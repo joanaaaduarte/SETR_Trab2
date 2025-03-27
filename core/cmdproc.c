@@ -1,9 +1,12 @@
-/* ****************************** */
-/* See cmdProc.h for indications  */
-/* ****************************** */
+/**
+    \file cmdproc.c
+    \authors Joana Duarte, nmec: 102608
+    \authors Hugo Miranda, nmec: 104348
+    \date Colocar data  
+ */
 #include <stdio.h>
 #include <string.h>
-
+#include <stdint.h>
 #include "cmdproc.h"
 
 /* Internal variables */
@@ -14,6 +17,40 @@ static unsigned char rxBufLen = 0; 					//Comprimento do buffer de receção
 static unsigned char UARTTxBuffer[UART_TX_SIZE];	//Buffer de transmissão	
 static unsigned char txBufLen = 0; 					//Comprimento do buffer de receção
 
+
+// Histórico de temperatura últimas MAX_HISTORY = 20 amostras
+static int8_t temperature_history[MAX_HISTORY];
+static int temp_history_index = 0;
+
+// Tabela de valores de temperatura
+const int8_t simulated_temps[NUM_SAMPLES] = {
+    	-50, -40, -35, -30, -25, -20,
+		-15, -10, -5, 0, 5, 10, 15, 
+		18, 20, 22, 24, 26, 28, 30,
+    	32, 35, 38, 40, 45, 50, 55,
+		58, 59, 60
+};
+
+int temps_index = 0;
+
+
+int8_t getNextTemperature()
+{
+    int8_t temp = simulated_temps[temps_index];
+    temps_index = (temps_index + 1) % NUM_SAMPLES;
+
+    // Atualiza histórico
+    temperature_history[temp_history_index] = temp;
+    temp_history_index = (temp_history_index + 1) % MAX_HISTORY;
+
+    return temp;
+}
+
+void resetTemperatureHistory()
+{
+    memset(temperature_history, 0, sizeof(temperature_history));
+    temp_history_index = 0;
+}
  
 // Função para processar os comandos recebidos
 int cmdProcessor(void) {
@@ -24,7 +61,7 @@ int cmdProcessor(void) {
     if (rxBufLen == 0)
         return -1;
 
-    // Encontra o índice do SOF (Start of Frame)
+    // Encontra o índice do SOF 
     for (i = 0; i < rxBufLen; i++) {
         if (UARTRxBuffer[i] == SOF_SYM) {
             break;
@@ -34,55 +71,34 @@ int cmdProcessor(void) {
     // Se encontrou o SOF, começa a processar o comando
     if (i < rxBufLen) {
         switch (UARTRxBuffer[i + 1]) {
-            case 'A':
-                // Comando "A" para ler todos os sensores
+
+            case 'A':		// Comando "A" para ler todos os sensores
                 if (UARTRxBuffer[i + 2] != EOF_SYM) {
                     return -4;
                 }
-
+				
                 // Processa e envia a resposta para todos os sensores
                 txChar('#');
                 txChar('A');
-
-                // Temperatura simulada
-                txChar('t');
-                txChar('+');
-                txChar('2');
-                txChar('5'); // Temperatura simulada 25°C
-
-                // Humidade simulada
-                txChar('h');
-                txChar('+');
-                txChar('5');
-                txChar('0'); // Hmidade simulada 50%
-
-                // CO2 simulado
-                txChar('c');
-                txChar('+');
-                txChar('4');
-                txChar('0'); // CO2 simulado 4000 
-				txChar('0');
-				txChar('0');
+				txChar('t');
+				int8_t temp = getNextTemperature();
+				txChar((unsigned char)temp);
 
                 // Finaliza com EOF_SYM
                 txChar('!');
                 break;
 
-            case 'P':
-                // Comando "P" para ler um sensor específico (t, h, c)
+            case 'P':	// Comando "P" para ler um sensor específico (t, h, c)
                 sid = UARTRxBuffer[i + 2];  // 't', 'h', ou 'c'
 
                 if (sid == 't') {
-                    // Envia o valor de temperatura simulado
-                    txChar('#');
-                    txChar('P');
-                    txChar('t');
 
-                    txChar('+');
-                    txChar('3');
-                    txChar('0'); // Temperatura simulada 30°C
-                    txChar('!');
-
+    				int8_t temp = getNextTemperature();
+    				txChar('#');
+    				txChar('P');
+    				txChar('t');
+    				txChar((unsigned char)temp);  // valor binário
+    				txChar('!');
 
                 } else if (sid == 'h') {
                     // Envia o valor de Humidade simulado
@@ -114,26 +130,27 @@ int cmdProcessor(void) {
                 }
                 break;
 
-            case 'L':
-                // Comando "L" para as últimas 20 amostras de cada sensor
+            case 'L':		// Comando "L" para as últimas 20 amostras de cada sensor
+
                 txChar('#');
                 txChar('L');
+				txChar('t');  
 
+				// Enviar os valores do histórico
+				for (int j = 0; j < MAX_HISTORY; ++j) {
+					int idx_temp = (temp_history_index + j) % MAX_HISTORY;
+					txChar((unsigned char)temperature_history[idx_temp]);
+				}
 
-
-                
-                txChar('!');
-                break;
+				txChar('!');
+				break;
 
             case 'R':
                 // Comando "R" para resetar o histórico
+				resetTemperatureHistory();
  				txChar('#');
-                txChar('R');
-
-				
-                
+                txChar('R');              
                 txChar('!');
-
                 break;
 
             default:
@@ -145,7 +162,10 @@ int cmdProcessor(void) {
     return -4;
 }
 
-	
+
+
+
+
 		
 
 /*
