@@ -1,16 +1,11 @@
-/* ******************************************************/
-/* SETR 23/24, Paulo Pedreiras                          */
-/*	Base code for Unit Testing                          */
-/*  	Simple example of command processor             */
-/*    	for smart sensor node with 3 sensors			*/
-/*     													*/
-/*	Code is just for illustrative effects. E.g. error 	*/ 
-/*		codes are "magic numbers" in the middle of the	*/
-/*    	code instead of being (defined) text literals, 	*/
-/* 		sensor data is not properly emulated, missing 	*/
-/* 		commands, Checksum not implemented, ...			*/
-/*														*/
-/* ******************************************************/
+/**
+    \file cmdproc.h
+    \authors Joana Duarte, nmec: 102608
+    \authors Hugo Miranda, nmec: 104348
+    \date Colocar data  
+ */
+
+
 
 #ifndef CMD_PROC_H_
 #define CMD_PROC_H_
@@ -19,11 +14,17 @@
 /* Other defines should be return codes of the functions */
 /* E.g. #define CMD_EMPTY_STRING -1                      */
 #define UART_RX_SIZE 20 	/* Maximum size of the RX buffer */ 
-#define UART_TX_SIZE 20 	/* Maximum size of the TX buffer */ 
+#define UART_TX_SIZE 20 	/* Maximum size of the TX buffer */
+#define MAX_HISTORY 20      
+
+
 #define SOF_SYM '#'	        /* Start of Frame Symbol */
 #define EOF_SYM '!'          /* End of Frame Symbol */
 
 /* Function prototypes */
+
+
+
 
 /* ************************************************************ */
 /* Processes the chars in the RX buffer looking for commands 	*/

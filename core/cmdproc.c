@@ -8,108 +8,145 @@
 
 /* Internal variables */
 /* Used as part of the UART emulation */
-static unsigned char UARTRxBuffer[UART_RX_SIZE];
-static unsigned char rxBufLen = 0; 
+static unsigned char UARTRxBuffer[UART_RX_SIZE];	//Buffer de receção
+static unsigned char rxBufLen = 0; 					//Comprimento do buffer de receção
 
-static unsigned char UARTTxBuffer[UART_TX_SIZE];
-static unsigned char txBufLen = 0; 
+static unsigned char UARTTxBuffer[UART_TX_SIZE];	//Buffer de transmissão	
+static unsigned char txBufLen = 0; 					//Comprimento do buffer de receção
 
  
-/* Function implementation */
+// Função para processar os comandos recebidos
+int cmdProcessor(void) {
+    int i;
+    unsigned char sid;
 
-/* 
- * cmdProcessor
- */ 
-int cmdProcessor(void)
-{
-	int i;
-	unsigned char sid;
-		
-	/* Detect empty cmd string */
-	if(rxBufLen == 0)
-		return -1; 
-	
-	/* Find index of SOF */
-	for(i=0; i < rxBufLen; i++) {
-		if(UARTRxBuffer[i] == SOF_SYM) {
-			break;
-		}
-	}
-	
-	/* If a SOF was found look for commands */
-	if(i < rxBufLen) {
-		
-		switch(UARTRxBuffer[i+1]) { 
-			
-			case 'P':		
-				/* Command "P" detected.							*/
-				/* Follows one DATA byte that specifies the sensor	*/ 
-				/* to read. I assume 't','h','c' for temp., humid. 	*/
-				/* and CO2, resp.									*/   
-		
-				/* Check sensor type */
-				sid = UARTRxBuffer[i+2];
-				if(sid != 't' && sid != 'h' && sid != 'c') {
-					return -2;
-				}
-				
-				/* Check checksum */
-				if(!(calcChecksum(&(UARTRxBuffer[i+1]),2))) {
-					return -3;
-				}
-				
-				/* Check EOF */
-				if(UARTRxBuffer[i+6] != EOF_SYM) {
-					return -4;
-				}
-			
-				/* Command is (is it? ... ) valid. Produce answer and terminate */ 
-				txChar('#');
-				txChar('p'); /* p is the reply to P 							*/	
-				txChar('t'); /* t indicate that it is a temperature 			*/
-				txChar('+'); /* This is the sensor reading. You should call a 	*/
-				txChar('2'); /*   function that emulates the reading of a 		*/
-				txChar('1'); /*   sensor value 	*/
-				txChar('1'); /* Checksum is 114 decimal in this case		*/
-				txChar('1'); /*   You should call a funcion that computes 	*/
-				txChar('4'); /*   the checksum for any command 				*/  
-				txChar('!');
-				
-				/* Here you should remove the characters that are part of the 		*/
-				/* command from the RX buffer. I'm just resetting it, which is not 	*/
-				/* a good solution, as a new command could be in progress and		*/
-				/* resetting  will generate errors									*/
-				rxBufLen = 0;	
-				
-				return 0;
-								
-			default:
-				/* If code reaches this place, the command is not recognized */
-				return -2;				
-		}
-		
-		
-	}
-	
-	/* Cmd string not null and SOF not found */
-	return -4;
+    // Verifica se o comando está vazio
+    if (rxBufLen == 0)
+        return -1;
 
+    // Encontra o índice do SOF (Start of Frame)
+    for (i = 0; i < rxBufLen; i++) {
+        if (UARTRxBuffer[i] == SOF_SYM) {
+            break;
+        }
+    }
+
+    // Se encontrou o SOF, começa a processar o comando
+    if (i < rxBufLen) {
+        switch (UARTRxBuffer[i + 1]) {
+            case 'A':
+                // Comando "A" para ler todos os sensores
+                if (UARTRxBuffer[i + 2] != EOF_SYM) {
+                    return -4;
+                }
+
+                // Processa e envia a resposta para todos os sensores
+                txChar('#');
+                txChar('A');
+
+                // Temperatura simulada
+                txChar('t');
+                txChar('+');
+                txChar('2');
+                txChar('5'); // Temperatura simulada 25°C
+
+                // Humidade simulada
+                txChar('h');
+                txChar('+');
+                txChar('5');
+                txChar('0'); // Hmidade simulada 50%
+
+                // CO2 simulado
+                txChar('c');
+                txChar('+');
+                txChar('4');
+                txChar('0'); // CO2 simulado 4000 
+				txChar('0');
+				txChar('0');
+
+                // Finaliza com EOF_SYM
+                txChar('!');
+                break;
+
+            case 'P':
+                // Comando "P" para ler um sensor específico (t, h, c)
+                sid = UARTRxBuffer[i + 2];  // 't', 'h', ou 'c'
+
+                if (sid == 't') {
+                    // Envia o valor de temperatura simulado
+                    txChar('#');
+                    txChar('P');
+                    txChar('t');
+
+                    txChar('+');
+                    txChar('3');
+                    txChar('0'); // Temperatura simulada 30°C
+                    txChar('!');
+
+
+                } else if (sid == 'h') {
+                    // Envia o valor de Humidade simulado
+                    txChar('#');
+                    txChar('P');
+                    txChar('h');
+                    txChar('+');
+                    txChar('1');
+                    txChar('0'); // Humidade simulada 100%
+					txChar('0');
+                    txChar('!');
+
+
+                } else if (sid == 'c') {
+                    // Envia o valor de CO2 simulado
+                    txChar('#');
+                    txChar('P');
+                    txChar('c');
+                    txChar('+');
+                    txChar('2');
+                    txChar('0'); // CO2 simulado 20000
+					txChar('0');
+					txChar('0');
+					txChar('0');
+                    txChar('!');
+
+                } else {
+                    return -2;  // Tipo de sensor inválido
+                }
+                break;
+
+            case 'L':
+                // Comando "L" para as últimas 20 amostras de cada sensor
+                txChar('#');
+                txChar('L');
+
+
+
+                
+                txChar('!');
+                break;
+
+            case 'R':
+                // Comando "R" para resetar o histórico
+ 				txChar('#');
+                txChar('R');
+
+				
+                
+                txChar('!');
+
+                break;
+
+            default:
+                return -2;  // Comando inválido
+        }
+    }
+
+    // Caso não tenha encontrado o SOF ou o comando esteja mal formatado
+    return -4;
 }
 
-/* 
- * calcChecksum
- */ 
-int calcChecksum(unsigned char * buf, int nbytes) {
-	/* Here you are supposed to compute the modulo 256 checksum */
-	/* of the first n bytes of buf. Then you should convert the */
-	/* checksum to ascii (3 digitas/chars) and compare each one */
-	/* of these digits/characters to the ones in the RxBuffer,	*/
-	/* positions nbytes, nbytes + 1 and nbytes +2. 				*/
 	
-	/* That is your work to do. In this example I just assume 	*/
-	/* that the checksum is always OK.							*/	
-	return 1;		
-}
+		
 
 /*
  * rxChar
@@ -172,3 +209,17 @@ void getTxBuffer(unsigned char * buf, int * len)
 }
 
 
+/* 
+ * calcChecksum
+ */ 
+int calcChecksum(unsigned char * buf, int nbytes) {
+	/* Here you are supposed to compute the modulo 256 checksum */
+	/* of the first n bytes of buf. Then you should convert the */
+	/* checksum to ascii (3 digitas/chars) and compare each one */
+	/* of these digits/characters to the ones in the RxBuffer,	*/
+	/* positions nbytes, nbytes + 1 and nbytes +2. 				*/
+	
+	/* That is your work to do. In this example I just assume 	*/
+	/* that the checksum is always OK.							*/	
+	return 1;		
+}

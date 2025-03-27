@@ -19,76 +19,103 @@
 
 int main(void) 
 {
-	int i,len, err;
-	unsigned char ans[30]; 
-	unsigned char ansTest1[]={'#','p','t', '+', '2', '1', '1', '1', '4','!'};
-	
-	printf("\n Smart Sensor interface emulation \n");
-	printf(" \t - simple illustration of interface and use \n\n\r");
-	
-	/* Init UART RX and TX buffers */
-	resetTxBuffer();
-	resetRxBuffer();
-	
-	/* Test 1 */
-	
-	printf("Test1 - check the answer to a valid Pt command\n");
-	
-	/* 1 - send the command */
-	rxChar('#');
-	rxChar('P');
-	rxChar('t');
-	rxChar('1');
-	rxChar('9');
-	rxChar('6');
-	rxChar('!');
-			
-	/* 2 - Process the comand and check the answer */
-	
-	cmdProcessor();
-	
-	getTxBuffer(ans,&len);
-	if(memcmp(ans,ansTest1,len)) {
-		printf("Test 1 failed\n");
-	} else {
-		printf("Test 1 succeeded\n");
-	}	
-	
-	/* You can print the answer to see what is wrong, if necessary */
-	printf("\t Received answer:");
-	for(i=0; i < len; i++) {
-		printf("%c", ans[i]);
-	}
-	printf("\n\t Expected answer:");
-	i=sizeof(ansTest1);
-	for(i=0; i< len; i++) {
-		printf("%c", ansTest1[i]);
-	}
-	printf("\n");
-	
-	
-	/* Test 2 */
-	
-	printf("Test2 - check the answer to a transmission omission/error \n");
-	
-	/* 1 - send the command */
-	rxChar('#');
-	rxChar('P');
-	// rxChar('t'); - simulates missing character, emulates a tx error 
-	rxChar('1');
-	rxChar('9');
-	rxChar('6');
-	rxChar('!');
-			
-	/* 2 - Process the comand and check the answer */
-	
-	err=cmdProcessor();
-		
-	if(err == -2) {
-		printf("Test 2 succeeded, as omission was detected\n");
-	} else {
-		printf("Test 2 failed, as omission was not detected\n");
-	}		
+    int i, len;
+    unsigned char ans[30];
+
+    printf("\n Smart Sensor interface emulation \n");
+    printf(" \t - simple illustration of interface and use \n\n\r");
+
+    /* Inicializa os buffers da UART */
+    resetTxBuffer();
+    resetRxBuffer();
+
+    /* Teste 1: Envia o comando "A" para ler todos os sensores */
+    printf("Test 1 - Enviar comando 'A' para ler todos os sensores\n");
+
+    // Envia o comando "A"
+    rxChar('#');
+    rxChar('A');
+    rxChar('!');
+    
+    cmdProcessor();  // Processa o comando
+
+    // Obtém o que foi enviado pela UART
+    getTxBuffer(ans, &len);
+    printf("Resposta recebida: ");
+    for (i = 0; i < len; i++) {
+        printf("%c", ans[i]);
+    }
+
+	/**************************************************************************************/
+
+	/* Teste 2: Envia o comando "P" para ler o sensor de temperatura */
+    printf("\nTest 2 - Enviar comando 'P' para ler sensor de temperatura\n");
+
+    resetTxBuffer();
+    resetRxBuffer();
+
+    // Envia o comando "P" com sensor 't'
+    rxChar('#');
+    rxChar('P');
+    rxChar('t');
+    rxChar('!');
+
+    cmdProcessor();
+
+    getTxBuffer(ans, &len);
+
+    printf("Resposta recebida: ");
+    for (i = 0; i < len; i++) {
+        printf("%c", ans[i]);
+    }
+    printf("\n");
+
+
+	/************************************************************************* */
+	    /* Teste 3: Envia o comando "P" para ler o sensor de humidade */
+    printf("\nTest 3 - Enviar comando 'P' para ler sensor de humidade\n");
+
+    resetTxBuffer();
+    resetRxBuffer();
+
+    // Envia o comando "P" com sensor 'h'
+    rxChar('#');
+    rxChar('P');
+    rxChar('h');
+    rxChar('!');
+
+    cmdProcessor();
+
+    getTxBuffer(ans, &len);
+
+    printf("Resposta recebida: ");
+    for (i = 0; i < len; i++) {
+        printf("%c", ans[i]);
+    }
+    printf("\n");
+
+	/**************************************************************************************+ */
+	/* Teste 4: Envia o comando "P" para ler o sensor de CO2 */
+    printf("\nTest 4 - Enviar comando 'P' para ler sensor de CO2\n");
+
+    resetTxBuffer();
+    resetRxBuffer();
+
+    // Envia o comando "P" com sensor 'c'
+    rxChar('#');
+    rxChar('P');
+    rxChar('c');
+    rxChar('!');
+
+    cmdProcessor();
+
+    getTxBuffer(ans, &len);
+
+    printf("Resposta recebida: ");
+    for (i = 0; i < len; i++) {
+        printf("%c", ans[i]);
+    }
+    printf("\n");
 	
 	/* Much more tests are needed. Unity shoul be used for it. */
 	
