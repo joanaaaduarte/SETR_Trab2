@@ -18,7 +18,7 @@
 #define UART_RX_SIZE 64 	/* Maximum size of the RX buffer */ 
 #define UART_TX_SIZE 64 	/* Maximum size of the TX buffer */
 #define MAX_HISTORY 20      
-#define NUM_SAMPLES 30
+#define NUM_SAMPLES 30      
 
 
 #define SOF_SYM '#'	        /* Start of Frame Symbol */
@@ -29,9 +29,11 @@
 int8_t getNextTemperature();
 void resetTemperatureHistory();
 
+int8_t getNextHumidity();
+void resetHumidityHistory();
 
-
-
+int16_t getNextCO2();
+void resetCO2History();
 
 
 /* ************************************************************ */
