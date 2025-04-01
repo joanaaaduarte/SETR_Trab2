@@ -366,14 +366,34 @@ void getTxBuffer(unsigned char * buf, int * len)
 /* 
  * calcChecksum
  */ 
-int calcChecksum(unsigned char * buf, int nbytes) {
+int calcChecksum(unsigned char * buf, int nbytes, unsigned char *RxBuffer) {
 	/* Here you are supposed to compute the modulo 256 checksum */
 	/* of the first n bytes of buf. Then you should convert the */
 	/* checksum to ascii (3 digitas/chars) and compare each one */
-	/* of these digits/characters to the ones in the RxBuffer,	*/
-	/* positions nbytes, nbytes + 1 and nbytes +2. 				*/
+	/* of these digits/characters to the ones in the RxBuffer,      */
+	/* positions nbytes, nbytes + 1 and nbytes +2.                          */
 	
-	/* That is your work to do. In this example I just assume 	*/
-	/* that the checksum is always OK.							*/	
-	return 1;		
+	/* That is your work to do. In this example I just assume       */
+	/* that the checksum is always OK.                                                      */      
+
+	// First: Sum first buffer nbytes
+	int sum = 0;
+	for(int i = 0; i < nbytes; i++){
+			sum +=buf[i];
+	}
+
+	// Second:
+	int checksum = 0;
+	checksum = sum % 256;
+
+	// Third: Convert string 3 digits to ASCII
+	char checksumStr[10];
+	snprintf(checksumStr, sizeof(checksumStr), "%03d", checksum);
+
+	// Compares the 3 digits with the expected values in the RxBuffer
+	if (memcmp(checksumStr, RxBuffer, 3) == 0) {
+		return 1; // Checksum correto
+	}
+
+	return 0;               
 }
