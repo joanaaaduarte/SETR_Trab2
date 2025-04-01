@@ -1,1 +1,1 @@
-/usr/bin/cc -Wall -Werror -g CMakeFiles/ass2.dir/main.c.o CMakeFiles/ass2.dir/core/cmdproc.c.o -o ass2 
+/usr/bin/cc -Wall -Werror -g CMakeFiles/ass2.dir/main.c.o CMakeFiles/ass2.dir/core/cmdproc.c.o -o ass2

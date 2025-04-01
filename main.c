@@ -28,11 +28,14 @@ int main(void)
     resetTxBuffer();
     resetRxBuffer();
 
-
-		// Envia o comando "A"
+	// Envia o comando "A"
 	rxChar('#');
 	rxChar('A');
 	rxChar('!');
+
+	/* Checksum*/
+
+	int checksum = calcChecksum(rx)
 
 	cmdProcessor();  // Processa o comando
 

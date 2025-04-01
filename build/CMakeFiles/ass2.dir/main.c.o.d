@@ -1,4 +1,5 @@
-CMakeFiles/ass2.dir/main.c.o: /home/hugo/SETR_Trab2/main.c \
+CMakeFiles/ass2.dir/main.c.o: \
+ /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/main.c \
  /usr/include/stdc-predef.h /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -8,8 +9,8 @@ CMakeFiles/ass2.dir/main.c.o: /home/hugo/SETR_Trab2/main.c \
  /usr/include/x86_64-linux-gnu/bits/long-double.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
+ /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+ /usr/lib/gcc/x86_64-linux-gnu/14/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/types.h \
  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
  /usr/include/x86_64-linux-gnu/bits/time64.h \
@@ -25,8 +26,9 @@ CMakeFiles/ass2.dir/main.c.o: /home/hugo/SETR_Trab2/main.c \
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h /usr/include/string.h \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
- /usr/include/strings.h /home/hugo/SETR_Trab2/include/cmdproc.h \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
+ /usr/include/strings.h \
+ /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/include/cmdproc.h \
+ /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
