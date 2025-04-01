@@ -1,0 +1,70 @@
+\doxysection{/home/hugo/\+SETR\+\_\+\+Trab2/include/cmdproc.h File Reference}
+\hypertarget{cmdproc_8h}{}\label{cmdproc_8h}\index{/home/hugo/SETR\_Trab2/include/cmdproc.h@{/home/hugo/SETR\_Trab2/include/cmdproc.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for cmdproc.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{cmdproc_8h_a7e4912ef6d5612f8ebca463ff206d9ce}\label{cmdproc_8h_a7e4912ef6d5612f8ebca463ff206d9ce} 
+\#define {\bfseries UART\+\_\+\+RX\+\_\+\+SIZE}~64  /\texorpdfstring{$\ast$}{*} Maximum size of the RX buffer \texorpdfstring{$\ast$}{*}/
+\item 
+\Hypertarget{cmdproc_8h_a7bd31e3844f5461db2cbe6d906ca4040}\label{cmdproc_8h_a7bd31e3844f5461db2cbe6d906ca4040} 
+\#define {\bfseries UART\+\_\+\+TX\+\_\+\+SIZE}~64  /\texorpdfstring{$\ast$}{*} Maximum size of the TX buffer \texorpdfstring{$\ast$}{*}/
+\item 
+\Hypertarget{cmdproc_8h_abf8d8994f09509f9e061f5bf82daf4cd}\label{cmdproc_8h_abf8d8994f09509f9e061f5bf82daf4cd} 
+\#define {\bfseries MAX\+\_\+\+HISTORY}~20
+\item 
+\Hypertarget{cmdproc_8h_af0b23eedf2352de4c1eff77e1401730c}\label{cmdproc_8h_af0b23eedf2352de4c1eff77e1401730c} 
+\#define {\bfseries NUM\+\_\+\+SAMPLES}~30
+\item 
+\Hypertarget{cmdproc_8h_a98ce42a3f4332d00581da3291c9865cb}\label{cmdproc_8h_a98ce42a3f4332d00581da3291c9865cb} 
+\#define {\bfseries SOF\+\_\+\+SYM}~\textquotesingle{}\#\textquotesingle{}         /\texorpdfstring{$\ast$}{*} Start of Frame Symbol \texorpdfstring{$\ast$}{*}/
+\item 
+\Hypertarget{cmdproc_8h_a87045860c979c33b7bb6e4f90e7914df}\label{cmdproc_8h_a87045860c979c33b7bb6e4f90e7914df} 
+\#define {\bfseries EOF\+\_\+\+SYM}~\textquotesingle{}!\textquotesingle{}          /\texorpdfstring{$\ast$}{*} End of Frame Symbol \texorpdfstring{$\ast$}{*}/
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{cmdproc_8h_a2a24c0bd6f004420f49542d3f993dd0c}\label{cmdproc_8h_a2a24c0bd6f004420f49542d3f993dd0c} 
+int8\+\_\+t {\bfseries get\+Next\+Temperature} ()
+\item 
+\Hypertarget{cmdproc_8h_ab6bd270c191579c5717cf5fe1af89500}\label{cmdproc_8h_ab6bd270c191579c5717cf5fe1af89500} 
+void {\bfseries reset\+Temperature\+History} ()
+\item 
+\Hypertarget{cmdproc_8h_afbdfe0465dfd34a5f244fe41fa27c12a}\label{cmdproc_8h_afbdfe0465dfd34a5f244fe41fa27c12a} 
+int {\bfseries cmd\+Processor} (void)
+\item 
+\Hypertarget{cmdproc_8h_a67ae8a79a708a3c5471668bddbd16400}\label{cmdproc_8h_a67ae8a79a708a3c5471668bddbd16400} 
+int {\bfseries rx\+Char} (unsigned char car)
+\item 
+\Hypertarget{cmdproc_8h_abdb4363f0662688850bbcdfb59ce4566}\label{cmdproc_8h_abdb4363f0662688850bbcdfb59ce4566} 
+int {\bfseries tx\+Char} (unsigned char car)
+\item 
+\Hypertarget{cmdproc_8h_a918f38a7eecdd03671d28a3a07f94856}\label{cmdproc_8h_a918f38a7eecdd03671d28a3a07f94856} 
+void {\bfseries reset\+Rx\+Buffer} (void)
+\item 
+\Hypertarget{cmdproc_8h_abd91ad9b5887f4769f45823899583bab}\label{cmdproc_8h_abd91ad9b5887f4769f45823899583bab} 
+void {\bfseries reset\+Tx\+Buffer} (void)
+\item 
+\Hypertarget{cmdproc_8h_a8beeddde9a644610c72724be856db6dd}\label{cmdproc_8h_a8beeddde9a644610c72724be856db6dd} 
+void {\bfseries get\+Tx\+Buffer} (unsigned char \texorpdfstring{$\ast$}{*}buf, int \texorpdfstring{$\ast$}{*}len)
+\item 
+\Hypertarget{cmdproc_8h_a2a0e03d8d8ff0f0459f7623ffd6d39b1}\label{cmdproc_8h_a2a0e03d8d8ff0f0459f7623ffd6d39b1} 
+int {\bfseries calc\+Checksum} (unsigned char \texorpdfstring{$\ast$}{*}buf, int nbytes)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Authors}
+Joana Duarte, nmec\+: 102608 
+
+Hugo Miranda, nmec\+: 104348 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Colocar data ~\newline
+ 
+\end{DoxyDate}
