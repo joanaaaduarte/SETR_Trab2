@@ -153,6 +153,30 @@ core/cmdproc.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/cmdproc.c.s
 .PHONY : core/cmdproc.c.s
 
+core/unity.o: core/unity.c.o
+.PHONY : core/unity.o
+
+# target to build an object file
+core/unity.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/unity.c.o
+.PHONY : core/unity.c.o
+
+core/unity.i: core/unity.c.i
+.PHONY : core/unity.i
+
+# target to preprocess a source file
+core/unity.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/unity.c.i
+.PHONY : core/unity.c.i
+
+core/unity.s: core/unity.c.s
+.PHONY : core/unity.s
+
+# target to generate assembly for a file
+core/unity.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/unity.c.s
+.PHONY : core/unity.c.s
+
 main.o: main.c.o
 .PHONY : main.o
 
@@ -189,6 +213,9 @@ help:
 	@echo "... core/cmdproc.o"
 	@echo "... core/cmdproc.i"
 	@echo "... core/cmdproc.s"
+	@echo "... core/unity.o"
+	@echo "... core/unity.i"
+	@echo "... core/unity.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

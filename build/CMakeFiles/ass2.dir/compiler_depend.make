@@ -67,6 +67,9 @@ CMakeFiles/ass2.dir/core/cmdproc.c.o: /home/joana/Documents/SETR/git/Trab2/SETR_
   /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
   /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
 
+CMakeFiles/ass2.dir/core/unity.c.o: /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/unity.c \
+  /usr/include/stdc-predef.h
+
 CMakeFiles/ass2.dir/main.c.o: /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/main.c \
   /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/include/cmdproc.h \
   /usr/include/features-time64.h \
@@ -180,6 +183,8 @@ CMakeFiles/ass2.dir/main.c.o: /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/ma
 /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
+
+/home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/unity.c:
 
 /usr/include/features.h:
 

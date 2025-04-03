@@ -68,6 +68,10 @@ CMakeFiles/ass2.dir/core/cmdproc.c.o
  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h
  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
 
+CMakeFiles/ass2.dir/core/unity.c.o
+ /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/unity.c
+ /usr/include/stdc-predef.h
+
 CMakeFiles/ass2.dir/main.c.o
  /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/main.c
  /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/include/cmdproc.h

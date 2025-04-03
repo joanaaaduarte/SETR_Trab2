@@ -16,6 +16,7 @@ int main(void)
 {
     int i, len;
     unsigned char ans[30];
+	unsigned char inputBuffer[10];
 
     printf("\n Smart Sensor interface emulation \n");
     printf(" \t - simple illustration of interface and use \n\n\r");
@@ -29,26 +30,33 @@ int main(void)
     resetRxBuffer();
 
 	// Envia o comando "A"
+
 	rxChar('#');
 	rxChar('A');
 	rxChar('!');
+	
 
-	/* Checksum*/
+	snprintf((char *)inputBuffer, sizeof(inputBuffer), "#A");
+	int checksum = calcChecksum((unsigned char *)&inputBuffer[1], strlen((char *)&inputBuffer[1]));
+	snprintf((char *)&inputBuffer[2], sizeof(inputBuffer) - 2, "%03d!", checksum);
 
-	int checksum = calcChecksum(rx)
-
-	cmdProcessor();  // Processa o comando
-
-	getTxBuffer(ans, &len); 
-
-
-
-
-	printf("Resposta recebida: ");
-	for (i = 0; i < len; i++) {
-		printf("%c", ans[i]);
+	// Enviar caracteres individualmente para rxChar()
+	for (i = 0; i < strlen((char *)inputBuffer); i++) {
+   		rxChar(inputBuffer[i]);
 	}
-	printf("\n");
+
+	// Processar comando
+	cmdProcessor();
+	getTxBuffer(ans, &len);
+
+	// Imprimir resposta recebida
+	printf("Resposta recebida ASCII somado: ");
+	int sum = 0;
+	for (i = 1; i < len - 1; i++) {
+  	  sum += ans[i];
+	}
+	printf("\n%d\n", sum);
+
 	/**************************************************************************************/
 
 	/* Teste 2: Envia o comando "P" para ler o sensor de temperatura */
@@ -58,20 +66,32 @@ int main(void)
     resetRxBuffer();
 
     // Envia o comando "P" com sensor 't'
+
     rxChar('#');
     rxChar('P');
     rxChar('t');
     rxChar('!');
 
-    cmdProcessor();
 
+    snprintf((char *)inputBuffer, sizeof(inputBuffer), "#Pt");
+    checksum = calcChecksum((unsigned char *)&inputBuffer[1], strlen((char *)&inputBuffer[1]));
+    snprintf((char *)inputBuffer + 2, sizeof(inputBuffer) - 2, "%03d!", checksum);
+
+	for (i = 0; i < strlen((char *)inputBuffer); i++) {
+        rxChar(inputBuffer[i]);
+		printf("Enviado para rxChar: %c\n", inputBuffer[i]); 
+    }
+
+	cmdProcessor();
     getTxBuffer(ans, &len);
 
-	printf("Resposta recebida: ");
-	for (i = 0; i < len; i++) {
-		printf("%c", ans[i]);  // imprime tudo como string legível
-	}
-	printf("\n");
+	sum = 0;
+    printf("Resposta recebida ASCII somado: ");
+    for (i = 1; i < len-1; i++) {
+        sum += ans[i];
+    }
+	printf("%d", sum);
+    printf("\n");
 
 	/************************************************************************* */
 	/* Teste 2.1: Envia o comando "P" para ler o sensor de humidade */
