@@ -334,6 +334,8 @@ int txChar(unsigned char car)
  */
 void resetRxBuffer(void)
 {
+	// memset: https://www.tutorialspoint.com/c_standard_library/c_function_memset.htm
+	memset(UARTRxBuffer, 0, UART_RX_SIZE);
 	rxBufLen = 0;		
 	return;
 }
@@ -343,6 +345,7 @@ void resetRxBuffer(void)
  */
 void resetTxBuffer(void)
 {
+	memset(UARTTxBuffer, 0, UART_TX_SIZE);
 	txBufLen = 0;		
 	return;
 }

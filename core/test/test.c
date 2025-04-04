@@ -17,7 +17,7 @@
  */
 
  void setUp(void) {
-    // Initialization code before each test (if needed)
+    history_reset('r');
 }
 
 /**
@@ -29,34 +29,34 @@ void tearDown(void) {
     // Cleanup code after each test (if needed)
 }
 
-/**
- * @brief Test for calcChecksum with a valid input buffer.
- *
- * Uses the buffer "Pt-40". For this buffer:
- * - 'P' = 80, 't' = 116, '-' = 45, '4' = 52, '0' = 48;
- * - Sum = 80 + 116 + 45 + 52 + 48 = 341;
- * - checksum = 341 % 256 = 85.
- *
- * @see calcChecksum()
- */
-void test_calcChecksum_valid(void) {
-    unsigned char buffer[] = "Pt-40";
-    int result = calcChecksum(buffer, strlen((char *)buffer));
-    TEST_ASSERT_EQUAL_INT(85, result);
+// UART Tests
+
+void test_UART_putc_Rx_valid(void)
+{
+    int ret1 = UART_putc_Rx('#');
+    int ret2 = UART_putc_Rx('2');
+    int ret3 = UART_putc_Rx('A');
+
+    TEST_ASSERT_EQUAL_INT(0, ret1);
+    TEST_ASSERT_EQUAL_INT(0, ret2);
+    TEST_ASSERT_EQUAL_INT(0, ret3);
+
+    TEST_ASSERT_EQUAL_INT(3, Rx_Buf.count);
+    TEST_ASSERT_EQUAL_INT(3, Rx_Buf.tail);
+    TEST_ASSERT_EQUAL_STRING("#2A", (char *)Rx_Buf.data);
 }
 
-/**
- * @brief Test for calcChecksum with an empty buffer.
- *
- * Verifies that the function returns 0 when the buffer is empty.
- *
- * @see calcChecksum()
- */
-void test_calcChecksum_empty(void) {
-    unsigned char buffer[] = "";
-    int result = calcChecksum(buffer, 0);
-    TEST_ASSERT_EQUAL_INT(0, result);
+void test_UART_putc_Rx_invalid(void)
+{
+    int ret = UART_putc_Rx('\0');
+    TEST_ASSERT_EQUAL_INT(-1, ret);
+
+    TEST_ASSERT_EQUAL_INT(0, Rx_Buf.count);
+    TEST_ASSERT_EQUAL_INT(0, Rx_Buf.tail);
+    TEST_ASSERT_EQUAL_STRING("", (char *)Rx_Buf.data);
 }
+
+
 
 /**
  * @brief Main function that runs the unit tests.
@@ -69,11 +69,9 @@ void test_calcChecksum_empty(void) {
 int main(void) {
     UNITY_BEGIN();
 
-    /*
-    RUN_TEST(test_calcChecksum_valid);
-    RUN_TEST(test_calcChecksum_empty);
-    */
-   
+    RUN_TEST(test_UART_putc_Rx_valid_character);
+    RUN_TEST(test_UART_putc_Rx_invalid_character);
+
     return UNITY_END();
 }
 

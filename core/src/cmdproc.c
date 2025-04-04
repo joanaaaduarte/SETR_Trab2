@@ -257,7 +257,6 @@ int cmdProcessor(void) {
 					txChar('#');
 					txChar('P');
 					txChar('c');
-
 					txChar('+');	//sempre positivo
 
 					// Converter c02 para string
@@ -277,7 +276,6 @@ int cmdProcessor(void) {
 			}
 
             case 'L':	
-
                 txChar('#');
                 txChar('L');
 				txChar('t');  

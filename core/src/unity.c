@@ -5,6 +5,8 @@
     SPDX-License-Identifier: MIT
 ========================================================================= */
 
+/* Editado */
+
 #include "unity.h"
 #include "math.h"
 
