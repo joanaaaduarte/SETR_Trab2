@@ -21,6 +21,7 @@
 #define NUM_SAMPLES 30      
 
 
+
 #define SOF_SYM '#'	        /* Start of Frame Symbol */
 #define EOF_SYM '!'          /* End of Frame Symbol */
 
@@ -35,6 +36,10 @@ void resetHumidityHistory();
 int16_t getNextCO2();
 void resetCO2History();
 
+
+int UART_putc_Rx(char c); 
+
+void history_reset(char mode);
 
 /* ************************************************************ */
 /* Processes the chars in the RX buffer looking for commands 	*/

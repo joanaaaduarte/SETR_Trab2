@@ -123,6 +123,21 @@ void resetCO2History()
     co2_history_index = 0;
 }
 
+
+int UART_putc_Rx(char c) {
+    if ((c < 32 || c > 126) && c != '#') {
+        return -1;
+    }
+
+    if (Rx_Buf.count >= RX_BUF_SIZE) {
+        return -1; 
+    }
+    Rx_Buf.buffer[Rx_Buf.count++] = c;
+
+    return 0;
+}
+
+
 void history_reset(char mode) {
     if (mode == 'r') {
         resetTemperatureHistory();
