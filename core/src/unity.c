@@ -82,8 +82,7 @@ static const char UNITY_PROGMEM UnityStrDetail2Name[]            = " " UNITY_DET
 #endif
 
 
-/*--------------------------------
----------------
+/*-----------------------------------------------
  * Pretty Printers & Test Result Output Handlers
  *-----------------------------------------------*/
 

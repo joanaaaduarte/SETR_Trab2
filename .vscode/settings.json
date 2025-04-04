@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "cmdproc.h": "c",
+        "string.h": "c",
+        "unity.h": "c"
+    }
+}

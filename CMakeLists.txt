@@ -4,18 +4,21 @@ project(ass2)
 
 set(CMAKE_C_FLAGS "-Wall -Werror -g")
 
-include_directories(${CMAKE_SOURCE_DIR}/include)
-include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/core/include
+                    ${CMAKE_SOURCE_DIR}/core/src
+                    ${CMAKE_SOURCE_DIR}/core/test
+                    )
 
+# eliminar este dps do test_runner funcionar
 add_executable(ass2
     ${CMAKE_SOURCE_DIR}/main.c
-    ${CMAKE_SOURCE_DIR}/core/cmdproc.c
+    ${CMAKE_SOURCE_DIR}/core/src/cmdproc.c
 )
 
 add_executable(test_runner
-    ${CMAKE_SOURCE_DIR}/test/test.c
-    ${CMAKE_SOURCE_DIR}/core/cmdproc.c
-    ${CMAKE_SOURCE_DIR}/core/unity.c
+    ${CMAKE_SOURCE_DIR}/core/test/test.c
+    ${CMAKE_SOURCE_DIR}/core/src/cmdproc.c
+    ${CMAKE_SOURCE_DIR}/core/src/unity.c
 )
 
 enable_testing()

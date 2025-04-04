@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "cmdproc.h"
+#include "core/include/cmdproc.h"
 #include <stdint.h>
 
 
@@ -55,7 +55,7 @@ int main(void)
 	for (i = 1; i < len - 1; i++) {
   	  sum += ans[i];
 	}
-	printf("\n%d\n", sum);
+	printf("%d\n", sum);
 
 	/**************************************************************************************/
 
@@ -79,7 +79,6 @@ int main(void)
 
 	for (i = 0; i < strlen((char *)inputBuffer); i++) {
         rxChar(inputBuffer[i]);
-		printf("Enviado para rxChar: %c\n", inputBuffer[i]); 
     }
 
 	cmdProcessor();
@@ -106,15 +105,23 @@ int main(void)
 	rxChar('h');
 	rxChar('!');
 
-	cmdProcessor();
+    snprintf((char *)inputBuffer, sizeof(inputBuffer), "#Pt");
+    checksum = calcChecksum((unsigned char *)&inputBuffer[1], strlen((char *)&inputBuffer[1]));
+    snprintf((char *)inputBuffer + 2, sizeof(inputBuffer) - 2, "%03d!", checksum);
 
+	for (i = 0; i < strlen((char *)inputBuffer); i++) {
+        rxChar(inputBuffer[i]);
+    }
+
+	cmdProcessor();
 	getTxBuffer(ans, &len);
 
-	printf("Resposta recebida: ");
-	for (i = 0; i < len; i++) {
-		printf("%c", ans[i]);
+	printf("Resposta recebida ASCII somado: ");
+	sum = 0;
+	for (i = 1; i < len - 1; i++) {
+  	  sum += ans[i];
 	}
-	printf("\n");
+	printf("%d\n", sum);
 
 	/* Teste 2.2: Envia comando 'P' para ler o sensor de CO2  */
 	printf("\nTest 2.3 - Enviar comando 'P' para ler sensor de CO2 (#Pc+00500!) \n");
@@ -127,15 +134,23 @@ int main(void)
 	rxChar('c');
 	rxChar('!');
 
-	cmdProcessor();
+	snprintf((char *)inputBuffer, sizeof(inputBuffer), "#Pt");
+    checksum = calcChecksum((unsigned char *)&inputBuffer[1], strlen((char *)&inputBuffer[1]));
+    snprintf((char *)inputBuffer + 2, sizeof(inputBuffer) - 2, "%03d!", checksum);
 
+	for (i = 0; i < strlen((char *)inputBuffer); i++) {
+        rxChar(inputBuffer[i]);
+    }
+
+	cmdProcessor();
 	getTxBuffer(ans, &len);
 
-	printf("Resposta recebida: ");
-	for (i = 0; i < len; i++) {
-		printf("%c", ans[i]);
+	printf("Resposta recebida ASCII somado: ");
+	sum = 0;
+	for (i = 1; i < len - 1; i++) {
+  	  sum += ans[i];
 	}
-	printf("\n");
+	printf("%d\n", sum);
 
 
 	/* Much more tests are needed. Unity shoul be used for it. */

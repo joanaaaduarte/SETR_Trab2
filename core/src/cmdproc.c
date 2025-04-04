@@ -297,7 +297,12 @@ int cmdProcessor(void) {
     // Caso não tenha encontrado o SOF ou o comando esteja mal formatado
     return -4;
 }
-	
+
+
+
+
+
+		
 
 /*
  * rxChar

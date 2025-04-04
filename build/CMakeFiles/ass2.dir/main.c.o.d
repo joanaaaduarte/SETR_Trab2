@@ -27,7 +27,7 @@ CMakeFiles/ass2.dir/main.c.o: \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
  /usr/include/strings.h \
- /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/include/cmdproc.h \
+ /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/include/cmdproc.h \
  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \

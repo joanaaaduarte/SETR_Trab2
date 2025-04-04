@@ -1,8 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/ass2.dir/core/cmdproc.c.o"
-  "CMakeFiles/ass2.dir/core/cmdproc.c.o.d"
-  "CMakeFiles/ass2.dir/core/unity.c.o"
-  "CMakeFiles/ass2.dir/core/unity.c.o.d"
+  "CMakeFiles/ass2.dir/core/src/cmdproc.c.o"
+  "CMakeFiles/ass2.dir/core/src/cmdproc.c.o.d"
   "CMakeFiles/ass2.dir/main.c.o"
   "CMakeFiles/ass2.dir/main.c.o.d"
   "ass2"

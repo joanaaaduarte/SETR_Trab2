@@ -65,6 +65,16 @@ CMAKE_BINARY_DIR = /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "No interactive CMake dialog available..."
@@ -129,53 +139,93 @@ ass2/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/build
 .PHONY : ass2/fast
 
-core/cmdproc.o: core/cmdproc.c.o
-.PHONY : core/cmdproc.o
+#=============================================================================
+# Target rules for targets named test_runner
+
+# Build rule for target.
+test_runner: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_runner
+.PHONY : test_runner
+
+# fast build rule for target.
+test_runner/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/build
+.PHONY : test_runner/fast
+
+core/src/cmdproc.o: core/src/cmdproc.c.o
+.PHONY : core/src/cmdproc.o
 
 # target to build an object file
-core/cmdproc.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/cmdproc.c.o
-.PHONY : core/cmdproc.c.o
+core/src/cmdproc.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/src/cmdproc.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/core/src/cmdproc.c.o
+.PHONY : core/src/cmdproc.c.o
 
-core/cmdproc.i: core/cmdproc.c.i
-.PHONY : core/cmdproc.i
+core/src/cmdproc.i: core/src/cmdproc.c.i
+.PHONY : core/src/cmdproc.i
 
 # target to preprocess a source file
-core/cmdproc.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/cmdproc.c.i
-.PHONY : core/cmdproc.c.i
+core/src/cmdproc.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/src/cmdproc.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/core/src/cmdproc.c.i
+.PHONY : core/src/cmdproc.c.i
 
-core/cmdproc.s: core/cmdproc.c.s
-.PHONY : core/cmdproc.s
+core/src/cmdproc.s: core/src/cmdproc.c.s
+.PHONY : core/src/cmdproc.s
 
 # target to generate assembly for a file
-core/cmdproc.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/cmdproc.c.s
-.PHONY : core/cmdproc.c.s
+core/src/cmdproc.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/src/cmdproc.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/core/src/cmdproc.c.s
+.PHONY : core/src/cmdproc.c.s
 
-core/unity.o: core/unity.c.o
-.PHONY : core/unity.o
+core/src/unity.o: core/src/unity.c.o
+.PHONY : core/src/unity.o
 
 # target to build an object file
-core/unity.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/unity.c.o
-.PHONY : core/unity.c.o
+core/src/unity.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/core/src/unity.c.o
+.PHONY : core/src/unity.c.o
 
-core/unity.i: core/unity.c.i
-.PHONY : core/unity.i
+core/src/unity.i: core/src/unity.c.i
+.PHONY : core/src/unity.i
 
 # target to preprocess a source file
-core/unity.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/unity.c.i
-.PHONY : core/unity.c.i
+core/src/unity.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/core/src/unity.c.i
+.PHONY : core/src/unity.c.i
 
-core/unity.s: core/unity.c.s
-.PHONY : core/unity.s
+core/src/unity.s: core/src/unity.c.s
+.PHONY : core/src/unity.s
 
 # target to generate assembly for a file
-core/unity.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/unity.c.s
-.PHONY : core/unity.c.s
+core/src/unity.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/core/src/unity.c.s
+.PHONY : core/src/unity.c.s
+
+core/test/test.o: core/test/test.c.o
+.PHONY : core/test/test.o
+
+# target to build an object file
+core/test/test.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/core/test/test.c.o
+.PHONY : core/test/test.c.o
+
+core/test/test.i: core/test/test.c.i
+.PHONY : core/test/test.i
+
+# target to preprocess a source file
+core/test/test.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/core/test/test.c.i
+.PHONY : core/test/test.c.i
+
+core/test/test.s: core/test/test.c.s
+.PHONY : core/test/test.s
+
+# target to generate assembly for a file
+core/test/test.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/core/test/test.c.s
+.PHONY : core/test/test.c.s
 
 main.o: main.c.o
 .PHONY : main.o
@@ -209,13 +259,18 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... test"
 	@echo "... ass2"
-	@echo "... core/cmdproc.o"
-	@echo "... core/cmdproc.i"
-	@echo "... core/cmdproc.s"
-	@echo "... core/unity.o"
-	@echo "... core/unity.i"
-	@echo "... core/unity.s"
+	@echo "... test_runner"
+	@echo "... core/src/cmdproc.o"
+	@echo "... core/src/cmdproc.i"
+	@echo "... core/src/cmdproc.s"
+	@echo "... core/src/unity.o"
+	@echo "... core/src/unity.i"
+	@echo "... core/src/unity.s"
+	@echo "... core/test/test.o"
+	@echo "... core/test/test.i"
+	@echo "... core/test/test.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

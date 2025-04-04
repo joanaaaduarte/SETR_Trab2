@@ -83,49 +83,33 @@ CMakeFiles/ass2.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/ass2.dir/main.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/main.c -o CMakeFiles/ass2.dir/main.c.s
 
-CMakeFiles/ass2.dir/core/cmdproc.c.o: CMakeFiles/ass2.dir/flags.make
-CMakeFiles/ass2.dir/core/cmdproc.c.o: /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/cmdproc.c
-CMakeFiles/ass2.dir/core/cmdproc.c.o: CMakeFiles/ass2.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/ass2.dir/core/cmdproc.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/ass2.dir/core/cmdproc.c.o -MF CMakeFiles/ass2.dir/core/cmdproc.c.o.d -o CMakeFiles/ass2.dir/core/cmdproc.c.o -c /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/cmdproc.c
+CMakeFiles/ass2.dir/core/src/cmdproc.c.o: CMakeFiles/ass2.dir/flags.make
+CMakeFiles/ass2.dir/core/src/cmdproc.c.o: /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/src/cmdproc.c
+CMakeFiles/ass2.dir/core/src/cmdproc.c.o: CMakeFiles/ass2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/ass2.dir/core/src/cmdproc.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/ass2.dir/core/src/cmdproc.c.o -MF CMakeFiles/ass2.dir/core/src/cmdproc.c.o.d -o CMakeFiles/ass2.dir/core/src/cmdproc.c.o -c /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/src/cmdproc.c
 
-CMakeFiles/ass2.dir/core/cmdproc.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/ass2.dir/core/cmdproc.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/cmdproc.c > CMakeFiles/ass2.dir/core/cmdproc.c.i
+CMakeFiles/ass2.dir/core/src/cmdproc.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/ass2.dir/core/src/cmdproc.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/src/cmdproc.c > CMakeFiles/ass2.dir/core/src/cmdproc.c.i
 
-CMakeFiles/ass2.dir/core/cmdproc.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/ass2.dir/core/cmdproc.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/cmdproc.c -o CMakeFiles/ass2.dir/core/cmdproc.c.s
-
-CMakeFiles/ass2.dir/core/unity.c.o: CMakeFiles/ass2.dir/flags.make
-CMakeFiles/ass2.dir/core/unity.c.o: /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/unity.c
-CMakeFiles/ass2.dir/core/unity.c.o: CMakeFiles/ass2.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/ass2.dir/core/unity.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/ass2.dir/core/unity.c.o -MF CMakeFiles/ass2.dir/core/unity.c.o.d -o CMakeFiles/ass2.dir/core/unity.c.o -c /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/unity.c
-
-CMakeFiles/ass2.dir/core/unity.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/ass2.dir/core/unity.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/unity.c > CMakeFiles/ass2.dir/core/unity.c.i
-
-CMakeFiles/ass2.dir/core/unity.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/ass2.dir/core/unity.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/unity.c -o CMakeFiles/ass2.dir/core/unity.c.s
+CMakeFiles/ass2.dir/core/src/cmdproc.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/ass2.dir/core/src/cmdproc.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/src/cmdproc.c -o CMakeFiles/ass2.dir/core/src/cmdproc.c.s
 
 # Object files for target ass2
 ass2_OBJECTS = \
 "CMakeFiles/ass2.dir/main.c.o" \
-"CMakeFiles/ass2.dir/core/cmdproc.c.o" \
-"CMakeFiles/ass2.dir/core/unity.c.o"
+"CMakeFiles/ass2.dir/core/src/cmdproc.c.o"
 
 # External object files for target ass2
 ass2_EXTERNAL_OBJECTS =
 
 ass2: CMakeFiles/ass2.dir/main.c.o
-ass2: CMakeFiles/ass2.dir/core/cmdproc.c.o
-ass2: CMakeFiles/ass2.dir/core/unity.c.o
+ass2: CMakeFiles/ass2.dir/core/src/cmdproc.c.o
 ass2: CMakeFiles/ass2.dir/build.make
 ass2: CMakeFiles/ass2.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable ass2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable ass2"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ass2.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
