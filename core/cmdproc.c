@@ -123,6 +123,13 @@ void resetCO2History()
     co2_history_index = 0;
 }
 
+void history_reset(char mode) {
+    if (mode == 'r') {
+        resetTemperatureHistory();
+        resetHumidityHistory();
+        resetCO2History();
+    }
+}
 
 
 // Função para processar os comandos recebidos
@@ -382,7 +389,7 @@ int calcChecksum(unsigned char * buf, int nbytes) {
 			sum +=buf[i];
 	}
 
-	// Second:
+	// Second: Compute the checksum as the modulo 256 of the sum.
 	int checksum = 0;
 	checksum = sum % 256;
 
