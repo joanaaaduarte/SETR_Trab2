@@ -69,8 +69,8 @@ void test_UART_putc_Rx_invalid(void)
 int main(void) {
     UNITY_BEGIN();
 
-    RUN_TEST(test_UART_putc_Rx_valid_character);
-    RUN_TEST(test_UART_putc_Rx_invalid_character);
+    RUN_TEST(test_UART_putc_Rx_valid);
+    RUN_TEST(test_UART_putc_Rx_invalid);
 
     return UNITY_END();
 }

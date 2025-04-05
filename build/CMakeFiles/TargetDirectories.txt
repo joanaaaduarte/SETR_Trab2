@@ -1,4 +1,3 @@
-/home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build/CMakeFiles/ass2.dir
 /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build/CMakeFiles/test_runner.dir
 /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build/CMakeFiles/test.dir
 /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build/CMakeFiles/edit_cache.dir

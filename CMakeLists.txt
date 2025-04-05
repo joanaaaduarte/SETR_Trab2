@@ -10,10 +10,11 @@ include_directories(${CMAKE_SOURCE_DIR}/core/include
                     )
 
 # eliminar este dps do test_runner funcionar
-add_executable(ass2
-    ${CMAKE_SOURCE_DIR}/main.c
-    ${CMAKE_SOURCE_DIR}/core/src/cmdproc.c
-)
+# add_executable(ass2
+#     ${CMAKE_SOURCE_DIR}/main.c
+#     ${CMAKE_SOURCE_DIR}/core/src/cmdproc.c
+# )
+
 
 add_executable(test_runner
     ${CMAKE_SOURCE_DIR}/core/test/test.c

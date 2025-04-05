@@ -21,6 +21,17 @@
 #define NUM_SAMPLES 30      
 
 
+#define RX_BUF_SIZE 128  // Definition of RX_BUF_SIZE 
+
+typedef struct {
+    char buffer[RX_BUF_SIZE];
+    int count;    // Counter for the number of elements in the buffer
+    int tail;     // Index for the end of the buffer
+    char *data;   // Pointer to the data in the buffer
+} RxBuffer;
+
+// Initialize Rx_Buf
+extern RxBuffer Rx_Buf; 
 
 #define SOF_SYM '#'	        /* Start of Frame Symbol */
 #define EOF_SYM '!'          /* End of Frame Symbol */
@@ -37,7 +48,9 @@ int16_t getNextCO2();
 void resetCO2History();
 
 
-int UART_putc_Rx(char c); 
+// Declare the UART_putc_Rx function
+int UART_putc_Rx(char c);
+
 
 void history_reset(char mode);
 

@@ -63,7 +63,6 @@ CMAKE_BINARY_DIR = /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/ass2.dir/all
 all: CMakeFiles/test_runner.dir/all
 .PHONY : all
 
@@ -72,35 +71,8 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/ass2.dir/clean
 clean: CMakeFiles/test_runner.dir/clean
 .PHONY : clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/ass2.dir
-
-# All Build rule for target.
-CMakeFiles/ass2.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build/CMakeFiles --progress-num=1,2,3 "Built target ass2"
-.PHONY : CMakeFiles/ass2.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/ass2.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build/CMakeFiles 3
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/ass2.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build/CMakeFiles 0
-.PHONY : CMakeFiles/ass2.dir/rule
-
-# Convenience name for target.
-ass2: CMakeFiles/ass2.dir/rule
-.PHONY : ass2
-
-# clean rule for target.
-CMakeFiles/ass2.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/clean
-.PHONY : CMakeFiles/ass2.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/test_runner.dir
@@ -109,7 +81,7 @@ CMakeFiles/ass2.dir/clean:
 CMakeFiles/test_runner.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build/CMakeFiles --progress-num=4,5,6,7 "Built target test_runner"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/joana/Documents/SETR/git/Trab2/SETR_Trab2/build/CMakeFiles --progress-num=1,2,3,4 "Built target test_runner"
 .PHONY : CMakeFiles/test_runner.dir/all
 
 # Build rule for subdir invocation for target.

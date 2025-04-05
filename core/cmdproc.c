@@ -20,6 +20,8 @@ static unsigned char UARTTxBuffer[UART_TX_SIZE];	//Buffer de transmissão
 static unsigned char txBufLen = 0; 					//Comprimento do buffer de receção
 
 
+RxBuffer Rx_Buf = { .count = 0, .tail = 0 };  // Make sure the buffer is initialized.
+
 	/*Sensor de Tmeperatura*/
 // Histórico de temperatura últimas MAX_HISTORY = 20 amostras
 static int8_t temperature_history[MAX_HISTORY];
@@ -125,16 +127,14 @@ void resetCO2History()
 
 
 int UART_putc_Rx(char c) {
-    if ((c < 32 || c > 126) && c != '#') {
-        return -1;
+    if (Rx_Buf.count < UART_RX_SIZE) {
+        Rx_Buf.data[Rx_Buf.tail] = c;
+        Rx_Buf.tail = (Rx_Buf.tail + 1) % UART_RX_SIZE;  // Wrap around if we reach the end of the buffer
+        Rx_Buf.count++;
+        return 0;  // Success
+    } else {
+        return -1;  // Buffer full
     }
-
-    if (Rx_Buf.count >= RX_BUF_SIZE) {
-        return -1; 
-    }
-    Rx_Buf.buffer[Rx_Buf.count++] = c;
-
-    return 0;
 }
 
 
