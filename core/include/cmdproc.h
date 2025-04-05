@@ -19,8 +19,8 @@
 #define UART_TX_SIZE 64 	/* Maximum size of the TX buffer */
 #define MAX_HISTORY 20      
 #define NUM_SAMPLES 30      
-
-
+#define SOF_SYM '#'	        /* Start of Frame Symbol */
+#define EOF_SYM '!'          /* End of Frame Symbol */
 #define RX_BUF_SIZE 128  // Definition of RX_BUF_SIZE 
 
 typedef struct {
@@ -30,11 +30,9 @@ typedef struct {
     char *data;   // Pointer to the data in the buffer
 } RxBuffer;
 
-// Initialize Rx_Buf
-extern RxBuffer Rx_Buf; 
+// Declaração do buffer Rx_Buf 
+extern RxBuffer Rx_Buf;
 
-#define SOF_SYM '#'	        /* Start of Frame Symbol */
-#define EOF_SYM '!'          /* End of Frame Symbol */
 
 /* Function prototypes */
 
@@ -48,11 +46,7 @@ int16_t getNextCO2();
 void resetCO2History();
 
 
-// Declare the UART_putc_Rx function
-int UART_putc_Rx(char c);
-
-
-void history_reset(char mode);
+//void history_reset(char mode);
 
 /* ************************************************************ */
 /* Processes the chars in the RX buffer looking for commands 	*/

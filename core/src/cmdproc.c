@@ -19,6 +19,12 @@ static unsigned char rxBufLen = 0; 					//Comprimento do buffer de receção
 static unsigned char UARTTxBuffer[UART_TX_SIZE];	//Buffer de transmissão	
 static unsigned char txBufLen = 0; 					//Comprimento do buffer de receção
 
+//Inicilizar buffer Rx
+RxBuffer Rx_Buf = {
+    .count = 0,
+    .tail = 0,
+    .data = Rx_Buf.buffer
+};
 
 	/*Sensor de Tmeperatura*/
 // Histórico de temperatura últimas MAX_HISTORY = 20 amostras
@@ -122,6 +128,8 @@ void resetCO2History()
     memset(co2_history, 0, sizeof(co2_history));
     co2_history_index = 0;
 }
+
+
 
 
 
@@ -257,6 +265,7 @@ int cmdProcessor(void) {
 					txChar('#');
 					txChar('P');
 					txChar('c');
+
 					txChar('+');	//sempre positivo
 
 					// Converter c02 para string
@@ -276,6 +285,7 @@ int cmdProcessor(void) {
 			}
 
             case 'L':	
+
                 txChar('#');
                 txChar('L');
 				txChar('t');  
@@ -295,26 +305,30 @@ int cmdProcessor(void) {
     // Caso não tenha encontrado o SOF ou o comando esteja mal formatado
     return -4;
 }
-
-
-
-
-
-		
+	
 
 /*
  * rxChar
  */
 int rxChar(unsigned char car)
 {
-	/* If rxbuff not full add char to it */
-	if (rxBufLen < UART_RX_SIZE) {
-		UARTRxBuffer[rxBufLen] = car;
-		rxBufLen += 1;
-		return 0;		
-	}	
-	/* If cmd string full return error */
-	return -1;
+    if (car == '\0') {
+        return -1;  // Caracter inválido
+    }
+
+    if (rxBufLen < UART_RX_SIZE) {
+        UARTRxBuffer[rxBufLen] = car;
+        rxBufLen += 1;
+
+        Rx_Buf.buffer[Rx_Buf.tail++] = car;
+        Rx_Buf.count++;
+
+        if (Rx_Buf.tail >= RX_BUF_SIZE)
+            Rx_Buf.tail = 0;
+
+        return 0;
+    }
+    return -1;
 }
 
 /*
@@ -337,7 +351,16 @@ int txChar(unsigned char car)
  */
 void resetRxBuffer(void)
 {
-	rxBufLen = 0;		
+	// memset: https://www.tutorialspoint.com/c_standard_library/c_function_memset.htm
+	memset(UARTRxBuffer, 0, UART_RX_SIZE);
+	rxBufLen = 0;	
+
+	//  limpar o Rx_Buf  que utilizamos  para os testes 
+    memset(Rx_Buf.buffer, 0, sizeof(Rx_Buf.buffer));
+
+	Rx_Buf.count = 0;
+    Rx_Buf.tail = 0;
+
 	return;
 }
 
@@ -346,6 +369,7 @@ void resetRxBuffer(void)
  */
 void resetTxBuffer(void)
 {
+	memset(UARTTxBuffer, 0, UART_TX_SIZE);
 	txBufLen = 0;		
 	return;
 }
@@ -382,7 +406,7 @@ int calcChecksum(unsigned char * buf, int nbytes) {
 			sum +=buf[i];
 	}
 
-	// Second:
+	// Second: Compute the checksum as the modulo 256 of the sum.
 	int checksum = 0;
 	checksum = sum % 256;
 

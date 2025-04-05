@@ -19,8 +19,28 @@ static unsigned char rxBufLen = 0; 					//Comprimento do buffer de receção
 static unsigned char UARTTxBuffer[UART_TX_SIZE];	//Buffer de transmissão	
 static unsigned char txBufLen = 0; 					//Comprimento do buffer de receção
 
+RxBuffer Rx_Buf = {
+    .count = 0,
+    .tail = 0,
+    .data = Rx_Buf.buffer
+};
 
-RxBuffer Rx_Buf = { .count = 0, .tail = 0 };  // Make sure the buffer is initialized.
+
+void history_reset(char mode)
+{
+    (void)mode;  // se o modo ainda não está a ser usado
+
+    // Limpa Rx_Buf para testes
+    memset(Rx_Buf.buffer, 0, sizeof(Rx_Buf.buffer));
+
+    Rx_Buf.count = 0;
+    Rx_Buf.tail = 0;
+    Rx_Buf.data = Rx_Buf.buffer;
+
+    // Limpa buffer interno também
+    resetRxBuffer();
+}
+
 
 	/*Sensor de Tmeperatura*/
 // Histórico de temperatura últimas MAX_HISTORY = 20 amostras
@@ -126,25 +146,7 @@ void resetCO2History()
 }
 
 
-int UART_putc_Rx(char c) {
-    if (Rx_Buf.count < UART_RX_SIZE) {
-        Rx_Buf.data[Rx_Buf.tail] = c;
-        Rx_Buf.tail = (Rx_Buf.tail + 1) % UART_RX_SIZE;  // Wrap around if we reach the end of the buffer
-        Rx_Buf.count++;
-        return 0;  // Success
-    } else {
-        return -1;  // Buffer full
-    }
-}
 
-
-void history_reset(char mode) {
-    if (mode == 'r') {
-        resetTemperatureHistory();
-        resetHumidityHistory();
-        resetCO2History();
-    }
-}
 
 
 // Função para processar os comandos recebidos
@@ -326,16 +328,21 @@ int cmdProcessor(void) {
  */
 int rxChar(unsigned char car)
 {
-	/* If rxbuff not full add char to it */
-	if (rxBufLen < UART_RX_SIZE) {
-		UARTRxBuffer[rxBufLen] = car;
-		rxBufLen += 1;
-		return 0;		
-	}	
-	/* If cmd string full return error */
-	return -1;
-}
+    if (rxBufLen < UART_RX_SIZE) {
+        UARTRxBuffer[rxBufLen] = car;
+        rxBufLen += 1;
 
+        // Atualiza também Rx_Buf usado para testes
+        Rx_Buf.buffer[Rx_Buf.tail++] = car;
+        Rx_Buf.count++;
+
+        if (Rx_Buf.tail >= RX_BUF_SIZE)
+            Rx_Buf.tail = 0;
+
+        return 0;
+    }
+    return -1;
+}
 /*
  * txChar
  */

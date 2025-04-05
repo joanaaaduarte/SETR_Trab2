@@ -7,7 +7,6 @@
 
  #include "unity.h"
  #include "cmdproc.h"
-
  #include <string.h>
 
  /**
@@ -17,7 +16,8 @@
  */
 
  void setUp(void) {
-    history_reset('r');
+    resetTxBuffer();
+    resetRxBuffer();
 }
 
 /**
@@ -29,13 +29,32 @@ void tearDown(void) {
     // Cleanup code after each test (if needed)
 }
 
+
 // UART Tests
 
-void test_UART_putc_Rx_valid(void)
+// Testar se resetRxBuffer limpa o buffer corretamente
+void test_resetRxBuffer(void)
 {
-    int ret1 = UART_putc_Rx('#');
-    int ret2 = UART_putc_Rx('2');
-    int ret3 = UART_putc_Rx('A');
+
+    rxChar('Z');  
+
+    TEST_ASSERT_EQUAL_INT(1, Rx_Buf.count);
+
+    resetRxBuffer();
+
+    TEST_ASSERT_EQUAL_INT(0, Rx_Buf.count);
+    TEST_ASSERT_EQUAL_INT(0, Rx_Buf.tail);
+    TEST_ASSERT_EQUAL_CHAR('\0', Rx_Buf.buffer[0]);
+}
+
+//Testar se rxChar insere caracteres válidos no buffer Rx
+void test_rxChar_valid(void)
+{
+    resetRxBuffer();
+
+    int ret1 = rxChar('#');
+    int ret2 = rxChar('2');
+    int ret3 = rxChar('A');
 
     TEST_ASSERT_EQUAL_INT(0, ret1);
     TEST_ASSERT_EQUAL_INT(0, ret2);
@@ -46,15 +65,40 @@ void test_UART_putc_Rx_valid(void)
     TEST_ASSERT_EQUAL_STRING("#2A", (char *)Rx_Buf.data);
 }
 
-void test_UART_putc_Rx_invalid(void)
+// Testar se rxChar rejeita  um carácter inválido
+void test_rxChar_invalid(void)
 {
-    int ret = UART_putc_Rx('\0');
+    resetRxBuffer();
+
+    int ret = rxChar('\0');
     TEST_ASSERT_EQUAL_INT(-1, ret);
 
     TEST_ASSERT_EQUAL_INT(0, Rx_Buf.count);
     TEST_ASSERT_EQUAL_INT(0, Rx_Buf.tail);
     TEST_ASSERT_EQUAL_STRING("", (char *)Rx_Buf.data);
 }
+
+// Testar quando existe overflow no buffer Rx
+void test_rxChar_overflow(void)
+{
+    resetRxBuffer();  
+
+    int data = 0;
+
+
+    for (int i = 0; i < UART_RX_SIZE; i++) {
+
+        data = rxChar('K');
+        TEST_ASSERT_EQUAL_INT(0, data); 
+
+    }
+
+    // Tentar inserir mais um , que vai dar erro
+    data = rxChar('N');
+    TEST_ASSERT_EQUAL_INT(-1, data);
+}
+
+
 
 
 
@@ -69,8 +113,12 @@ void test_UART_putc_Rx_invalid(void)
 int main(void) {
     UNITY_BEGIN();
 
-    RUN_TEST(test_UART_putc_Rx_valid);
-    RUN_TEST(test_UART_putc_Rx_invalid);
+    //Rx
+    RUN_TEST(test_resetRxBuffer);
+    RUN_TEST(test_rxChar_valid);
+    RUN_TEST(test_rxChar_invalid);
+    RUN_TEST(test_rxChar_overflow);
+
 
     return UNITY_END();
 }
