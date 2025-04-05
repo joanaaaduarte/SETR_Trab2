@@ -30,75 +30,375 @@ void tearDown(void) {
 }
 
 
-// UART Tests
+//                       UART Tests
 
-// Testar se resetRxBuffer limpa o buffer corretamente
-void test_resetRxBuffer(void)
-{
+//RX
 
-    rxChar('Z');  
+    // Testar se resetRxBuffer limpa o buffer corretamente
+    void test_resetRxBuffer()
+    {
 
-    TEST_ASSERT_EQUAL_INT(1, Rx_Buf.count);
+        rxChar('Z');  
 
-    resetRxBuffer();
+        TEST_ASSERT_EQUAL_INT(1, Rx_Buf.contador);
 
-    TEST_ASSERT_EQUAL_INT(0, Rx_Buf.count);
-    TEST_ASSERT_EQUAL_INT(0, Rx_Buf.tail);
-    TEST_ASSERT_EQUAL_CHAR('\0', Rx_Buf.buffer[0]);
-}
+        resetRxBuffer();
 
-//Testar se rxChar insere caracteres válidos no buffer Rx
-void test_rxChar_valid(void)
-{
-    resetRxBuffer();
+        TEST_ASSERT_EQUAL_INT(0, Rx_Buf.contador);
+        TEST_ASSERT_EQUAL_INT(0, Rx_Buf.indice_fim);
+        TEST_ASSERT_EQUAL_CHAR('\0', Rx_Buf.buffer[0]);
+    }
 
-    int ret1 = rxChar('#');
-    int ret2 = rxChar('2');
-    int ret3 = rxChar('A');
+    //Testar se rxChar insere caracteres válidos no buffer Rx
+    void test_rxChar_valido()
+    {
+        resetRxBuffer();
 
-    TEST_ASSERT_EQUAL_INT(0, ret1);
-    TEST_ASSERT_EQUAL_INT(0, ret2);
-    TEST_ASSERT_EQUAL_INT(0, ret3);
+        int ret1 = rxChar('#');
+        int ret2 = rxChar('2');
+        int ret3 = rxChar('A');
 
-    TEST_ASSERT_EQUAL_INT(3, Rx_Buf.count);
-    TEST_ASSERT_EQUAL_INT(3, Rx_Buf.tail);
-    TEST_ASSERT_EQUAL_STRING("#2A", (char *)Rx_Buf.data);
-}
+        TEST_ASSERT_EQUAL_INT(0, ret1);
+        TEST_ASSERT_EQUAL_INT(0, ret2);
+        TEST_ASSERT_EQUAL_INT(0, ret3);
 
-// Testar se rxChar rejeita  um carácter inválido
-void test_rxChar_invalid(void)
-{
-    resetRxBuffer();
+        TEST_ASSERT_EQUAL_INT(3, Rx_Buf.contador);
+        TEST_ASSERT_EQUAL_INT(3, Rx_Buf.indice_fim);
+        TEST_ASSERT_EQUAL_STRING("#2A", (char *)Rx_Buf.p_dados);
+    }
 
-    int ret = rxChar('\0');
-    TEST_ASSERT_EQUAL_INT(-1, ret);
+    // Testar se rxChar rejeita  um carácter inválido
+    void test_rxChar_invalido()
+    {
+        resetRxBuffer();
 
-    TEST_ASSERT_EQUAL_INT(0, Rx_Buf.count);
-    TEST_ASSERT_EQUAL_INT(0, Rx_Buf.tail);
-    TEST_ASSERT_EQUAL_STRING("", (char *)Rx_Buf.data);
-}
+        int ret = rxChar('\0');
+        TEST_ASSERT_EQUAL_INT(-1, ret);
 
-// Testar quando existe overflow no buffer Rx
-void test_rxChar_overflow(void)
-{
-    resetRxBuffer();  
+        TEST_ASSERT_EQUAL_INT(0, Rx_Buf.contador);
+        TEST_ASSERT_EQUAL_INT(0, Rx_Buf.indice_fim);
+        TEST_ASSERT_EQUAL_STRING("", (char *)Rx_Buf.p_dados);
+    }
 
-    int data = 0;
+    // Testar quando existe overflow no buffer Rx
+    void test_rxChar_overflow()
+    {
+        resetRxBuffer();  
+
+        int data = 0;
 
 
-    for (int i = 0; i < UART_RX_SIZE; i++) {
+        for (int i = 0; i < UART_RX_SIZE; i++) {
 
-        data = rxChar('K');
-        TEST_ASSERT_EQUAL_INT(0, data); 
+            data = rxChar('K');
+            TEST_ASSERT_EQUAL_INT(0, data); 
+
+        }
+
+        // Tentar inserir mais um , que vai dar erro
+        data = rxChar('N');
+        TEST_ASSERT_EQUAL_INT(-1, data);
+    }
+
+
+//TX
+
+    // Testar se a função resetTxBuffer limpa o buffer de transmissão 
+    void test_resetTxBuffer()
+    {
+
+        txChar('X');
+        txChar('Y');
+        txChar('Z');
+
+        unsigned char tx[64] = {0};
+        int len = 0;
+
+        getTxBuffer(tx, &len);
+
+        TEST_ASSERT_EQUAL_INT(3, len);
+        TEST_ASSERT_EQUAL_CHAR('X', tx[0]);
+        TEST_ASSERT_EQUAL_CHAR('Y', tx[1]);
+        TEST_ASSERT_EQUAL_CHAR('Z', tx[2]);
+
+        
+        resetTxBuffer();
+
+    
+        getTxBuffer(tx, &len);
+
+        TEST_ASSERT_EQUAL_INT(0, len);             
+    }
+
+    //Testa se  são inseridos caracteres no  buffer TX
+    void test_txChar_top()
+    {
+        resetTxBuffer();  
+
+        int ret1 = txChar('O');
+        int ret2 = txChar('L');
+        int ret3 = txChar('A');
+
+        TEST_ASSERT_EQUAL_INT(0, ret1);
+        TEST_ASSERT_EQUAL_INT(0, ret2);
+        TEST_ASSERT_EQUAL_INT(0, ret3);
+
+        unsigned char tx[64] = {0};
+        int len = 0;
+
+        getTxBuffer(tx, &len);
+
+        TEST_ASSERT_EQUAL_INT(3, len);              
+        TEST_ASSERT_EQUAL_CHAR('O', tx[0]);
+        TEST_ASSERT_EQUAL_CHAR('L', tx[1]);
+        TEST_ASSERT_EQUAL_CHAR('A', tx[2]);
+        
+    }
+
+
+    //Testar o caso de overflow no buffer TX
+    void test_txChar_overflow()
+    {
+        resetTxBuffer();  
+
+        for (int i = 0; i < UART_TX_SIZE; i++) {
+
+            TEST_ASSERT_EQUAL_INT(0, txChar('H'));
+
+        }
+
+        TEST_ASSERT_EQUAL_INT(-1, txChar('U'));              
+    }
+
+
+//Testar a cmdProcess
+
+    //Testar comando incompleto, suposto retornar -1
+
+    void  test_cmdProcessor_incompleto(void)
+    {
+
+        rxChar('#');
+        rxChar('P');
+
+        int retur = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-1, retur);
+    }
+
+
+    //Testar cmdProcessor com um comando inválido , deve retornar -2
+    void  test_cmdProcessor_letra_comando_invalido()
+    {
+
+        rxChar('#');
+        rxChar('H');  
+        rxChar('!');
+
+        int retur = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-2, retur);
 
     }
 
-    // Tentar inserir mais um , que vai dar erro
-    data = rxChar('N');
-    TEST_ASSERT_EQUAL_INT(-1, data);
-}
+        // Testa se cmdProcessor retorna -4 com comando sem  !
+    void test_cmdProcessor_faltando_ultimo_caractere(void)
+    {
+
+        rxChar('#');
+        rxChar('A');  
 
 
+        int retur = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-4, retur);
+    }
+
+    //Testar Checksum
+
+        // Testar com checksum incorreto o comando #Pt na cmdProcessor  , deve retornar -3
+        void test_cmdProcessor_checksum_errado_entrada()
+        {
+
+            rxChar('#');
+            rxChar('P');
+            rxChar('t');
+            rxChar('9');
+            rxChar('9');
+            rxChar('9');
+            rxChar('!');
+
+            int result = cmdProcessor();
+            TEST_ASSERT_EQUAL_INT(-3, result);  
+        }
+
+        //Testar cmd proc com checksum correta para a entrada #pt!
+        void test_cmdProcessor_checksum_valido_entrada()
+        {
+            resetRxBuffer();
+            resetTxBuffer();
+
+            
+            rxChar('#');
+            rxChar('P');
+            rxChar('t');
+            rxChar('1');
+            rxChar('9');
+            rxChar('6');
+            rxChar('!');
+
+            int result = cmdProcessor();
+            TEST_ASSERT_EQUAL_INT(0, result);  
+        }
+
+
+
+
+//Testar a leiuras de dados e dar reset ( temp, hum e co2)
+
+    // Testar a  leitura de temperaturas e dar reset
+    void test_temperature_ler_temps_e_reset()
+    {
+        resetTemperatureHistory();  
+
+    
+        int8_t t1 = getNextTemperature();  
+        int8_t t2 = getNextTemperature();  
+
+        TEST_ASSERT_EQUAL_INT8(-50, t1);
+        TEST_ASSERT_EQUAL_INT8(-40, t2);
+
+        
+        resetTemperatureHistory();
+
+        
+        int8_t t3 = getNextTemperature();  
+        TEST_ASSERT_EQUAL_INT8(-50, t3);
+    
+    }
+
+
+    // Testar a  leitura de humidades e dar reset
+    void test_humidity_ler_hums_e_reset()
+    {
+        resetHumidityHistory();
+
+        int8_t h1 = getNextHumidity();  
+        int8_t h2 = getNextHumidity();  
+
+        TEST_ASSERT_EQUAL_INT8(50, h1);
+        TEST_ASSERT_EQUAL_INT8(5, h2);
+
+        resetHumidityHistory();
+        int8_t h3 = getNextHumidity();  
+        TEST_ASSERT_EQUAL_INT8(50, h3);
+    }
+
+
+
+    // Testar a  leitura de co2 e dar reset
+    void test_co2_ler_co2_e_reset()
+    {
+        resetCO2History();
+
+        int16_t c1 = getNextCO2();  
+        int16_t c2 = getNextCO2();  
+
+        TEST_ASSERT_EQUAL_INT16(400, c1);
+        TEST_ASSERT_EQUAL_INT16(500, c2);
+
+        resetCO2History();
+        int16_t c3 = getNextCO2();  
+        TEST_ASSERT_EQUAL_INT16(400, c3);
+    }
+
+//Comando 'A'
+    //Adicionar testes
+
+
+//Comando 'P'
+    //caso t
+        //Testar a resposta correta á entrada #pt196!
+        void test_cmdProcessor_Pt_verificar_resposta_correta()
+        {
+            resetTemperatureHistory();  
+
+            // Enviar comando #Pt196!
+            rxChar('#');
+            rxChar('P');
+            rxChar('t');
+            rxChar('1');
+            rxChar('9');
+            rxChar('6');
+            rxChar('!');
+
+            int retur = cmdProcessor();
+            TEST_ASSERT_EQUAL_INT(0, retur);
+
+            unsigned char tx[64] = {0};
+            int len = 0;
+
+            getTxBuffer(tx, &len);
+
+            TEST_ASSERT_EQUAL_STRING("#Pt-50086!", (char*)tx);  
+        }
+
+    //caso h
+
+        // Verificar a  resposta correta ao comando #Ph184! 
+        void test_cmdProcessor_Ph_verificar_resposta_correta()
+        {
+            resetHumidityHistory();  
+
+            // // Enviar comando #Ph184!
+            rxChar('#');
+            rxChar('P');
+            rxChar('h');
+            rxChar('1');
+            rxChar('8');
+            rxChar('4');
+            rxChar('!');
+
+            int retur = cmdProcessor();
+            TEST_ASSERT_EQUAL_INT(0, retur);
+
+            unsigned char tx[64] = {0};
+            int len = 0;
+
+            getTxBuffer(tx, &len);
+
+            TEST_ASSERT_EQUAL_STRING("#Ph+50072!", (char*)tx);
+        }
+
+    //caso c
+        // verificar a resposta correta ao comando #Pc179!
+        void test_cmdProcessor_Pc_verificar_resposta_correta()
+        {
+            resetCO2History();  
+
+            // Enviar comando #Pc179! 
+            rxChar('#');
+            rxChar('P');
+            rxChar('c');
+            rxChar('1');
+            rxChar('7');
+            rxChar('9');
+            rxChar('!');
+
+            int ret = cmdProcessor();
+            TEST_ASSERT_EQUAL_INT(0, ret);
+
+            unsigned char tx[64] = {0};
+            int len = 0;
+            getTxBuffer(tx, &len);
+
+            TEST_ASSERT_EQUAL_STRING("#Pc+00400210!", (char*)tx);
+        }
+
+//Comando 'L'
+    //Adicionar testes
+
+
+
+//Comando 'R'
+    //Adicionar testes
 
 
 
@@ -112,12 +412,66 @@ void test_rxChar_overflow(void)
  */
 int main(void) {
     UNITY_BEGIN();
+    printf("\n");
 
-    //Rx
+    //RX
+    printf("------- Testes de Receção (RX) -------\n");
     RUN_TEST(test_resetRxBuffer);
-    RUN_TEST(test_rxChar_valid);
-    RUN_TEST(test_rxChar_invalid);
+    RUN_TEST(test_rxChar_valido);
+    RUN_TEST(test_rxChar_invalido);
     RUN_TEST(test_rxChar_overflow);
+    printf("\n");
+
+    //TX
+    printf("------- Testes de Transmissão (TX) -------\n");
+    RUN_TEST(test_resetTxBuffer);
+    RUN_TEST(test_txChar_top);
+    RUN_TEST(test_txChar_overflow);
+    printf("\n");
+
+    //Verificar Comandos incompletos, inválido e sem o !
+    printf("------- Testes de cmdProcessor  -------\n");
+    RUN_TEST(test_cmdProcessor_incompleto);
+    RUN_TEST(test_cmdProcessor_letra_comando_invalido);
+    RUN_TEST(test_cmdProcessor_faltando_ultimo_caractere);
+    printf("\n");
+
+    //Checksum
+    printf("------- Verificar Checksum  -------\n");
+    RUN_TEST(test_cmdProcessor_checksum_valido_entrada);
+    RUN_TEST(test_cmdProcessor_checksum_errado_entrada);
+    printf("\n");
+
+    //Leituras de dados e resets
+    printf("------- leituras de dados e dar reset ( temp, hum e co2)  -------\n");
+    RUN_TEST(test_temperature_ler_temps_e_reset);
+    RUN_TEST(test_humidity_ler_hums_e_reset);
+    RUN_TEST(test_co2_ler_co2_e_reset);
+    printf("\n");
+
+    //Comando A
+
+
+    //Comando P
+    printf("------- Verificar comando 'P'  -------\n");
+        //Caso t
+            //Verificar a resposta correta para o comando #pt196!
+            RUN_TEST(test_cmdProcessor_Pt_verificar_resposta_correta);
+    
+        //caso h
+            //Verificar a  resposta correta ao comando #Ph184! 
+            RUN_TEST(test_cmdProcessor_Ph_verificar_resposta_correta);
+
+        //caso c
+            // verificar a resposta correta ao comando #Pc179!
+            RUN_TEST(test_cmdProcessor_Pc_verificar_resposta_correta);
+    printf("\n");
+
+    //Comando 'L'
+
+
+    //Comando 'R'
+
 
 
     return UNITY_END();

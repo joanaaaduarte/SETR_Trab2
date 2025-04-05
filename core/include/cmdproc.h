@@ -25,9 +25,9 @@
 
 typedef struct {
     char buffer[RX_BUF_SIZE];
-    int count;    // Counter for the number of elements in the buffer
-    int tail;     // Index for the end of the buffer
-    char *data;   // Pointer to the data in the buffer
+    int contador;    // Conta o numero de elementos do buffer
+    int indice_fim;     // indice do fim do buffer
+    char *p_dados;   // Ponteiro para os dados do buffer
 } RxBuffer;
 
 // Declaração do buffer Rx_Buf 
@@ -45,8 +45,6 @@ void resetHumidityHistory();
 int16_t getNextCO2();
 void resetCO2History();
 
-
-//void history_reset(char mode);
 
 /* ************************************************************ */
 /* Processes the chars in the RX buffer looking for commands 	*/

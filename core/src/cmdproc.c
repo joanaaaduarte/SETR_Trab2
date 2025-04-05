@@ -21,13 +21,12 @@ static unsigned char txBufLen = 0; 					//Comprimento do buffer de receção
 
 //Inicilizar buffer Rx
 RxBuffer Rx_Buf = {
-    .count = 0,
-    .tail = 0,
-    .data = Rx_Buf.buffer
+    .contador = 0,
+    .indice_fim = 0,
+    .p_dados = Rx_Buf.buffer
 };
 
-	/*Sensor de Tmeperatura*/
-// Histórico de temperatura últimas MAX_HISTORY = 20 amostras
+	/*Sensor de Temperatura*/
 static int8_t temperature_history[MAX_HISTORY];
 static int temp_history_index = 0;
 
@@ -37,13 +36,13 @@ const int8_t simulated_temps[NUM_SAMPLES] = {
 		-15, -10, -5, 0, 5, 10, 15, 
 		18, 20, 22, 24, 26, 28, 30,
     	32, 35, 38, 40, 45, 50, 55,
-		58, 59, 60
+		58, -40, 60
 };
 
 int temps_index = 0;
 
 
-int8_t getNextTemperature()
+int8_t getNextTemperature()					//ref:https://stackoverflow.com/questions/3621956/how-do-i-code-a-simple-integer-circular-buffer-in-c-c
 {
     int8_t temp = simulated_temps[temps_index];
     temps_index = (temps_index + 1) % NUM_SAMPLES;
@@ -59,10 +58,10 @@ void resetTemperatureHistory()
 {
     memset(temperature_history, 0, sizeof(temperature_history));
     temp_history_index = 0;
+	temps_index = 0;
 }
 
 	/*Sensor de Humidade */
-// Histórico de humidade - últimas MAX_HISTORY = 20 amostras
 static int8_t humidity_history[MAX_HISTORY];
 static int humidity_history_index = 0;
 
@@ -77,7 +76,7 @@ const int8_t simulated_hums[NUM_SAMPLES] = {
 
 int humidity_index = 0;
 
-int8_t getNextHumidity()
+int8_t getNextHumidity()				//ref:https://stackoverflow.com/questions/3621956/how-do-i-code-a-simple-integer-circular-buffer-in-c-c
 {
     int8_t hum = simulated_hums[humidity_index];
     humidity_index = (humidity_index + 1) % NUM_SAMPLES;
@@ -93,14 +92,14 @@ void resetHumidityHistory()
 {
     memset(humidity_history, 0, sizeof(humidity_history));
     humidity_history_index = 0;
+	humidity_index = 0;
 }
 
-/* Sensor de CO₂ */
-// Histórico de CO₂ - últimas MAX_HISTORY = 20 amostras
+/* Sensor de CO2 */
 static int16_t co2_history[MAX_HISTORY];
 static int co2_history_index = 0;
 
-// Tabela de valores simulados de CO₂ (400 a 20000 ppm)
+// Tabela de valores simulados de CO2 
 const int16_t simulated_co2[NUM_SAMPLES] = {
     400, 500, 600, 700, 800, 900,
     1000, 1200, 1400, 1600, 1800, 2000,
@@ -111,7 +110,7 @@ const int16_t simulated_co2[NUM_SAMPLES] = {
 
 int co2_index = 0;
 
-int16_t getNextCO2()
+int16_t getNextCO2()							//ref:https://stackoverflow.com/questions/3621956/how-do-i-code-a-simple-integer-circular-buffer-in-c-c
 {
     int16_t co2 = simulated_co2[co2_index];
     co2_index = (co2_index + 1) % NUM_SAMPLES;
@@ -127,6 +126,7 @@ void resetCO2History()
 {
     memset(co2_history, 0, sizeof(co2_history));
     co2_history_index = 0;
+	co2_index = 0;
 }
 
 
@@ -158,125 +158,165 @@ int cmdProcessor(void) {
 					return -4;
 				}
 
-				int8_t temp = getNextTemperature();
-				int8_t hum = getNextHumidity();
-				int16_t co2 = getNextCO2();
-
-				txChar('#');
-				txChar('A');
-
-				// Temperatura
-				txChar('t');
-				if (temp < 0) {
-
-					txChar('-');
-					temp = -temp;
-
-				} else {
-
-					txChar('+');
-
-				}
-
-				txChar('0' + (temp / 10));
-				txChar('0' + (temp % 10));
-
-				// Humidade
-				txChar('h');
-				if (hum < 0) {
-
-					txChar('-');
-					hum = -hum;
-
-				} else {
-
-					txChar('+');	
-
-				}
-				txChar('0' + (hum / 10));
-				txChar('0' + (hum % 10));
-
-				// CO2
-				txChar('c');
-				txChar('+');
-				char buffer[7];
-
-				snprintf(buffer, sizeof(buffer), "%05d", co2);
-
-				for (int j = 0; j < 5; ++j) {
-
-					txChar(buffer[j]);
-				}
-
-				txChar('!');
-				break;
+				//Falta fazer
 			}
 
 			case 'P': {  
+
+				if (rxBufLen < i + 7)
+				{
+        			return -1;
+				};
+
+				if (!calcChecksum(&UARTRxBuffer[i + 1], 2))  	
+				{					 
+        				return -3;
+				};
+
 				sid = UARTRxBuffer[i + 2];  // 't', 'h', ou 'c'
 
 				if (sid == 't') {
 
 					int8_t temp = getNextTemperature();
 
-					txChar('#');
-					txChar('P');
-					txChar('t');
+					unsigned char resposta[10];
+					int posicao = 0;
+
+					resposta[posicao++] = 'P';
+					resposta[posicao++] = 't';
 
 					if (temp < 0) {
-
-						txChar('-');
+						resposta[posicao++] = '-';
 						temp = -temp;
-
 					} else {
-						txChar('+');
+						resposta[posicao++] = '+';
 					}
 
-					txChar('0' + (temp / 10));  // dezena
-					txChar('0' + (temp % 10));  // unidade
+					//Converter para ASCII					https://stackoverflow.com/questions/29077138/conversion-of-integer-to-char-array-in-c
+					resposta[posicao++] = '0' + (temp / 10);
+					resposta[posicao++] = '0' + (temp % 10);
 
+					// Calcular checksum da resposta
+					int soma = 0;
+					for (int j = 0; j < posicao; ++j)
+					{
+						soma = soma + resposta[j];
+					};
+
+					int cs = soma % 256;
+					char cs_str[5];
+
+					snprintf(cs_str, sizeof(cs_str), "%03d", cs);
+
+					// Enviar a resposta real
+					txChar('#');
+					for (int j = 0; j < posicao; ++j)
+					{
+						txChar(resposta[j]);
+					};
+
+					txChar(cs_str[0]);
+					txChar(cs_str[1]);
+					txChar(cs_str[2]);
 					txChar('!');
+					return 0;
+
 				} else if (sid == 'h') {
 
 					int8_t hum = getNextHumidity();
 
-					txChar('#');
-					txChar('P');
-					txChar('h');
+					unsigned char resposta[10];
+					int posicao = 0;
+
+					resposta[posicao++]= 'P';
+					resposta[posicao++]= 'h';
 
 					if (hum < 0) {
 
-						txChar('-');
+						resposta[posicao++] = '-';
 						hum = -hum;
 
 					} else {
 
-						txChar('+');
+						resposta[posicao++] = '+';
 					}
+					
+					//Converter para ASCII				//Ref:https://stackoverflow.com/questions/29077138/conversion-of-integer-to-char-array-in-c
+					resposta[posicao++] = '0' + (hum / 10);
+					resposta[posicao++] = '0' + (hum % 10);
 
-					txChar('0' + (hum / 10));
-					txChar('0' + (hum % 10));
 
+					// Calcular checksum
+					int soma = 0;
+					for (int j = 0; j < posicao; ++j)
+					{
+						soma = soma +  resposta[j];
+					};
+
+					int cs = soma % 256;
+					char cs_str[5];
+					snprintf(cs_str, sizeof(cs_str), "%03d", cs);
+
+					// Enviar resposta com checksum
+					txChar('#');
+					for (int j = 0; j < posicao; ++j)
+					{
+						txChar(resposta[j]);
+					};
+
+					txChar(cs_str[0]);
+					txChar(cs_str[1]);
+					txChar(cs_str[2]);
 					txChar('!');
+
+					return 0;
+
 				} else if (sid == 'c') {
 
 					int16_t co2 = getNextCO2(); 
 
+					char co2_str[7];
+					snprintf(co2_str, sizeof(co2_str), "%05d", co2); // 5 dígitos
+
+					unsigned char resposta[16];
+					int posicao = 0;
+
+					resposta[posicao++] = 'P';
+					resposta[posicao++] = 'c';
+
+					resposta[posicao++] = '+';  // sempre positivo
+
+					// Copia os 5 dígitos do CO2
+					for (int i = 0; i < 5; ++i)
+					{
+						resposta[posicao++] = co2_str[i];
+					};
+
+					// Calcular checksum
+					int soma = 0;
+					for (int j = 0; j < posicao; ++j)
+					{
+						soma = soma + resposta[j];
+					};
+
+					int cs = soma % 256;
+					char cs_str[6];
+					snprintf(cs_str, sizeof(cs_str), "%03d", cs);
+
+					// Enviar resposta com checksum
 					txChar('#');
-					txChar('P');
-					txChar('c');
+					for (int j = 0; j < posicao; ++j)
+					{
+						txChar(resposta[j]);
+					};
 
-					txChar('+');	//sempre positivo
-
-					// Converter c02 para string
-					char buffer[7];  // 6 + '/0'
-					snprintf(buffer, sizeof(buffer), "%05d", co2);
-
-					for (int j = 0; j < 5; ++j) {
-						txChar(buffer[j]);
-					}
-
+					txChar(cs_str[0]);
+					txChar(cs_str[1]);
+					txChar(cs_str[2]);
 					txChar('!');
+
+					return 0;
+
 				} else {
 					return -2;  // Tipo de sensor inválido
 				}
@@ -286,23 +326,18 @@ int cmdProcessor(void) {
 
             case 'L':	
 
-                txChar('#');
-                txChar('L');
-				txChar('t');  
-				break;
+				//Faltar Fazer
 
             case 'R':
- 				txChar('#');
-                txChar('R');              
-                txChar('!');
-                break;
+			
+				//Falta Fazer
 
             default:
                 return -2;  
         }
     }
 
-    // Caso não tenha encontrado o SOF ou o comando esteja mal formatado
+    // Caso não  encontre o SOF ou o comando esteja mal formatado
     return -4;
 }
 	
@@ -320,11 +355,11 @@ int rxChar(unsigned char car)
         UARTRxBuffer[rxBufLen] = car;
         rxBufLen += 1;
 
-        Rx_Buf.buffer[Rx_Buf.tail++] = car;
-        Rx_Buf.count++;
+        Rx_Buf.buffer[Rx_Buf.indice_fim++] = car;
+        Rx_Buf.contador++;
 
-        if (Rx_Buf.tail >= RX_BUF_SIZE)
-            Rx_Buf.tail = 0;
+        if (Rx_Buf.indice_fim >= RX_BUF_SIZE)
+            Rx_Buf.indice_fim = 0;
 
         return 0;
     }
@@ -358,8 +393,8 @@ void resetRxBuffer(void)
 	//  limpar o Rx_Buf  que utilizamos  para os testes 
     memset(Rx_Buf.buffer, 0, sizeof(Rx_Buf.buffer));
 
-	Rx_Buf.count = 0;
-    Rx_Buf.tail = 0;
+	Rx_Buf.contador = 0;
+    Rx_Buf.indice_fim = 0;
 
 	return;
 }
@@ -414,5 +449,12 @@ int calcChecksum(unsigned char * buf, int nbytes) {
 	char checksumStr[10];
 	snprintf(checksumStr, sizeof(checksumStr), "%03d", checksum);
 
-	return atoi(checksumStr);               
+    // Compara os 3 dígitos com os caracteres no buffer original
+    if (buf[nbytes]     == checksumStr[0] &&
+        buf[nbytes + 1] == checksumStr[1] &&
+        buf[nbytes + 2] == checksumStr[2]) {
+        return 1;  // válido
+    }
+
+    return 0;  // inválido            
 }
