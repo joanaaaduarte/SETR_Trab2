@@ -312,6 +312,31 @@ void tearDown(void) {
 //Comando 'A'
     //Adicionar testes
 
+        void test_cmdProcessorA_add_data(){
+
+            //resetRxBuffer();
+            //resetTxBuffer();
+            resetTemperatureHistory();
+            resetHumidityHistory();
+            resetCO2History();
+
+            rxChar('#');
+            rxChar('A');
+            rxChar('!');
+
+
+            int retur = cmdProcessor();
+            TEST_ASSERT_EQUAL_INT(0, retur);
+
+            unsigned char tx[64] = {0};
+            int len = 0;
+            getTxBuffer(tx, &len);
+
+            // temp = -50, hum = 50, co2 = 400
+            TEST_ASSERT_EQUAL_STRING("#At-50h+50c+00400!", (char*)tx);
+
+        }
+
 
 //Comando 'P'
     //caso t
@@ -450,6 +475,10 @@ int main(void) {
     printf("\n");
 
     //Comando A
+
+    printf("------- Verificar comando 'A'  -------\n");
+        RUN_TEST(test_cmdProcessorA_add_data);
+    printf("\n");
 
 
     //Comando P
