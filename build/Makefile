@@ -127,6 +127,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named ass2
+
+# Build rule for target.
+ass2: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ass2
+.PHONY : ass2
+
+# fast build rule for target.
+ass2/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/build
+.PHONY : ass2/fast
+
+#=============================================================================
 # Target rules for targets named test_runner
 
 # Build rule for target.
@@ -144,6 +157,7 @@ core/src/cmdproc.o: core/src/cmdproc.c.o
 
 # target to build an object file
 core/src/cmdproc.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/src/cmdproc.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/core/src/cmdproc.c.o
 .PHONY : core/src/cmdproc.c.o
 
@@ -152,6 +166,7 @@ core/src/cmdproc.i: core/src/cmdproc.c.i
 
 # target to preprocess a source file
 core/src/cmdproc.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/src/cmdproc.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/core/src/cmdproc.c.i
 .PHONY : core/src/cmdproc.c.i
 
@@ -160,6 +175,7 @@ core/src/cmdproc.s: core/src/cmdproc.c.s
 
 # target to generate assembly for a file
 core/src/cmdproc.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/core/src/cmdproc.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/core/src/cmdproc.c.s
 .PHONY : core/src/cmdproc.c.s
 
@@ -211,6 +227,30 @@ core/test/test.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_runner.dir/build.make CMakeFiles/test_runner.dir/core/test/test.c.s
 .PHONY : core/test/test.c.s
 
+main.o: main.c.o
+.PHONY : main.o
+
+# target to build an object file
+main.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/main.c.o
+.PHONY : main.c.o
+
+main.i: main.c.i
+.PHONY : main.i
+
+# target to preprocess a source file
+main.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/main.c.i
+.PHONY : main.c.i
+
+main.s: main.c.s
+.PHONY : main.s
+
+# target to generate assembly for a file
+main.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ass2.dir/build.make CMakeFiles/ass2.dir/main.c.s
+.PHONY : main.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -220,6 +260,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... ass2"
 	@echo "... test_runner"
 	@echo "... core/src/cmdproc.o"
 	@echo "... core/src/cmdproc.i"
@@ -230,6 +271,9 @@ help:
 	@echo "... core/test/test.o"
 	@echo "... core/test/test.i"
 	@echo "... core/test/test.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 .PHONY : help
 
 

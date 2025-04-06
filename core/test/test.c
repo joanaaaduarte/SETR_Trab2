@@ -9,6 +9,9 @@
  #include "cmdproc.h"
  #include <string.h>
 
+ #include <stdio.h>
+
+
  /**
  * @brief Setup function called before each test.
  *
@@ -312,30 +315,28 @@ void tearDown(void) {
 //Comando 'A'
     //Adicionar testes
 
-        void test_cmdProcessorA_add_data(){
+    void test_cmdProcessorA_add_data(){
 
-            //resetRxBuffer();
-            //resetTxBuffer();
-            resetTemperatureHistory();
-            resetHumidityHistory();
-            resetCO2History();
+        resetTemperatureHistory();
+        resetHumidityHistory();
+        resetCO2History();
+    
+        // Envia o comando #At181!
+        rxChar('#');
+        rxChar('A');
+        rxChar('t');
+        rxChar('!');
+       
 
-            rxChar('#');
-            rxChar('A');
-            rxChar('!');
-
-
-            int retur = cmdProcessor();
-            TEST_ASSERT_EQUAL_INT(0, retur);
-
-            unsigned char tx[64] = {0};
-            int len = 0;
-            getTxBuffer(tx, &len);
-
-            // temp = -50, hum = 50, co2 = 400
-            TEST_ASSERT_EQUAL_STRING("#At-50h+50c+00400!", (char*)tx);
-
-        }
+        int retur = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(0, retur);
+    
+        unsigned char tx[64] = {0};
+        int len = 0;
+        getTxBuffer(tx, &len);
+    
+        TEST_ASSERT_EQUAL_STRING("#At-50h+50c+00400!", (char*)tx);
+    }
 
 
 //Comando 'P'
@@ -407,8 +408,8 @@ void tearDown(void) {
             rxChar('9');
             rxChar('!');
 
-            int ret = cmdProcessor();
-            TEST_ASSERT_EQUAL_INT(0, ret);
+            int retur = cmdProcessor();
+            TEST_ASSERT_EQUAL_INT(0, retur);
 
             unsigned char tx[64] = {0};
             int len = 0;
@@ -420,12 +421,78 @@ void tearDown(void) {
 //Comando 'L'
     //Adicionar testes
 
-
+    void test_cmdProcessorL_returns_last_samples() {
+        // Reset dos históricos
+        resetTemperatureHistory();
+        resetHumidityHistory();
+        resetCO2History();
+        
+        // Preenche os históricos com 20 amostras cada
+        // (Assumindo que MAX_HISTORY é 20)
+        for (int i = 0; i < MAX_HISTORY; i++) {
+            getNextTemperature();  // Preenche temperature_history
+            getNextHumidity();     // Preenche humidity_history
+            getNextCO2();          // Preenche co2_history
+        }
+        
+        // Envia o comando 'L' (assumindo que o comando 'L' não requer parâmetros e termina com '!')
+        rxChar('#');
+        rxChar('L');
+        rxChar('!');
+        
+        int ret = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(0, ret);
+        
+        // Obter a resposta do buffer de transmissão
+        unsigned char tx[256] = {0};
+        int len = 0;
+        getTxBuffer(tx, &len);
+        
+        // Define a string esperada.
+        // A string abaixo é um exemplo, baseado nos arrays simulados:
+        // Para simulated_temps, os 20 primeiros valores são:
+        //    -50, -40, -35, -30, -25, -20, -15, -10, -5, 0, 5, 10, 15, 18, 20, 22, 24, 26, 28, 30
+        // Para simulated_hums, os 20 primeiros valores são:
+        //    50, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95
+        // Para simulated_co2, os 20 primeiros valores são:
+        //    400, 500, 600, 700, 800, 900, 1000, 1200, 1400, 1600, 1800, 2000, 2500, 3000, 4000, 5000, 6000, 8000, 10000, 12000
+        const char *expected =
+          "#Lt[-50,-40,-35,-30,-25,-20,-15,-10,-5,0,5,10,15,18,20,22,24,26,28,30]"
+          "h[50,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95]"
+          "c[00400,00500,00600,00700,00800,00900,01000,01200,01400,01600,01800,02000,02500,03000,04000,05000,06000,08000,10000,12000]!";
+        
+        // Para ajudar na depuração, imprime a resposta
+        printf("Resposta recebida: %s\n", tx);
+        printf("Tamanho da resposta: %d\n", len);
+        
+        TEST_ASSERT_EQUAL_STRING(expected, (char*)tx);
+    }
 
 //Comando 'R'
     //Adicionar testes
 
+        void test_cmdProcessorR_reset_history(){
+            
+            resetTemperatureHistory();
+            resetHumidityHistory();
+            resetCO2History();
 
+            // Simula o envio do comando #R!
+            rxChar('#');
+            rxChar('R');
+            rxChar('!');
+        
+            int retur = cmdProcessor();
+            TEST_ASSERT_EQUAL_INT(0, retur);
+        
+            // Verifica se o buffer de transmissão contém a resposta "#R!"
+            unsigned char tx[64] = {0};
+            int len = 0;
+            getTxBuffer(tx, &len);
+            TEST_ASSERT_EQUAL_STRING("#R!", (char*)tx);
+        
+        }
+ 
 
 /**
  * @brief Main function that runs the unit tests.
@@ -475,9 +542,8 @@ int main(void) {
     printf("\n");
 
     //Comando A
-
     printf("------- Verificar comando 'A'  -------\n");
-        RUN_TEST(test_cmdProcessorA_add_data);
+    RUN_TEST(test_cmdProcessorA_add_data);
     printf("\n");
 
 
@@ -498,9 +564,14 @@ int main(void) {
 
     //Comando 'L'
 
+    printf("------- Verificar comando 'L'  -------\n");
+    RUN_TEST(test_cmdProcessorL_returns_last_samples);
+    printf("\n");
 
     //Comando 'R'
-
+    printf("------- Verificar comando 'R'  -------\n");
+    RUN_TEST(test_cmdProcessorR_reset_history);
+    printf("\n");
 
 
     return UNITY_END();

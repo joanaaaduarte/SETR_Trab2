@@ -26,6 +26,7 @@ RxBuffer Rx_Buf = {
 };
 
 
+
 void history_reset(char mode)
 {
     (void)mode;  // se o modo ainda não está a ser usado
@@ -171,12 +172,99 @@ int cmdProcessor(void) {
 
             case 'A': {
 				if (UARTRxBuffer[i + 2] != EOF_SYM) {
-					return -4;
+					return -3;
 				}
 
 				int8_t temp = getNextTemperature();
 				int8_t hum = getNextHumidity();
 				int16_t co2 = getNextCO2();
+
+
+				txChar('#');
+				txChar('A');
+
+				// Temperatura
+				txChar('t');
+				if (temp < 0) {
+
+					txChar('-');
+					temp = -temp;
+
+				} else {
+
+					txChar('+');
+
+				}
+
+				txChar('0' + (temp / 10));
+				txChar('0' + (temp % 10));
+
+				// Humidade
+				txChar('h');
+				if (hum < 0) {
+
+					txChar('-');
+					hum = -hum;
+
+				} else {
+
+					txChar('+');	
+
+				}
+				txChar('0' + (hum / 10));
+				txChar('0' + (hum % 10));
+
+				// CO2
+				txChar('c');
+				txChar('+');
+				char buffer[7];
+
+				snprintf(buffer, sizeof(buffer), "%05d", co2);
+
+				for (int j = 0; j < 5; ++j) {
+
+					txChar(buffer[j]);
+				}
+	if (i < rxBufLen) {
+
+        switch (UARTRxBuffer[i + 1]) {
+
+            case 'A': {
+				if (UARTRxBuffer[i + 2] != EOF_SYM)
+					return -3;
+
+				int8_t temp = getNextTemperature();
+				int8_t hum = getNextHumidity();
+				int16_t co2 = getNextCO2();
+
+
+				txChar('#');
+				txChar('A');
+
+				// Temperatura
+				txChar('t');
+				if (temp < 0) {
+					txChar('-');
+					temp = -temp;
+				} else {
+					txChar('+');
+				}
+
+				txChar('0' + (temp / 10));
+				txChar('0' + (temp % 10));
+
+				// Humidaif (i < rxBufLen) {
+        switch (UARTRxBuffer[i + 1]) {
+
+            case 'A': {
+				if (UARTRxBuffer[i + 2] != EOF_SYM) {
+					return -3;
+				}
+
+				int8_t temp = getNextTemperature();
+				int8_t hum = getNextHumidity();
+				int16_t co2 = getNextCO2();
+
 
 				txChar('#');
 				txChar('A');
@@ -227,8 +315,30 @@ int cmdProcessor(void) {
 				txChar('!');
 				break;
 			}
+				txChar('h');
+				if (hum < 0) {
+					txChar('-');
+					hum = -hum;
+				} else {
+					txChar('+');	
+				}
+				txChar('0' + (hum / 10));
+				txChar('0' + (hum % 10));
 
-			case 'P': {  
+				// CO2
+				txChar('c');
+				txChar('+');
+				char buffer[7];
+
+				snprintf(buffer, sizeof(buffer), "%05d", co2);
+
+				for (int j = 0; j < 5; ++j)
+					txChar(buffer[j]);
+				
+				txChar('!');
+				break;
+			}
+				case 'P': {  
 				sid = UARTRxBuffer[i + 2];  // 't', 'h', ou 'c'
 
 				if (sid == 't') {
@@ -308,6 +418,10 @@ int cmdProcessor(void) {
 				break;
 
             case 'R':
+
+				if (UARTRxBuffer[i + 2] != EOF_SYM) 
+					return -3;  // Comando mal formatado
+
  				txChar('#');
                 txChar('R');              
                 txChar('!');
@@ -391,10 +505,6 @@ void getTxBuffer(unsigned char * buf, int * len)
 	return;
 }
 
-
-/* 
- * calcChecksum
- */ 
 int calcChecksum(unsigned char * buf, int nbytes) {
 	/* Here you are supposed to compute the modulo 256 checksum */
 	/* of the first n bytes of buf. Then you should convert the */
@@ -411,13 +521,14 @@ int calcChecksum(unsigned char * buf, int nbytes) {
 			sum +=buf[i];
 	}
 
+	return sum % 256;
 	// Second: Compute the checksum as the modulo 256 of the sum.
-	int checksum = 0;
+	/* int checksum = 0;
 	checksum = sum % 256;
 
 	// Third: Convert string 3 digits to ASCII
 	char checksumStr[10];
 	snprintf(checksumStr, sizeof(checksumStr), "%03d", checksum);
 
-	return atoi(checksumStr);               
+	return atoi(checksumStr); */              
 }
