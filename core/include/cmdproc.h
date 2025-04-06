@@ -16,7 +16,7 @@
 /* Other defines should be return codes of the functions */
 /* E.g. #define CMD_EMPTY_STRING -1                      */
 #define UART_RX_SIZE 64 	/* Maximum size of the RX buffer */ 
-#define UART_TX_SIZE 64 	/* Maximum size of the TX buffer */
+#define UART_TX_SIZE 128 	/* Maximum size of the TX buffer */
 #define MAX_HISTORY 20      
 #define NUM_SAMPLES 30      
 #define SOF_SYM '#'	        /* Start of Frame Symbol */
@@ -44,6 +44,11 @@ void resetHumidityHistory();
 
 int16_t getNextCO2();
 void resetCO2History();
+
+// Apenas para testes , histórico separado por sensor no comando 'L'
+void enviarHistoricoTemperatura();
+void enviarHistoricoHumidade();
+void enviarHistoricoCO2();
 
 
 /* ************************************************************ */

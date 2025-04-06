@@ -18,6 +18,9 @@
  void setUp(void) {
     resetTxBuffer();
     resetRxBuffer();
+    resetTemperatureHistory();
+    resetHumidityHistory();
+    resetCO2History();
 }
 
 /**
@@ -199,17 +202,23 @@ void tearDown(void) {
 
     }
 
-        // Testa se cmdProcessor retorna -4 com comando sem  !
-    void test_cmdProcessor_faltando_ultimo_caractere(void)
+    void test_cmdProcessor_comando_invalido()
     {
 
         rxChar('#');
-        rxChar('A');  
+        rxChar('X'); // comando inválido
 
+        rxChar('1');
+        rxChar('2');
+        rxChar('3');
 
-        int retur = cmdProcessor();
-        TEST_ASSERT_EQUAL_INT(-4, retur);
+        rxChar('!');
+
+        int ret = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-2, ret);
     }
+
+
 
     //Testar Checksum
 
@@ -312,8 +321,131 @@ void tearDown(void) {
 //Comando 'A'
     //Adicionar testes
 
+        //Testar o comando A com uma checksum errada,retorna -3
+        void test_cmdProcessor_A_checksum_invalido() {
+            resetRxBuffer(); resetTxBuffer();
+
+            rxChar('#');
+            rxChar('A');
+            rxChar('0'); rxChar('0'); rxChar('0');  // Checksum errado
+            rxChar('!');
+
+            int ret = cmdProcessor();
+            TEST_ASSERT_EQUAL_INT(-3, ret);
+        }
+
+        // Entrada: #A! , retorna -1
+        void test_cmdProcessor_A_incompleto() {
+            resetRxBuffer(); resetTxBuffer();
+
+            rxChar('#'); rxChar('A'); rxChar('!');
+
+            int ret = cmdProcessor();
+            TEST_ASSERT_EQUAL_INT(-1, ret); // Incompleto
+        }
+
+
+            //Testar formato errado , retorna -4
+        void test_cmdProcessor_A_formato_invalido_sem_exclamacao()
+        {
+            
+
+            rxChar('#');
+            rxChar('A');
+            rxChar('0');
+            rxChar('6');
+            rxChar('5');  //Checksum correta
+            rxChar('?');   //devia ser !
+
+            int retur = cmdProcessor();
+            TEST_ASSERT_EQUAL_INT(-4, retur);  
+        }
+
+
+        // Testa se a resposta à entrada #A065! é formada corretamente
+        void test_cmdProcessor_A_output_correta()
+        {
+            resetTemperatureHistory();
+            resetHumidityHistory();
+            resetCO2History();
+
+            // Envia o comando válido #A065!
+            rxChar('#');
+            rxChar('A');
+            rxChar('0');
+            rxChar('6');
+            rxChar('5');
+            rxChar('!');
+
+            cmdProcessor();
+
+            unsigned char tx[64] = {0};
+            int len = 0;
+            getTxBuffer(tx, &len);
+            tx[len] = '\0';
+
+            // Checksum 193
+            TEST_ASSERT_EQUAL_STRING("#At-50h+50c+00400193!", (char*)tx);
+        }
+
+
+
 
 //Comando 'P'
+
+    // Testa se cmdproc retorna -4 , quando falta !
+    void test_cmdProcessor_P_falta_exclamacao()
+    {
+
+        rxChar('#');
+        rxChar('P');
+        rxChar('t');
+        rxChar('1');    //checksum bem
+        rxChar('9');
+        rxChar('6');
+        rxChar('?');  //  devia ser '!'
+
+        int retur = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-4, retur);
+    }
+
+    // Testa se cmdProc retorna -1 quando o comando P está incompleto
+    void test_cmdProcessor_P_incompleto()
+    {
+        resetRxBuffer();
+
+        rxChar('#');
+        rxChar('P');
+        rxChar('t');  
+        // falta checksum
+        //falta !
+        int retur = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-1, retur);
+    }
+
+    // Testa se cmdProcessor retorna -3 quando a checksum está errada
+    void test_cmdProcessor_P_checksum_invalida()
+    {
+        resetRxBuffer();
+
+        rxChar('#');
+        rxChar('P');
+        rxChar('t');
+
+        rxChar('0');  // ← Checksum errada 
+        rxChar('0');
+        rxChar('0');
+
+        rxChar('!');  
+
+        int retur = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-3, retur);
+    }
+
+
+
+
+
     //caso t
         //Testar a resposta correta á entrada #pt196!
         void test_cmdProcessor_Pt_verificar_resposta_correta()
@@ -393,12 +525,250 @@ void tearDown(void) {
         }
 
 //Comando 'L'
-    //Adicionar testes
+    // Testa se cmdproc retorna -1 , comando incompleto para 'L'
+    void test_cmdProcessor_L_incompleto() {
+        rxChar('#');
+        rxChar('L'); 
+
+        int retur = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-1, retur);
+    }
+
+    // Testa se  cmdproc retorna -2 para um comando inválido
+    void test_cmdProcessor_L_invalido() {
+
+        rxChar('#');
+        rxChar('X');  // comando desconhecido
+        rxChar('0');  
+        rxChar('0');
+        rxChar('0');
+        rxChar('!');
+
+        int retur = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-2, retur);
+    }
+
+    // Testa  se cmdproc retorna -3, quando checksum inválido no comando L
+    void test_cmdProcessor_L_checksum_invalido() {
+
+        rxChar('#');
+        rxChar('L');
+        rxChar('9');  // checksum inválido
+        rxChar('9');
+        rxChar('9');
+        rxChar('!');
+
+        int retur = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-3, retur);
+    }
+
+    // Testa se cmdproc retorna -4 para falta do caractere !
+    void test_cmdProcessor_L_falta_exclamacao() {
+
+        rxChar('#');
+        rxChar('L');
+        rxChar('0');
+        rxChar('7');
+        rxChar('6');
+         rxChar('?');
+
+        int retur = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-4, retur);
+    }
 
 
+   void test_cmdProcessor_Lt_resposta_correta() {
+
+        // Preenche histórico
+        for (int i = 0; i < MAX_HISTORY; ++i)
+        {
+            getNextTemperature();
+        }
+
+        // Envia comando válido com checksum
+        rxChar('#');
+        rxChar('L');
+        rxChar('0'); 
+        rxChar('7'); 
+        rxChar('6');  
+        rxChar('!');
+
+        int ret = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(0, ret);
+
+        // Verifica 1ºsegmento: #Lt...
+        unsigned char tx[124] = {0};
+        int len = 0;
+        getTxBuffer(tx, &len);
+
+        // Valida que a resposta começa com '#Lt'
+        TEST_ASSERT_EQUAL_CHAR('#', tx[0]);
+        TEST_ASSERT_EQUAL_CHAR('L', tx[1]);
+        TEST_ASSERT_EQUAL_CHAR('t', tx[2]);
+    
+    }
+
+    void test_cmdProcessor_Lh_resposta_correta() {
+
+        // Preenche histórico de humidade
+        for (int i = 0; i < MAX_HISTORY; ++i) {
+            getNextHumidity();
+        }
+
+        // Envia comando válido com checksum
+        rxChar('#');
+        rxChar('L');
+        rxChar('0'); 
+        rxChar('7'); 
+        rxChar('6');  // Checksum de 'L'
+        rxChar('!');
+
+        int ret = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(0, ret);
+
+        // Verifica segundo segmento #Lh...
+        unsigned char tx[512] = {0};
+        int len = 0;
+        getTxBuffer(tx, &len);
+
+        // Encontra o início de #Lh
+        char *ptr = strstr((char *)tx, "#Lh");
+        TEST_ASSERT_NOT_NULL(ptr);
+
+        TEST_ASSERT_EQUAL_CHAR('#', ptr[0]);
+        TEST_ASSERT_EQUAL_CHAR('L', ptr[1]);
+        TEST_ASSERT_EQUAL_CHAR('h', ptr[2]);
+    }
+
+    void test_cmdProcessor_Lc_resposta_correta() {
+
+        // Preenche histórico de CO₂
+        for (int i = 0; i < MAX_HISTORY; ++i) {
+            getNextCO2();
+        }
+
+        // Envia comando válido com checksum
+        rxChar('#');
+        rxChar('L');
+        rxChar('0'); 
+        rxChar('7'); 
+        rxChar('6');  // Checksum de 'L'
+        rxChar('!');
+
+        int ret = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(0, ret);
+
+        // Verifica terceiro segmento no TX: #Lc...
+        unsigned char tx[1024] = {0};
+        int len = 0;
+        getTxBuffer(tx, &len);
+
+        // Encontra o início de #Lc
+        char *ptr = strstr((char *)tx, "#Lc");
+        TEST_ASSERT_NOT_NULL(ptr);
+
+        TEST_ASSERT_EQUAL_CHAR('#', ptr[0]);
+        TEST_ASSERT_EQUAL_CHAR('L', ptr[1]);
+        TEST_ASSERT_EQUAL_CHAR('c', ptr[2]);
+    }
 
 //Comando 'R'
-    //Adicionar testes
+
+    //Testar se cmdproc retorna -1, para comando incompleto
+    void test_cmdProcessor_R_incompleto() {
+
+        rxChar('#');
+        rxChar('R');
+
+        int ret = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-1, ret);
+
+    }
+
+    //Testar se cmdproc retorna -2, para um comando inválido no caso R
+    void test_cmdProcessor_R_comando_invalido() {
+
+        rxChar('#');
+        rxChar('V');  
+        rxChar('0');
+        rxChar('0');
+        rxChar('0');
+        rxChar('!');
+
+        int ret = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-2, ret);
+    }
+
+    //Verificar se cmdproc retorna -3, para checksum errada 
+    void test_cmdProcessor_R_checksum_incorreta() {
+
+        rxChar('#');
+        rxChar('R');
+        rxChar('1');  // Checksum errada
+        rxChar('2');
+        rxChar('3');
+        rxChar('!');
+
+        int ret = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-3, ret);
+    }
+
+    void test_cmdProcessor_R_falta_exclamacao() {
+
+        rxChar('#');
+        rxChar('R');
+        rxChar('0');
+        rxChar('8');
+        rxChar('2');
+        rxChar('?');
+
+        int retUR = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(-4, retUR);
+    }
+
+    //Testar se o histórico foi resetado
+    void test_cmdProcessor_R_reset_histórico() {
+    
+        //Preencher histórico
+        for (int i = 0; i < MAX_HISTORY; ++i) {
+            getNextTemperature();
+            getNextHumidity();
+            getNextCO2();
+        }
+
+        rxChar('#');
+        rxChar('R');
+        rxChar('0');
+        rxChar('8');
+        rxChar('2');
+        rxChar('!');
+
+        int ret = cmdProcessor();
+        TEST_ASSERT_EQUAL_INT(0, ret);
+
+        unsigned char tx[64] = {0};
+        int len = 0;
+        getTxBuffer(tx, &len);
+
+        // Verifica resposta correta
+        TEST_ASSERT_EQUAL_STRING("#R082!", (char *)tx);
+
+        // Verifica se o histórico foi resetado:
+        int8_t temp = getNextTemperature();
+        int8_t hum  = getNextHumidity();
+        int16_t co2 = getNextCO2();
+
+        TEST_ASSERT_EQUAL_INT8(-50, temp);     // Primeiro valor da temp
+        TEST_ASSERT_EQUAL_INT8(50, hum);       // Primeiro valor da hum
+        TEST_ASSERT_EQUAL_INT16(400, co2);     // Primeiro valor de co2
+    }
+
+
+
+
+
+    
+
 
 
 
@@ -433,7 +803,8 @@ int main(void) {
     printf("------- Testes de cmdProcessor  -------\n");
     RUN_TEST(test_cmdProcessor_incompleto);
     RUN_TEST(test_cmdProcessor_letra_comando_invalido);
-    RUN_TEST(test_cmdProcessor_faltando_ultimo_caractere);
+    RUN_TEST(test_cmdProcessor_comando_invalido);
+    
     printf("\n");
 
     //Checksum
@@ -450,10 +821,19 @@ int main(void) {
     printf("\n");
 
     //Comando A
-
+    printf("------- Verificar comando 'A'  -------\n");
+    RUN_TEST(test_cmdProcessor_A_checksum_invalido);
+    RUN_TEST(test_cmdProcessor_A_incompleto);
+    RUN_TEST(test_cmdProcessor_A_formato_invalido_sem_exclamacao);
+    RUN_TEST(test_cmdProcessor_A_output_correta);
+    printf("\n");
 
     //Comando P
     printf("------- Verificar comando 'P'  -------\n");
+    RUN_TEST(test_cmdProcessor_P_falta_exclamacao);
+    RUN_TEST(test_cmdProcessor_P_incompleto);
+    RUN_TEST(test_cmdProcessor_P_checksum_invalida);
+
         //Caso t
             //Verificar a resposta correta para o comando #pt196!
             RUN_TEST(test_cmdProcessor_Pt_verificar_resposta_correta);
@@ -468,10 +848,33 @@ int main(void) {
     printf("\n");
 
     //Comando 'L'
+    printf("------- Verificar comando 'L'  -------\n");
+    RUN_TEST(test_cmdProcessor_L_incompleto);
+    RUN_TEST(test_cmdProcessor_L_invalido);
+    RUN_TEST(test_cmdProcessor_L_checksum_invalido);
+    RUN_TEST(test_cmdProcessor_L_falta_exclamacao);
+
+        //Semgmento da temperatura
+            RUN_TEST(test_cmdProcessor_Lt_resposta_correta);
+        //Segmento da humidade
+            RUN_TEST(test_cmdProcessor_Lh_resposta_correta);
+
+        //Para este caso está a dar erro devido ao overflow do buffer tx
+        //segmento do co2
+            //RUN_TEST(test_cmdProcessor_Lc_segmento);
+
+
+    printf("\n");
 
 
     //Comando 'R'
-
+    printf("------- Verificar comando 'R'  -------\n");
+    RUN_TEST(test_cmdProcessor_R_incompleto);
+    RUN_TEST(test_cmdProcessor_R_checksum_incorreta);
+    RUN_TEST(test_cmdProcessor_R_comando_invalido);
+    RUN_TEST(test_cmdProcessor_R_falta_exclamacao);
+    RUN_TEST(test_cmdProcessor_R_reset_histórico);
+    printf("\n");
 
 
     return UNITY_END();

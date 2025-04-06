@@ -154,11 +154,92 @@ int cmdProcessor(void) {
         switch (UARTRxBuffer[i + 1]) {
 
             case 'A': {
-				if (UARTRxBuffer[i + 2] != EOF_SYM) {
-					return -4;
+
+				
+				if (rxBufLen < i + 6)
+				{
+					return -1;
 				}
 
-				//Falta fazer
+				// Verifica checksum de entrada ,apenas para 'A'
+				if (!calcChecksum(&UARTRxBuffer[i + 1], 1))
+				{
+					return -3;
+				}
+
+			    if (UARTRxBuffer[i + 5] != EOF_SYM)
+				{
+        			return -4;
+				}
+
+				// Ler sensores
+				int8_t temp = getNextTemperature();
+				int8_t hum  = getNextHumidity();
+				int16_t co2 = getNextCO2();
+
+				// Resposta
+				unsigned char resposta[32];
+				int pos = 0;
+
+				resposta[pos++] = 'A';
+
+				//  Temperatura 
+				resposta[pos++] = 't';
+				if (temp < 0) {
+
+					resposta[pos++] = '-';
+					temp = -temp;
+
+				} else {
+
+					resposta[pos++] = '+';
+
+				}
+
+				resposta[pos++] = '0' + (temp / 10);
+				resposta[pos++] = '0' + (temp % 10);
+
+				// Humidade 
+				resposta[pos++] = 'h';
+				if (hum < 0) {
+					resposta[pos++] = '-';
+					hum = -hum;
+				} else {
+					resposta[pos++] = '+';
+				}
+				resposta[pos++] = '0' + (hum / 10);
+				resposta[pos++] = '0' + (hum % 10);
+
+				//  CO2 -
+				resposta[pos++] = 'c';
+				resposta[pos++] = '+'; // sempre positivo
+
+				char co2_str[7]; // 5 digitos + '\0'
+				snprintf(co2_str, sizeof(co2_str), "%05d", co2);
+				for (int j = 0; j < 5; ++j)
+					resposta[pos++] = co2_str[j];
+
+				//  Checksum da resposta 
+				int soma = 0;
+				for (int j = 0; j < pos; ++j)
+					soma += resposta[j];
+
+				int cs = soma % 256;
+				char cs_str[5];
+				snprintf(cs_str, sizeof(cs_str), "%03d", cs);
+
+				// Transmitir a resposta completa
+				txChar('#');
+				for (int j = 0; j < pos; ++j)
+					txChar(resposta[j]);
+
+				txChar(cs_str[0]);
+				txChar(cs_str[1]);
+				txChar(cs_str[2]);
+				txChar('!');
+
+				return 0;
+			
 			}
 
 			case 'P': {  
@@ -172,6 +253,13 @@ int cmdProcessor(void) {
 				{					 
         				return -3;
 				};
+
+				// Verifica se o comando termina com '!'
+				if (UARTRxBuffer[i + 6] != EOF_SYM)
+				{
+					return -4;
+				}
+
 
 				sid = UARTRxBuffer[i + 2];  // 't', 'h', ou 'c'
 
@@ -315,22 +403,238 @@ int cmdProcessor(void) {
 					txChar(cs_str[2]);
 					txChar('!');
 
+
 					return 0;
 
-				} else {
-					return -2;  // Tipo de sensor inválido
+			case 'L':	{
+
+				// Validação do formato do comando
+				if (rxBufLen < i + 6) 
+				{
+					return -1;
 				}
+
+				if (!calcChecksum(&UARTRxBuffer[i + 1], 1))
+				{
+					return -3;
+				} 
+
+				if (UARTRxBuffer[i + 5] != EOF_SYM)
+				{
+						return -4;
+				} 
+				
+				char cs_str[5];
+				int soma, cs, pos;
+
+				//  Temperatura 
+				unsigned char resposta_t[128];
+				pos = 0;
+
+				resposta_t[pos++] = 'L';
+				resposta_t[pos++] = 't';
+
+				for (int j = 0; j < MAX_HISTORY; ++j) {
+
+					int idx = (temp_history_index + j) % MAX_HISTORY;
+					int8_t val = temperature_history[idx];
+
+					if (val < 0) {
+
+						resposta_t[pos++] = '-';
+						val = -val;
+
+					} else {
+
+						resposta_t[pos++] = '+';
+
+					}
+
+					resposta_t[pos++] = '0' + (val / 10);
+					resposta_t[pos++] = '0' + (val % 10);
+
+				}
+
+				soma = 0;
+
+				for (int j = 0; j < pos; ++j)
+				{
+					soma = soma + resposta_t[j];
+
+				}
+
+				cs = soma % 256;
+				snprintf(cs_str, sizeof(cs_str), "%03d", cs);
+
+				txChar('#');
+
+				for (int j = 0; j < pos; ++j)
+				{
+					txChar(resposta_t[j]);
+				}
+
+				for (int i = 0; i < 3; ++i)
+				{	
+					txChar(cs_str[i]);
+				}
+
+				txChar('!');
+
+				//  Humidade 
+				unsigned char resposta_h[128];
+				pos = 0;
+
+				resposta_h[pos++] = 'L';
+				resposta_h[pos++] = 'h';
+
+				for (int j = 0; j < MAX_HISTORY; ++j) {
+
+					int idx = (humidity_history_index + j) % MAX_HISTORY;
+					int8_t val = humidity_history[idx];
+
+					if (val < 0) {
+
+						resposta_h[pos++] = '-';
+						val = -val;
+
+					} else {
+
+						resposta_h[pos++] = '+';
+
+					}
+
+					resposta_h[pos++] = '0' + (val / 10);
+					resposta_h[pos++] = '0' + (val % 10);
+				}
+
+				soma = 0;
+
+				for (int j = 0; j < pos; ++j)
+				{
+					soma = soma +  resposta_h[j];
+				}
+
+				cs = soma % 256;
+				snprintf(cs_str, sizeof(cs_str), "%03d", cs);
+
+				txChar('#');
+				for (int j = 0; j < pos; ++j)
+				{
+					txChar(resposta_h[j]);
+				}
+
+				for (int i = 0; i < 3; ++i)
+				{
+					txChar(cs_str[i]);
+				} 
+				
+				txChar('!');
+
+				//  CO2 
+				unsigned char resposta_c[1024];
+				pos = 0;
+				resposta_c[pos++] = 'L';
+				resposta_c[pos++] = 'c';
+
+				for (int j = 0; j < MAX_HISTORY; ++j) {
+					int idx = (co2_history_index + j) % MAX_HISTORY;
+					int16_t val = co2_history[idx];
+
+					resposta_c[pos++] = '+';
+
+					char val_str[7];
+					snprintf(val_str, sizeof(val_str), "%05d", val);
+
+					for (int k = 0; k < 5; ++k)
+					
+						resposta_c[pos++] = val_str[k];
+				}
+
+				soma = 0;
+				for (int j = 0; j < pos; ++j)
+				{
+					 soma = soma + resposta_c[j];
+				}
+				cs = soma % 256;
+				snprintf(cs_str, sizeof(cs_str), "%03d", cs);
+
+				txChar('#');
+
+				for (int j = 0; j < pos; ++j)
+				{
+					txChar(resposta_c[j]);
+				}
+
+				for (int i = 0; i < 3; ++i)
+				{
+					txChar(cs_str[i]);
+				}
+
+				txChar('!');
+
+				return 0;
+
+			}
+
+
+            case 'R':{
+
+					// Validação básica
+				if (rxBufLen < i + 6)
+				{
+					return -1;
+				}
+
+				if (!calcChecksum(&UARTRxBuffer[i + 1], 1))
+				{	
+					return -3;
+
+				}
+
+				if (UARTRxBuffer[i + 5] != EOF_SYM)
+				{
+					return -4;
+				}
+
+				// Reset dos históricos
+				resetTemperatureHistory();
+				resetHumidityHistory();
+				resetCO2History();
+
+				// Preparar resposta #Rxxx!
+				unsigned char resposta[4];
+				resposta[0] = 'R';
+
+				// Calcular checksum da resposta
+				int soma = resposta[0];  		// só R
+
+				int cs = soma % 256;
+				char cs_str[4];
+				snprintf(cs_str, sizeof(cs_str), "%03d", cs);
+
+				txChar('#');
+
+				txChar(resposta[0]);
+
+				txChar(cs_str[0]);
+				txChar(cs_str[1]);
+				txChar(cs_str[2]);
+
+				txChar('!');
+
+				return 0;
+
+				}
+
+
+			} else {
+				return -2;  // Tipo de sensor inválido
+			}
 
 				break;  
 			}
 
-            case 'L':	
 
-				//Faltar Fazer
-
-            case 'R':
-			
-				//Falta Fazer
 
             default:
                 return -2;  
