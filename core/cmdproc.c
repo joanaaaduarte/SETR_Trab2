@@ -414,13 +414,47 @@ int cmdProcessor(void) {
 
                 txChar('#');
                 txChar('L');
-				txChar('t');  
+
+				// Temperature data
+				txChar('t');
+				for (int j = 0; j < MAX_HISTORY; j++) {
+					if (j > 0) txChar(',');
+					char tempBuffer[4];
+					snprintf(tempBuffer, sizeof(tempBuffer), "%d", temperature_history[(temp_history_index + j) % MAX_HISTORY]);
+					for (int k = 0; k < strlen(tempBuffer); k++) {
+						txChar(tempBuffer[k]);
+					}
+				}
+		
+				// Humidity data
+				txChar('h');
+				for (int j = 0; j < MAX_HISTORY; j++) {
+					if (j > 0) txChar(',');
+					char humBuffer[4];
+					snprintf(humBuffer, sizeof(humBuffer), "%d", humidity_history[(humidity_history_index + j) % MAX_HISTORY]);
+					for (int k = 0; k < strlen(humBuffer); k++) {
+						txChar(humBuffer[k]);
+					}
+				}
+
+				// CO2 data
+				txChar('c');
+				for (int j = 0; j < MAX_HISTORY; j++) {
+					if (j > 0) txChar(',');
+					char co2Buffer[7];
+					snprintf(co2Buffer, sizeof(co2Buffer), "%05d", co2_history[(co2_history_index + j) % MAX_HISTORY]);
+					for (int k = 0; k < strlen(co2Buffer); k++) {
+						txChar(co2Buffer[k]);
+					}
+				}
+
+				txChar('!');  
 				break;
 
             case 'R':
 
 				if (UARTRxBuffer[i + 2] != EOF_SYM) 
-					return -3;  // Comando mal formatado
+					return -3;
 
  				txChar('#');
                 txChar('R');              
