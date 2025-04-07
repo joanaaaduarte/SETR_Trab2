@@ -1,7 +1,301 @@
-\doxysection{/home/hugo/\+SETR\+\_\+\+Trab2/core/cmdproc.c File Reference}
-\hypertarget{cmdproc_8c}{}\label{cmdproc_8c}\index{/home/hugo/SETR\_Trab2/core/cmdproc.c@{/home/hugo/SETR\_Trab2/core/cmdproc.c}}
+\doxysection{/home/joana/\+Documents/\+SETR/git/\+Trab2/\+SETR\+\_\+\+Trab2/core/cmdproc.c File Reference}
+\hypertarget{cmdproc_8c}{}\label{cmdproc_8c}\index{/home/joana/Documents/SETR/git/Trab2/SETR\_Trab2/core/cmdproc.c@{/home/joana/Documents/SETR/git/Trab2/SETR\_Trab2/core/cmdproc.c}}
 {\ttfamily \#include $<$stdio.\+h$>$}\newline
 {\ttfamily \#include $<$string.\+h$>$}\newline
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
 {\ttfamily \#include "{}cmdproc.\+h"{}}\newline
 Include dependency graph for cmdproc.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cmdproc_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{cmdproc_8c_ae69482f77541db13d2d707da37913216}{history\+\_\+reset}} (char mode)
+\begin{DoxyCompactList}\small\item\em Resets the history buffers based on the given mode. \end{DoxyCompactList}\item 
+int8\+\_\+t \mbox{\hyperlink{cmdproc_8c_a2a24c0bd6f004420f49542d3f993dd0c}{get\+Next\+Temperature}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves the next simulated temperature value and updates the history. \end{DoxyCompactList}\item 
+\Hypertarget{cmdproc_8c_ab6bd270c191579c5717cf5fe1af89500}\label{cmdproc_8c_ab6bd270c191579c5717cf5fe1af89500} 
+void {\bfseries reset\+Temperature\+History} ()
+\begin{DoxyCompactList}\small\item\em Resets the temperature history buffer. \end{DoxyCompactList}\item 
+int8\+\_\+t \mbox{\hyperlink{cmdproc_8c_a1045ec4831105dd13f5f32eebb8a962c}{get\+Next\+Humidity}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves the next simulated humidity value and updates the history. \end{DoxyCompactList}\item 
+\Hypertarget{cmdproc_8c_a84cc0bf2cd4b4fe9a36e1e3eacf67915}\label{cmdproc_8c_a84cc0bf2cd4b4fe9a36e1e3eacf67915} 
+void {\bfseries reset\+Humidity\+History} ()
+\begin{DoxyCompactList}\small\item\em Resets the humidity history buffer. \end{DoxyCompactList}\item 
+int16\+\_\+t \mbox{\hyperlink{cmdproc_8c_a3371666c62f6280a03adfbd79e1d30a8}{get\+Next\+CO2}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves the next simulated CO₂ value and updates the history. \end{DoxyCompactList}\item 
+\Hypertarget{cmdproc_8c_a758aac83c3593b0b9a785dab77a10af7}\label{cmdproc_8c_a758aac83c3593b0b9a785dab77a10af7} 
+void {\bfseries reset\+CO2\+History} ()
+\begin{DoxyCompactList}\small\item\em Resets the CO₂ history buffer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{cmdproc_8c_afbdfe0465dfd34a5f244fe41fa27c12a}{cmd\+Processor}} (void)
+\begin{DoxyCompactList}\small\item\em Processes the received UART command and generates an appropriate response. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{cmdproc_8c_a67ae8a79a708a3c5471668bddbd16400}{rx\+Char}} (unsigned char car)
+\begin{DoxyCompactList}\small\item\em Receives a character and stores it in the UART receive buffer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{cmdproc_8c_abdb4363f0662688850bbcdfb59ce4566}{tx\+Char}} (unsigned char car)
+\begin{DoxyCompactList}\small\item\em Transmits a character by storing it in the UART transmit buffer. \end{DoxyCompactList}\item 
+\Hypertarget{cmdproc_8c_a918f38a7eecdd03671d28a3a07f94856}\label{cmdproc_8c_a918f38a7eecdd03671d28a3a07f94856} 
+void {\bfseries reset\+Rx\+Buffer} (void)
+\begin{DoxyCompactList}\small\item\em Resets the UART receive buffer. \end{DoxyCompactList}\item 
+\Hypertarget{cmdproc_8c_abd91ad9b5887f4769f45823899583bab}\label{cmdproc_8c_abd91ad9b5887f4769f45823899583bab} 
+void {\bfseries reset\+Tx\+Buffer} (void)
+\begin{DoxyCompactList}\small\item\em Resets the UART transmit buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{cmdproc_8c_a8beeddde9a644610c72724be856db6dd}{get\+Tx\+Buffer}} (unsigned char \texorpdfstring{$\ast$}{*}buf, int \texorpdfstring{$\ast$}{*}len)
+\begin{DoxyCompactList}\small\item\em Copies the contents of the transmit buffer into a user-\/provided buffer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{cmdproc_8c_a2a0e03d8d8ff0f0459f7623ffd6d39b1}{calc\+Checksum}} (unsigned char \texorpdfstring{$\ast$}{*}buf, int nbytes)
+\begin{DoxyCompactList}\small\item\em Calculates the modulo-\/256 checksum for a given buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Rx\+Buffer \mbox{\hyperlink{cmdproc_8c_ae960446bb49f732e438d40fcb6452a8b}{Rx\+\_\+\+Buf}}
+\item 
+const int8\+\_\+t \mbox{\hyperlink{cmdproc_8c_adbd46f07dd9406a43e49506870673651}{simulated\+\_\+temps}} \mbox{[}NUM\+\_\+\+SAMPLES\mbox{]}
+\item 
+\Hypertarget{cmdproc_8c_a666ee5cef59b2114702f2d05397f017a}\label{cmdproc_8c_a666ee5cef59b2114702f2d05397f017a} 
+int {\bfseries temps\+\_\+index} = 0
+\item 
+const int8\+\_\+t \mbox{\hyperlink{cmdproc_8c_a23bbd660daf8d81c0792a69fabbe87e5}{simulated\+\_\+hums}} \mbox{[}NUM\+\_\+\+SAMPLES\mbox{]}
+\item 
+\Hypertarget{cmdproc_8c_aa6fcc77fb94cbfc624c37167feba1415}\label{cmdproc_8c_aa6fcc77fb94cbfc624c37167feba1415} 
+int {\bfseries humidity\+\_\+index} = 0
+\item 
+const int16\+\_\+t \mbox{\hyperlink{cmdproc_8c_a280a21cb676ee9419321f6f7d4104106}{simulated\+\_\+co2}} \mbox{[}NUM\+\_\+\+SAMPLES\mbox{]}
+\item 
+\Hypertarget{cmdproc_8c_a907f38c8deb3701b770b55189a867448}\label{cmdproc_8c_a907f38c8deb3701b770b55189a867448} 
+int {\bfseries co2\+\_\+index} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Authors}
+Joana Duarte, nmec\+: 102608 
+
+Hugo Miranda, nmec\+: 104348 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Colocar data ~\newline
+ 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{cmdproc_8c_a2a0e03d8d8ff0f0459f7623ffd6d39b1}\label{cmdproc_8c_a2a0e03d8d8ff0f0459f7623ffd6d39b1} 
+\index{cmdproc.c@{cmdproc.c}!calcChecksum@{calcChecksum}}
+\index{calcChecksum@{calcChecksum}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{calcChecksum()}{calcChecksum()}}
+{\footnotesize\ttfamily int calc\+Checksum (\begin{DoxyParamCaption}\item[{unsigned char \texorpdfstring{$\ast$}{*}}]{buf,  }\item[{int}]{nbytes }\end{DoxyParamCaption})}
+
+
+
+Calculates the modulo-\/256 checksum for a given buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buf} & The buffer containing the data to check. \\
+\hline
+{\em nbytes} & Number of bytes in the buffer to include in the checksum. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The checksum value as an integer. 
+\end{DoxyReturn}
+\Hypertarget{cmdproc_8c_afbdfe0465dfd34a5f244fe41fa27c12a}\label{cmdproc_8c_afbdfe0465dfd34a5f244fe41fa27c12a} 
+\index{cmdproc.c@{cmdproc.c}!cmdProcessor@{cmdProcessor}}
+\index{cmdProcessor@{cmdProcessor}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{cmdProcessor()}{cmdProcessor()}}
+{\footnotesize\ttfamily int cmd\+Processor (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Processes the received UART command and generates an appropriate response. 
+
+\begin{DoxyReturn}{Returns}
+int Status code\+:
+\begin{DoxyItemize}
+\item -\/1 if the buffer is empty.
+\item -\/2 if the command or sensor ID is invalid.
+\item -\/4 if command format is incorrect.
+\item 0 on success. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{cmdproc_8c_a3371666c62f6280a03adfbd79e1d30a8}\label{cmdproc_8c_a3371666c62f6280a03adfbd79e1d30a8} 
+\index{cmdproc.c@{cmdproc.c}!getNextCO2@{getNextCO2}}
+\index{getNextCO2@{getNextCO2}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{getNextCO2()}{getNextCO2()}}
+{\footnotesize\ttfamily int16\+\_\+t get\+Next\+CO2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Retrieves the next simulated CO₂ value and updates the history. 
+
+\begin{DoxyReturn}{Returns}
+co2 The next CO₂ value. 
+\end{DoxyReturn}
+\Hypertarget{cmdproc_8c_a1045ec4831105dd13f5f32eebb8a962c}\label{cmdproc_8c_a1045ec4831105dd13f5f32eebb8a962c} 
+\index{cmdproc.c@{cmdproc.c}!getNextHumidity@{getNextHumidity}}
+\index{getNextHumidity@{getNextHumidity}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{getNextHumidity()}{getNextHumidity()}}
+{\footnotesize\ttfamily int8\+\_\+t get\+Next\+Humidity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Retrieves the next simulated humidity value and updates the history. 
+
+\begin{DoxyReturn}{Returns}
+hum The next humidity value. 
+\end{DoxyReturn}
+\Hypertarget{cmdproc_8c_a2a24c0bd6f004420f49542d3f993dd0c}\label{cmdproc_8c_a2a24c0bd6f004420f49542d3f993dd0c} 
+\index{cmdproc.c@{cmdproc.c}!getNextTemperature@{getNextTemperature}}
+\index{getNextTemperature@{getNextTemperature}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{getNextTemperature()}{getNextTemperature()}}
+{\footnotesize\ttfamily int8\+\_\+t get\+Next\+Temperature (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Retrieves the next simulated temperature value and updates the history. 
+
+\begin{DoxyReturn}{Returns}
+temp The next temperature value. 
+\end{DoxyReturn}
+\Hypertarget{cmdproc_8c_a8beeddde9a644610c72724be856db6dd}\label{cmdproc_8c_a8beeddde9a644610c72724be856db6dd} 
+\index{cmdproc.c@{cmdproc.c}!getTxBuffer@{getTxBuffer}}
+\index{getTxBuffer@{getTxBuffer}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{getTxBuffer()}{getTxBuffer()}}
+{\footnotesize\ttfamily void get\+Tx\+Buffer (\begin{DoxyParamCaption}\item[{unsigned char \texorpdfstring{$\ast$}{*}}]{buf,  }\item[{int \texorpdfstring{$\ast$}{*}}]{len }\end{DoxyParamCaption})}
+
+
+
+Copies the contents of the transmit buffer into a user-\/provided buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buf} & Pointer to the buffer where data will be copied. \\
+\hline
+{\em len} & Pointer to an integer where the length of the data will be stored. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{cmdproc_8c_ae69482f77541db13d2d707da37913216}\label{cmdproc_8c_ae69482f77541db13d2d707da37913216} 
+\index{cmdproc.c@{cmdproc.c}!history\_reset@{history\_reset}}
+\index{history\_reset@{history\_reset}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{history\_reset()}{history\_reset()}}
+{\footnotesize\ttfamily void history\+\_\+reset (\begin{DoxyParamCaption}\item[{char}]{mode }\end{DoxyParamCaption})}
+
+
+
+Resets the history buffers based on the given mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & Reserved for future use; currently unused. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{cmdproc_8c_a67ae8a79a708a3c5471668bddbd16400}\label{cmdproc_8c_a67ae8a79a708a3c5471668bddbd16400} 
+\index{cmdproc.c@{cmdproc.c}!rxChar@{rxChar}}
+\index{rxChar@{rxChar}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{rxChar()}{rxChar()}}
+{\footnotesize\ttfamily int rx\+Char (\begin{DoxyParamCaption}\item[{unsigned char}]{car }\end{DoxyParamCaption})}
+
+
+
+Receives a character and stores it in the UART receive buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em car} & The character to be stored. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 0 on success, -\/1 if buffer is full. 
+\end{DoxyReturn}
+\Hypertarget{cmdproc_8c_abdb4363f0662688850bbcdfb59ce4566}\label{cmdproc_8c_abdb4363f0662688850bbcdfb59ce4566} 
+\index{cmdproc.c@{cmdproc.c}!txChar@{txChar}}
+\index{txChar@{txChar}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{txChar()}{txChar()}}
+{\footnotesize\ttfamily int tx\+Char (\begin{DoxyParamCaption}\item[{unsigned char}]{car }\end{DoxyParamCaption})}
+
+
+
+Transmits a character by storing it in the UART transmit buffer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em car} & The character to be stored. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 0 on success, -\/1 if buffer is full. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{cmdproc_8c_ae960446bb49f732e438d40fcb6452a8b}\label{cmdproc_8c_ae960446bb49f732e438d40fcb6452a8b} 
+\index{cmdproc.c@{cmdproc.c}!Rx\_Buf@{Rx\_Buf}}
+\index{Rx\_Buf@{Rx\_Buf}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{Rx\_Buf}{Rx\_Buf}}
+{\footnotesize\ttfamily Rx\+Buffer Rx\+\_\+\+Buf}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ .count\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ .tail\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ .data\ =\ Rx\_Buf.buffer}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{cmdproc_8c_a280a21cb676ee9419321f6f7d4104106}\label{cmdproc_8c_a280a21cb676ee9419321f6f7d4104106} 
+\index{cmdproc.c@{cmdproc.c}!simulated\_co2@{simulated\_co2}}
+\index{simulated\_co2@{simulated\_co2}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{simulated\_co2}{simulated\_co2}}
+{\footnotesize\ttfamily const int16\+\_\+t simulated\+\_\+co2\mbox{[}NUM\+\_\+\+SAMPLES\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ 400,\ 500,\ 600,\ 700,\ 800,\ 900,}
+\DoxyCodeLine{\ \ \ \ 1000,\ 1200,\ 1400,\ 1600,\ 1800,\ 2000,}
+\DoxyCodeLine{\ \ \ \ 2500,\ 3000,\ 4000,\ 5000,\ 6000,\ 8000,}
+\DoxyCodeLine{\ \ \ \ 10000,\ 12000,\ 15000,\ 17000,\ 18000,\ 19000,}
+\DoxyCodeLine{\ \ \ \ 19500,\ 19800,\ 19900,\ 19950,\ 19980,\ 20000}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{cmdproc_8c_a23bbd660daf8d81c0792a69fabbe87e5}\label{cmdproc_8c_a23bbd660daf8d81c0792a69fabbe87e5} 
+\index{cmdproc.c@{cmdproc.c}!simulated\_hums@{simulated\_hums}}
+\index{simulated\_hums@{simulated\_hums}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{simulated\_hums}{simulated\_hums}}
+{\footnotesize\ttfamily const int8\+\_\+t simulated\+\_\+hums\mbox{[}NUM\+\_\+\+SAMPLES\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ 50,\ 5,\ 10,\ 15,\ 20,\ 25,}
+\DoxyCodeLine{\ \ \ \ 30,\ 35,\ 40,\ 45,\ 50,\ 55,}
+\DoxyCodeLine{\ \ \ \ 60,\ 65,\ 70,\ 75,\ 80,\ 85,}
+\DoxyCodeLine{\ \ \ \ 90,\ 95,\ 100,\ 95,\ 90,\ 85,}
+\DoxyCodeLine{\ \ \ \ 80,\ 75,\ 70,\ 65,\ 60,\ 55}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{cmdproc_8c_adbd46f07dd9406a43e49506870673651}\label{cmdproc_8c_adbd46f07dd9406a43e49506870673651} 
+\index{cmdproc.c@{cmdproc.c}!simulated\_temps@{simulated\_temps}}
+\index{simulated\_temps@{simulated\_temps}!cmdproc.c@{cmdproc.c}}
+\doxysubsubsection{\texorpdfstring{simulated\_temps}{simulated\_temps}}
+{\footnotesize\ttfamily const int8\+\_\+t simulated\+\_\+temps\mbox{[}NUM\+\_\+\+SAMPLES\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ -\/50,\ -\/40,\ -\/35,\ -\/30,\ -\/25,\ -\/20,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ -\/15,\ -\/10,\ -\/5,\ 0,\ 5,\ 10,\ 15,\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ 18,\ 20,\ 22,\ 24,\ 26,\ 28,\ 30,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ 32,\ 35,\ 38,\ 40,\ 45,\ 50,\ 55,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ 58,\ 59,\ 60}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}

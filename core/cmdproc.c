@@ -25,7 +25,11 @@ RxBuffer Rx_Buf = {
     .data = Rx_Buf.buffer
 };
 
-
+/**
+ * \brief Resets the history buffers based on the given mode.
+ *
+ * \param mode Reserved for future use; currently unused.
+ */
 void history_reset(char mode)
 {
     (void)mode;  // se o modo ainda não está a ser usado
@@ -59,6 +63,12 @@ const int8_t simulated_temps[NUM_SAMPLES] = {
 int temps_index = 0;
 
 
+/**
+ * \brief Retrieves the next simulated temperature value and updates the history.
+ *
+ * \return temp The next temperature value.
+ */
+
 int8_t getNextTemperature()
 {
     int8_t temp = simulated_temps[temps_index];
@@ -71,6 +81,10 @@ int8_t getNextTemperature()
     return temp;
 }
 
+
+/**
+ * \brief Resets the temperature history buffer.
+ */
 void resetTemperatureHistory()
 {
     memset(temperature_history, 0, sizeof(temperature_history));
@@ -93,6 +107,12 @@ const int8_t simulated_hums[NUM_SAMPLES] = {
 
 int humidity_index = 0;
 
+/**
+ * \brief Retrieves the next simulated humidity value and updates the history.
+ *
+ * \return hum The next humidity value.
+ */
+
 int8_t getNextHumidity()
 {
     int8_t hum = simulated_hums[humidity_index];
@@ -104,6 +124,10 @@ int8_t getNextHumidity()
 
     return hum;
 }
+
+/**
+ * \brief Resets the humidity history buffer.
+ */
 
 void resetHumidityHistory()
 {
@@ -127,6 +151,11 @@ const int16_t simulated_co2[NUM_SAMPLES] = {
 
 int co2_index = 0;
 
+/**
+ * \brief Retrieves the next simulated CO₂ value and updates the history.
+ *
+ * \return co2 The next CO₂ value.
+ */
 int16_t getNextCO2()
 {
     int16_t co2 = simulated_co2[co2_index];
@@ -139,6 +168,10 @@ int16_t getNextCO2()
     return co2;
 }
 
+
+/**
+ * \brief Resets the CO₂ history buffer.
+ */
 void resetCO2History()
 {
     memset(co2_history, 0, sizeof(co2_history));
@@ -147,7 +180,15 @@ void resetCO2History()
 
 
 
-
+/**
+ * \brief Processes the received UART command and generates an appropriate response.
+ *
+ * \return int Status code:
+ *         - -1 if the buffer is empty.
+ *         - -2 if the command or sensor ID is invalid.
+ *         - -4 if command format is incorrect.
+ *         - 0 on success.
+ */
 
 // Função para processar os comandos recebidos
 int cmdProcessor(void) {
@@ -323,9 +364,13 @@ int cmdProcessor(void) {
 }
 	
 
-/*
- * rxChar
+/**
+ * \brief Receives a character and stores it in the UART receive buffer.
+ *
+ * \param car The character to be stored.
+ * \return int 0 on success, -1 if buffer is full.
  */
+
 int rxChar(unsigned char car)
 {
     if (rxBufLen < UART_RX_SIZE) {
@@ -343,8 +388,13 @@ int rxChar(unsigned char car)
     }
     return -1;
 }
-/*
- * txChar
+
+
+/**
+ * \brief Transmits a character by storing it in the UART transmit buffer.
+ *
+ * \param car The character to be stored.
+ * \return int 0 on success, -1 if buffer is full.
  */
 int txChar(unsigned char car)
 {
@@ -358,9 +408,11 @@ int txChar(unsigned char car)
 	return -1;
 }
 
-/*
- * resetRxBuffer
+
+/**
+ * \brief Resets the UART receive buffer.
  */
+
 void resetRxBuffer(void)
 {
 	// memset: https://www.tutorialspoint.com/c_standard_library/c_function_memset.htm
@@ -369,8 +421,8 @@ void resetRxBuffer(void)
 	return;
 }
 
-/*
- * resetTxBuffer
+/**
+ * \brief Resets the UART transmit buffer.
  */
 void resetTxBuffer(void)
 {
@@ -379,9 +431,13 @@ void resetTxBuffer(void)
 	return;
 }
 
-/*
- * getTxBuffer
+/**
+ * \brief Copies the contents of the transmit buffer into a user-provided buffer.
+ *
+ * \param buf Pointer to the buffer where data will be copied.
+ * \param len Pointer to an integer where the length of the data will be stored.
  */
+
 void getTxBuffer(unsigned char * buf, int * len)
 {
 	*len = txBufLen;
@@ -392,9 +448,13 @@ void getTxBuffer(unsigned char * buf, int * len)
 }
 
 
-/* 
- * calcChecksum
- */ 
+/**
+ * \brief Calculates the modulo-256 checksum for a given buffer.
+ *
+ * \param buf The buffer containing the data to check.
+ * \param nbytes Number of bytes in the buffer to include in the checksum.
+ * \return int The checksum value as an integer.
+ */
 int calcChecksum(unsigned char * buf, int nbytes) {
 	/* Here you are supposed to compute the modulo 256 checksum */
 	/* of the first n bytes of buf. Then you should convert the */
