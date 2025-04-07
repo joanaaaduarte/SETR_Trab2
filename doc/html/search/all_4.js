@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['txchar_0',['txChar',['../cmdproc_8c.html#abdb4363f0662688850bbcdfb59ce4566',1,'cmdproc.c']]]
+  ['setup_0',['setUp',['../test_8c.html#a95c834d6178047ce9e1bce7cbfea2836',1,'test.c']]]
 ];

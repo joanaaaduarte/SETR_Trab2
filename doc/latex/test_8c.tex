@@ -1,0 +1,282 @@
+\doxysection{test.\+c File Reference}
+\hypertarget{test_8c}{}\label{test_8c}\index{test.c@{test.c}}
+{\ttfamily \#include "{}unity.\+h"{}}\newline
+{\ttfamily \#include "{}cmdproc.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+Include dependency graph for test.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{test_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{test_8c_a95c834d6178047ce9e1bce7cbfea2836}{set\+Up}} (void)
+\begin{DoxyCompactList}\small\item\em Setup function called before each test. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test_8c_a9909011e5fea0c018842eec4d93d0662}{tear\+Down}} (void)
+\begin{DoxyCompactList}\small\item\em Teardown function called after each test. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test_8c_a251055cd936f00cdcf7ca42de5b76e7d}{test\+\_\+reset\+Rx\+Buffer}} ()
+\item 
+void \mbox{\hyperlink{test_8c_afc3841d181cf953d3538c40488c6c07c}{test\+\_\+rx\+Char\+\_\+valido}} ()
+\item 
+void \mbox{\hyperlink{test_8c_aeac96837e810e7e08f471975520d5fe3}{test\+\_\+rx\+Char\+\_\+invalido}} ()
+\item 
+void \mbox{\hyperlink{test_8c_aedae2008a79e95983a2ff595257cb17b}{test\+\_\+rx\+Char\+\_\+overflow}} ()
+\item 
+void \mbox{\hyperlink{test_8c_a092218b17bb049bd11cb0fce2557528d}{test\+\_\+reset\+Tx\+Buffer}} ()
+\item 
+void \mbox{\hyperlink{test_8c_af6d3a81ea7fe9ab1b8a34a580a14c6a2}{test\+\_\+tx\+Char\+\_\+top}} ()
+\item 
+void \mbox{\hyperlink{test_8c_ab27d513a80c676725c0b6be80d6a27de}{test\+\_\+tx\+Char\+\_\+overflow}} ()
+\item 
+void \mbox{\hyperlink{test_8c_adeccaed3699ec8e363ca7bc03dd02b82}{test\+\_\+cmd\+Processor\+\_\+incompleto}} (void)
+\item 
+void \mbox{\hyperlink{test_8c_aa072179016f82cfd48b5176724c77a32}{test\+\_\+cmd\+Processor\+\_\+letra\+\_\+comando\+\_\+invalido}} ()
+\item 
+void \mbox{\hyperlink{test_8c_a2dfde4b95e2728cf4dbe25db4b520b05}{test\+\_\+cmd\+Processor\+\_\+faltando\+\_\+ultimo\+\_\+caractere}} (void)
+\item 
+void \mbox{\hyperlink{test_8c_a24c86721354d3e133166708120d06011}{test\+\_\+cmd\+Processor\+\_\+checksum\+\_\+errado\+\_\+entrada}} ()
+\item 
+void \mbox{\hyperlink{test_8c_a7b127ce1adde2bec898a4fe46d7db7c1}{test\+\_\+cmd\+Processor\+\_\+checksum\+\_\+valido\+\_\+entrada}} ()
+\item 
+void \mbox{\hyperlink{test_8c_a2bbf7ef789f2d9a19449f0ffb2994c2e}{test\+\_\+temperature\+\_\+ler\+\_\+temps\+\_\+e\+\_\+reset}} ()
+\item 
+void \mbox{\hyperlink{test_8c_a44d76caca2d9aec9c0f3fcb000977f27}{test\+\_\+humidity\+\_\+ler\+\_\+hums\+\_\+e\+\_\+reset}} ()
+\item 
+void \mbox{\hyperlink{test_8c_ab3b10cc678e6cec02d8653ca29e506db}{test\+\_\+co2\+\_\+ler\+\_\+co2\+\_\+e\+\_\+reset}} ()
+\item 
+void \mbox{\hyperlink{test_8c_a40e2ae303a2ca8649accf2cc64fbeb0f}{test\+\_\+cmd\+Processor\+A\+\_\+add\+\_\+data}} ()
+\item 
+void \mbox{\hyperlink{test_8c_a0573609194137892a9aef74aed34a6f3}{test\+\_\+cmd\+Processor\+\_\+\+Pt\+\_\+verificar\+\_\+resposta\+\_\+correta}} ()
+\item 
+void \mbox{\hyperlink{test_8c_ab365b1bdeb689de1835c0a8cf0db2c62}{test\+\_\+cmd\+Processor\+\_\+\+Ph\+\_\+verificar\+\_\+resposta\+\_\+correta}} ()
+\item 
+void \mbox{\hyperlink{test_8c_a266d7d18f237f2e965dcb5b7190fcbe7}{test\+\_\+cmd\+Processor\+\_\+\+Pc\+\_\+verificar\+\_\+resposta\+\_\+correta}} ()
+\item 
+void \mbox{\hyperlink{test_8c_ad82a2484a2eae7db278bbf88d3991ea9}{test\+\_\+cmd\+Processor\+L\+\_\+returns\+\_\+last\+\_\+samples}} ()
+\item 
+void \mbox{\hyperlink{test_8c_a8ac9db325cee3b1a11af0b428861be86}{test\+\_\+cmd\+Processor\+R\+\_\+reset\+\_\+history}} ()
+\item 
+int \mbox{\hyperlink{test_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\begin{DoxyCompactList}\small\item\em Main function that runs the unit tests. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Authors}
+Joana Duarte, nmec\+: 102608 
+
+Hugo Miranda, nmec\+: 104348 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Colocar data ~\newline
+ 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{test_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{test_8c_a840291bc02cba5474a4cb46a9b9566fe} 
+\index{test.c@{test.c}!main@{main}}
+\index{main@{main}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Main function that runs the unit tests. 
+
+Initializes the Unity test framework, runs the defined tests, and returns the overall test status.
+
+\begin{DoxyReturn}{Returns}
+int Returns the test status code. 
+\end{DoxyReturn}
+\Hypertarget{test_8c_a95c834d6178047ce9e1bce7cbfea2836}\label{test_8c_a95c834d6178047ce9e1bce7cbfea2836} 
+\index{test.c@{test.c}!setUp@{setUp}}
+\index{setUp@{setUp}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{setUp()}{setUp()}}
+{\footnotesize\ttfamily void set\+Up (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Setup function called before each test. 
+
+This function is used to initialize variables or prepare the test environment. \Hypertarget{test_8c_a9909011e5fea0c018842eec4d93d0662}\label{test_8c_a9909011e5fea0c018842eec4d93d0662} 
+\index{test.c@{test.c}!tearDown@{tearDown}}
+\index{tearDown@{tearDown}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{tearDown()}{tearDown()}}
+{\footnotesize\ttfamily void tear\+Down (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Teardown function called after each test. 
+
+This function is used to clean up after tests, such as releasing resources. \Hypertarget{test_8c_a24c86721354d3e133166708120d06011}\label{test_8c_a24c86721354d3e133166708120d06011} 
+\index{test.c@{test.c}!test\_cmdProcessor\_checksum\_errado\_entrada@{test\_cmdProcessor\_checksum\_errado\_entrada}}
+\index{test\_cmdProcessor\_checksum\_errado\_entrada@{test\_cmdProcessor\_checksum\_errado\_entrada}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_cmdProcessor\_checksum\_errado\_entrada()}{test\_cmdProcessor\_checksum\_errado\_entrada()}}
+{\footnotesize\ttfamily void test\+\_\+cmd\+Processor\+\_\+checksum\+\_\+errado\+\_\+entrada (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000011}{Test}}]Test checksum error in command \#\+Pt, expected to return -\/3. \end{DoxyRefDesc}
+\Hypertarget{test_8c_a7b127ce1adde2bec898a4fe46d7db7c1}\label{test_8c_a7b127ce1adde2bec898a4fe46d7db7c1} 
+\index{test.c@{test.c}!test\_cmdProcessor\_checksum\_valido\_entrada@{test\_cmdProcessor\_checksum\_valido\_entrada}}
+\index{test\_cmdProcessor\_checksum\_valido\_entrada@{test\_cmdProcessor\_checksum\_valido\_entrada}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_cmdProcessor\_checksum\_valido\_entrada()}{test\_cmdProcessor\_checksum\_valido\_entrada()}}
+{\footnotesize\ttfamily void test\+\_\+cmd\+Processor\+\_\+checksum\+\_\+valido\+\_\+entrada (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000012}{Test}}]Test valid checksum for command \#\+Pt196! \end{DoxyRefDesc}
+\Hypertarget{test_8c_a2dfde4b95e2728cf4dbe25db4b520b05}\label{test_8c_a2dfde4b95e2728cf4dbe25db4b520b05} 
+\index{test.c@{test.c}!test\_cmdProcessor\_faltando\_ultimo\_caractere@{test\_cmdProcessor\_faltando\_ultimo\_caractere}}
+\index{test\_cmdProcessor\_faltando\_ultimo\_caractere@{test\_cmdProcessor\_faltando\_ultimo\_caractere}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_cmdProcessor\_faltando\_ultimo\_caractere()}{test\_cmdProcessor\_faltando\_ultimo\_caractere()}}
+{\footnotesize\ttfamily void test\+\_\+cmd\+Processor\+\_\+faltando\+\_\+ultimo\+\_\+caractere (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000010}{Test}}]Test command missing \textquotesingle{}!\textquotesingle{} at the end, expected to return -\/4. \end{DoxyRefDesc}
+\Hypertarget{test_8c_adeccaed3699ec8e363ca7bc03dd02b82}\label{test_8c_adeccaed3699ec8e363ca7bc03dd02b82} 
+\index{test.c@{test.c}!test\_cmdProcessor\_incompleto@{test\_cmdProcessor\_incompleto}}
+\index{test\_cmdProcessor\_incompleto@{test\_cmdProcessor\_incompleto}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_cmdProcessor\_incompleto()}{test\_cmdProcessor\_incompleto()}}
+{\footnotesize\ttfamily void test\+\_\+cmd\+Processor\+\_\+incompleto (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000008}{Test}}]Test incomplete command, expected to return -\/1. \end{DoxyRefDesc}
+\Hypertarget{test_8c_aa072179016f82cfd48b5176724c77a32}\label{test_8c_aa072179016f82cfd48b5176724c77a32} 
+\index{test.c@{test.c}!test\_cmdProcessor\_letra\_comando\_invalido@{test\_cmdProcessor\_letra\_comando\_invalido}}
+\index{test\_cmdProcessor\_letra\_comando\_invalido@{test\_cmdProcessor\_letra\_comando\_invalido}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_cmdProcessor\_letra\_comando\_invalido()}{test\_cmdProcessor\_letra\_comando\_invalido()}}
+{\footnotesize\ttfamily void test\+\_\+cmd\+Processor\+\_\+letra\+\_\+comando\+\_\+invalido (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000009}{Test}}]Test invalid command letter, expected to return -\/2. \end{DoxyRefDesc}
+\Hypertarget{test_8c_a266d7d18f237f2e965dcb5b7190fcbe7}\label{test_8c_a266d7d18f237f2e965dcb5b7190fcbe7} 
+\index{test.c@{test.c}!test\_cmdProcessor\_Pc\_verificar\_resposta\_correta@{test\_cmdProcessor\_Pc\_verificar\_resposta\_correta}}
+\index{test\_cmdProcessor\_Pc\_verificar\_resposta\_correta@{test\_cmdProcessor\_Pc\_verificar\_resposta\_correta}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_cmdProcessor\_Pc\_verificar\_resposta\_correta()}{test\_cmdProcessor\_Pc\_verificar\_resposta\_correta()}}
+{\footnotesize\ttfamily void test\+\_\+cmd\+Processor\+\_\+\+Pc\+\_\+verificar\+\_\+resposta\+\_\+correta (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000019}{Test}}]Test correct response to command \#\+Pc179! \end{DoxyRefDesc}
+\Hypertarget{test_8c_ab365b1bdeb689de1835c0a8cf0db2c62}\label{test_8c_ab365b1bdeb689de1835c0a8cf0db2c62} 
+\index{test.c@{test.c}!test\_cmdProcessor\_Ph\_verificar\_resposta\_correta@{test\_cmdProcessor\_Ph\_verificar\_resposta\_correta}}
+\index{test\_cmdProcessor\_Ph\_verificar\_resposta\_correta@{test\_cmdProcessor\_Ph\_verificar\_resposta\_correta}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_cmdProcessor\_Ph\_verificar\_resposta\_correta()}{test\_cmdProcessor\_Ph\_verificar\_resposta\_correta()}}
+{\footnotesize\ttfamily void test\+\_\+cmd\+Processor\+\_\+\+Ph\+\_\+verificar\+\_\+resposta\+\_\+correta (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000018}{Test}}]Test correct response to command \#\+Ph184! \end{DoxyRefDesc}
+\Hypertarget{test_8c_a0573609194137892a9aef74aed34a6f3}\label{test_8c_a0573609194137892a9aef74aed34a6f3} 
+\index{test.c@{test.c}!test\_cmdProcessor\_Pt\_verificar\_resposta\_correta@{test\_cmdProcessor\_Pt\_verificar\_resposta\_correta}}
+\index{test\_cmdProcessor\_Pt\_verificar\_resposta\_correta@{test\_cmdProcessor\_Pt\_verificar\_resposta\_correta}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_cmdProcessor\_Pt\_verificar\_resposta\_correta()}{test\_cmdProcessor\_Pt\_verificar\_resposta\_correta()}}
+{\footnotesize\ttfamily void test\+\_\+cmd\+Processor\+\_\+\+Pt\+\_\+verificar\+\_\+resposta\+\_\+correta (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000017}{Test}}]Test correct response to command \#\+Pt196! \end{DoxyRefDesc}
+\Hypertarget{test_8c_a40e2ae303a2ca8649accf2cc64fbeb0f}\label{test_8c_a40e2ae303a2ca8649accf2cc64fbeb0f} 
+\index{test.c@{test.c}!test\_cmdProcessorA\_add\_data@{test\_cmdProcessorA\_add\_data}}
+\index{test\_cmdProcessorA\_add\_data@{test\_cmdProcessorA\_add\_data}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_cmdProcessorA\_add\_data()}{test\_cmdProcessorA\_add\_data()}}
+{\footnotesize\ttfamily void test\+\_\+cmd\+Processor\+A\+\_\+add\+\_\+data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000016}{Test}}]Test command \textquotesingle{}A\textquotesingle{} to add data and check response. \end{DoxyRefDesc}
+\Hypertarget{test_8c_ad82a2484a2eae7db278bbf88d3991ea9}\label{test_8c_ad82a2484a2eae7db278bbf88d3991ea9} 
+\index{test.c@{test.c}!test\_cmdProcessorL\_returns\_last\_samples@{test\_cmdProcessorL\_returns\_last\_samples}}
+\index{test\_cmdProcessorL\_returns\_last\_samples@{test\_cmdProcessorL\_returns\_last\_samples}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_cmdProcessorL\_returns\_last\_samples()}{test\_cmdProcessorL\_returns\_last\_samples()}}
+{\footnotesize\ttfamily void test\+\_\+cmd\+Processor\+L\+\_\+returns\+\_\+last\+\_\+samples (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000020}{Test}}]Test command \textquotesingle{}L\textquotesingle{} to return last samples. \end{DoxyRefDesc}
+\Hypertarget{test_8c_a8ac9db325cee3b1a11af0b428861be86}\label{test_8c_a8ac9db325cee3b1a11af0b428861be86} 
+\index{test.c@{test.c}!test\_cmdProcessorR\_reset\_history@{test\_cmdProcessorR\_reset\_history}}
+\index{test\_cmdProcessorR\_reset\_history@{test\_cmdProcessorR\_reset\_history}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_cmdProcessorR\_reset\_history()}{test\_cmdProcessorR\_reset\_history()}}
+{\footnotesize\ttfamily void test\+\_\+cmd\+Processor\+R\+\_\+reset\+\_\+history (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000021}{Test}}]Test command \textquotesingle{}R\textquotesingle{} to reset all histories. \end{DoxyRefDesc}
+\Hypertarget{test_8c_ab3b10cc678e6cec02d8653ca29e506db}\label{test_8c_ab3b10cc678e6cec02d8653ca29e506db} 
+\index{test.c@{test.c}!test\_co2\_ler\_co2\_e\_reset@{test\_co2\_ler\_co2\_e\_reset}}
+\index{test\_co2\_ler\_co2\_e\_reset@{test\_co2\_ler\_co2\_e\_reset}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_co2\_ler\_co2\_e\_reset()}{test\_co2\_ler\_co2\_e\_reset()}}
+{\footnotesize\ttfamily void test\+\_\+co2\+\_\+ler\+\_\+co2\+\_\+e\+\_\+reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000015}{Test}}]Read and reset CO2 history. \end{DoxyRefDesc}
+\Hypertarget{test_8c_a44d76caca2d9aec9c0f3fcb000977f27}\label{test_8c_a44d76caca2d9aec9c0f3fcb000977f27} 
+\index{test.c@{test.c}!test\_humidity\_ler\_hums\_e\_reset@{test\_humidity\_ler\_hums\_e\_reset}}
+\index{test\_humidity\_ler\_hums\_e\_reset@{test\_humidity\_ler\_hums\_e\_reset}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_humidity\_ler\_hums\_e\_reset()}{test\_humidity\_ler\_hums\_e\_reset()}}
+{\footnotesize\ttfamily void test\+\_\+humidity\+\_\+ler\+\_\+hums\+\_\+e\+\_\+reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000014}{Test}}]Read and reset humidity history. \end{DoxyRefDesc}
+\Hypertarget{test_8c_a251055cd936f00cdcf7ca42de5b76e7d}\label{test_8c_a251055cd936f00cdcf7ca42de5b76e7d} 
+\index{test.c@{test.c}!test\_resetRxBuffer@{test\_resetRxBuffer}}
+\index{test\_resetRxBuffer@{test\_resetRxBuffer}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_resetRxBuffer()}{test\_resetRxBuffer()}}
+{\footnotesize\ttfamily void test\+\_\+reset\+Rx\+Buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000001}{Test}}]Test if reset\+Rx\+Buffer correctly clears the RX buffer. \end{DoxyRefDesc}
+\Hypertarget{test_8c_a092218b17bb049bd11cb0fce2557528d}\label{test_8c_a092218b17bb049bd11cb0fce2557528d} 
+\index{test.c@{test.c}!test\_resetTxBuffer@{test\_resetTxBuffer}}
+\index{test\_resetTxBuffer@{test\_resetTxBuffer}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_resetTxBuffer()}{test\_resetTxBuffer()}}
+{\footnotesize\ttfamily void test\+\_\+reset\+Tx\+Buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000005}{Test}}]Test if reset\+Tx\+Buffer correctly clears the TX buffer. \end{DoxyRefDesc}
+\Hypertarget{test_8c_aeac96837e810e7e08f471975520d5fe3}\label{test_8c_aeac96837e810e7e08f471975520d5fe3} 
+\index{test.c@{test.c}!test\_rxChar\_invalido@{test\_rxChar\_invalido}}
+\index{test\_rxChar\_invalido@{test\_rxChar\_invalido}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_rxChar\_invalido()}{test\_rxChar\_invalido()}}
+{\footnotesize\ttfamily void test\+\_\+rx\+Char\+\_\+invalido (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000003}{Test}}]Test if rx\+Char rejects invalid characters. \end{DoxyRefDesc}
+\Hypertarget{test_8c_aedae2008a79e95983a2ff595257cb17b}\label{test_8c_aedae2008a79e95983a2ff595257cb17b} 
+\index{test.c@{test.c}!test\_rxChar\_overflow@{test\_rxChar\_overflow}}
+\index{test\_rxChar\_overflow@{test\_rxChar\_overflow}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_rxChar\_overflow()}{test\_rxChar\_overflow()}}
+{\footnotesize\ttfamily void test\+\_\+rx\+Char\+\_\+overflow (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000004}{Test}}]Test RX buffer overflow behavior. \end{DoxyRefDesc}
+\Hypertarget{test_8c_afc3841d181cf953d3538c40488c6c07c}\label{test_8c_afc3841d181cf953d3538c40488c6c07c} 
+\index{test.c@{test.c}!test\_rxChar\_valido@{test\_rxChar\_valido}}
+\index{test\_rxChar\_valido@{test\_rxChar\_valido}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_rxChar\_valido()}{test\_rxChar\_valido()}}
+{\footnotesize\ttfamily void test\+\_\+rx\+Char\+\_\+valido (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000002}{Test}}]Test if rx\+Char accepts valid characters into the RX buffer. \end{DoxyRefDesc}
+\Hypertarget{test_8c_a2bbf7ef789f2d9a19449f0ffb2994c2e}\label{test_8c_a2bbf7ef789f2d9a19449f0ffb2994c2e} 
+\index{test.c@{test.c}!test\_temperature\_ler\_temps\_e\_reset@{test\_temperature\_ler\_temps\_e\_reset}}
+\index{test\_temperature\_ler\_temps\_e\_reset@{test\_temperature\_ler\_temps\_e\_reset}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_temperature\_ler\_temps\_e\_reset()}{test\_temperature\_ler\_temps\_e\_reset()}}
+{\footnotesize\ttfamily void test\+\_\+temperature\+\_\+ler\+\_\+temps\+\_\+e\+\_\+reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000013}{Test}}]Read and reset temperature history. \end{DoxyRefDesc}
+\Hypertarget{test_8c_ab27d513a80c676725c0b6be80d6a27de}\label{test_8c_ab27d513a80c676725c0b6be80d6a27de} 
+\index{test.c@{test.c}!test\_txChar\_overflow@{test\_txChar\_overflow}}
+\index{test\_txChar\_overflow@{test\_txChar\_overflow}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_txChar\_overflow()}{test\_txChar\_overflow()}}
+{\footnotesize\ttfamily void test\+\_\+tx\+Char\+\_\+overflow (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000007}{Test}}]Test TX buffer overflow behavior. \end{DoxyRefDesc}
+\Hypertarget{test_8c_af6d3a81ea7fe9ab1b8a34a580a14c6a2}\label{test_8c_af6d3a81ea7fe9ab1b8a34a580a14c6a2} 
+\index{test.c@{test.c}!test\_txChar\_top@{test\_txChar\_top}}
+\index{test\_txChar\_top@{test\_txChar\_top}!test.c@{test.c}}
+\doxysubsubsection{\texorpdfstring{test\_txChar\_top()}{test\_txChar\_top()}}
+{\footnotesize\ttfamily void test\+\_\+tx\+Char\+\_\+top (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyRefDesc}{Test}
+\item[\mbox{\hyperlink{test__test000006}{Test}}]Test insertion of characters into the TX buffer. \end{DoxyRefDesc}

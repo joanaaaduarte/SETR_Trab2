@@ -1,4 +1,25 @@
 var searchData=
 [
-  ['history_5freset_0',['history_reset',['../cmdproc_8c.html#ae69482f77541db13d2d707da37913216',1,'cmdproc.c']]]
+  ['teardown_0',['tearDown',['../test_8c.html#a9909011e5fea0c018842eec4d93d0662',1,'test.c']]],
+  ['test_5fcmdprocessor_5fchecksum_5ferrado_5fentrada_1',['test_cmdProcessor_checksum_errado_entrada',['../test_8c.html#a24c86721354d3e133166708120d06011',1,'test.c']]],
+  ['test_5fcmdprocessor_5fchecksum_5fvalido_5fentrada_2',['test_cmdProcessor_checksum_valido_entrada',['../test_8c.html#a7b127ce1adde2bec898a4fe46d7db7c1',1,'test.c']]],
+  ['test_5fcmdprocessor_5ffaltando_5fultimo_5fcaractere_3',['test_cmdProcessor_faltando_ultimo_caractere',['../test_8c.html#a2dfde4b95e2728cf4dbe25db4b520b05',1,'test.c']]],
+  ['test_5fcmdprocessor_5fincompleto_4',['test_cmdProcessor_incompleto',['../test_8c.html#adeccaed3699ec8e363ca7bc03dd02b82',1,'test.c']]],
+  ['test_5fcmdprocessor_5fletra_5fcomando_5finvalido_5',['test_cmdProcessor_letra_comando_invalido',['../test_8c.html#aa072179016f82cfd48b5176724c77a32',1,'test.c']]],
+  ['test_5fcmdprocessor_5fpc_5fverificar_5fresposta_5fcorreta_6',['test_cmdProcessor_Pc_verificar_resposta_correta',['../test_8c.html#a266d7d18f237f2e965dcb5b7190fcbe7',1,'test.c']]],
+  ['test_5fcmdprocessor_5fph_5fverificar_5fresposta_5fcorreta_7',['test_cmdProcessor_Ph_verificar_resposta_correta',['../test_8c.html#ab365b1bdeb689de1835c0a8cf0db2c62',1,'test.c']]],
+  ['test_5fcmdprocessor_5fpt_5fverificar_5fresposta_5fcorreta_8',['test_cmdProcessor_Pt_verificar_resposta_correta',['../test_8c.html#a0573609194137892a9aef74aed34a6f3',1,'test.c']]],
+  ['test_5fcmdprocessora_5fadd_5fdata_9',['test_cmdProcessorA_add_data',['../test_8c.html#a40e2ae303a2ca8649accf2cc64fbeb0f',1,'test.c']]],
+  ['test_5fcmdprocessorl_5freturns_5flast_5fsamples_10',['test_cmdProcessorL_returns_last_samples',['../test_8c.html#ad82a2484a2eae7db278bbf88d3991ea9',1,'test.c']]],
+  ['test_5fcmdprocessorr_5freset_5fhistory_11',['test_cmdProcessorR_reset_history',['../test_8c.html#a8ac9db325cee3b1a11af0b428861be86',1,'test.c']]],
+  ['test_5fco2_5fler_5fco2_5fe_5freset_12',['test_co2_ler_co2_e_reset',['../test_8c.html#ab3b10cc678e6cec02d8653ca29e506db',1,'test.c']]],
+  ['test_5fhumidity_5fler_5fhums_5fe_5freset_13',['test_humidity_ler_hums_e_reset',['../test_8c.html#a44d76caca2d9aec9c0f3fcb000977f27',1,'test.c']]],
+  ['test_5fresetrxbuffer_14',['test_resetRxBuffer',['../test_8c.html#a251055cd936f00cdcf7ca42de5b76e7d',1,'test.c']]],
+  ['test_5fresettxbuffer_15',['test_resetTxBuffer',['../test_8c.html#a092218b17bb049bd11cb0fce2557528d',1,'test.c']]],
+  ['test_5frxchar_5finvalido_16',['test_rxChar_invalido',['../test_8c.html#aeac96837e810e7e08f471975520d5fe3',1,'test.c']]],
+  ['test_5frxchar_5foverflow_17',['test_rxChar_overflow',['../test_8c.html#aedae2008a79e95983a2ff595257cb17b',1,'test.c']]],
+  ['test_5frxchar_5fvalido_18',['test_rxChar_valido',['../test_8c.html#afc3841d181cf953d3538c40488c6c07c',1,'test.c']]],
+  ['test_5ftemperature_5fler_5ftemps_5fe_5freset_19',['test_temperature_ler_temps_e_reset',['../test_8c.html#a2bbf7ef789f2d9a19449f0ffb2994c2e',1,'test.c']]],
+  ['test_5ftxchar_5foverflow_20',['test_txChar_overflow',['../test_8c.html#ab27d513a80c676725c0b6be80d6a27de',1,'test.c']]],
+  ['test_5ftxchar_5ftop_21',['test_txChar_top',['../test_8c.html#af6d3a81ea7fe9ab1b8a34a580a14c6a2',1,'test.c']]]
 ];

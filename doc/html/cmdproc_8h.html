@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Assignment 2: /home/hugo/SETR_Trab2/include/cmdproc.h File Reference</title>
+<title>Assignment 2: cmdproc.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,13 +69,15 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_4270bfced15e0e73154b13468c7c9ad9.html">core</a></li><li class="navelem"><a class="el" href="dir_24d671cfcbc5d5238a6bd565a49d198f.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">cmdproc.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -83,23 +85,40 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for cmdproc.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="cmdproc_8h__incl.png" border="0" usemap="#a_2home_2hugo_2SETR__Trab2_2include_2cmdproc_8h" alt=""/></div>
+<div class="center"><img src="cmdproc_8h__incl.png" border="0" usemap="#acmdproc_8h" alt=""/></div>
+<map name="acmdproc_8h" id="acmdproc_8h">
+<area shape="rect" title=" " alt="" coords="5,5,96,31"/>
+<area shape="rect" title=" " alt="" coords="15,79,86,104"/>
+<area shape="poly" title=" " alt="" coords="53,31,53,65,48,65,48,31"/>
+</map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="cmdproc_8h__dep__incl.png" border="0" usemap="#a_2home_2hugo_2SETR__Trab2_2include_2cmdproc_8hdep" alt=""/></div>
+<div class="center"><img src="cmdproc_8h__dep__incl.png" border="0" usemap="#acmdproc_8hdep" alt=""/></div>
+<map name="acmdproc_8hdep" id="acmdproc_8hdep">
+<area shape="rect" title=" " alt="" coords="54,5,145,31"/>
+<area shape="rect" href="cmdproc_8c.html" title=" " alt="" coords="5,79,95,104"/>
+<area shape="poly" title=" " alt="" coords="86,44,60,80,56,77,81,41"/>
+<area shape="rect" href="test_8c.html" title=" " alt="" coords="119,79,178,104"/>
+<area shape="poly" title=" " alt="" coords="117,41,143,77,138,80,113,44"/>
+</map>
 </div>
 </div>
 <p><a href="cmdproc_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRxBuffer.html">RxBuffer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a7e4912ef6d5612f8ebca463ff206d9ce" id="r_a7e4912ef6d5612f8ebca463ff206d9ce"><td class="memItemLeft" align="right" valign="top"><a id="a7e4912ef6d5612f8ebca463ff206d9ce" name="a7e4912ef6d5612f8ebca463ff206d9ce"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>UART_RX_SIZE</b>&#160;&#160;&#160;64 	/* Maximum size of the RX buffer */</td></tr>
 <tr class="separator:a7e4912ef6d5612f8ebca463ff206d9ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7bd31e3844f5461db2cbe6d906ca4040" id="r_a7bd31e3844f5461db2cbe6d906ca4040"><td class="memItemLeft" align="right" valign="top"><a id="a7bd31e3844f5461db2cbe6d906ca4040" name="a7bd31e3844f5461db2cbe6d906ca4040"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>UART_TX_SIZE</b>&#160;&#160;&#160;64 	/* Maximum size of the TX buffer */</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>UART_TX_SIZE</b>&#160;&#160;&#160;128 	/* Maximum size of the TX buffer */</td></tr>
 <tr class="separator:a7bd31e3844f5461db2cbe6d906ca4040"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf8d8994f09509f9e061f5bf82daf4cd" id="r_abf8d8994f09509f9e061f5bf82daf4cd"><td class="memItemLeft" align="right" valign="top"><a id="abf8d8994f09509f9e061f5bf82daf4cd" name="abf8d8994f09509f9e061f5bf82daf4cd"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>MAX_HISTORY</b>&#160;&#160;&#160;20</td></tr>
@@ -113,6 +132,9 @@ Macros</h2></td></tr>
 <tr class="memitem:a87045860c979c33b7bb6e4f90e7914df" id="r_a87045860c979c33b7bb6e4f90e7914df"><td class="memItemLeft" align="right" valign="top"><a id="a87045860c979c33b7bb6e4f90e7914df" name="a87045860c979c33b7bb6e4f90e7914df"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>EOF_SYM</b>&#160;&#160;&#160;'!'          /* End of Frame Symbol */</td></tr>
 <tr class="separator:a87045860c979c33b7bb6e4f90e7914df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a690f985c933da2ce6fe62b6c61dfa662" id="r_a690f985c933da2ce6fe62b6c61dfa662"><td class="memItemLeft" align="right" valign="top"><a id="a690f985c933da2ce6fe62b6c61dfa662" name="a690f985c933da2ce6fe62b6c61dfa662"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RX_BUF_SIZE</b>&#160;&#160;&#160;128</td></tr>
+<tr class="separator:a690f985c933da2ce6fe62b6c61dfa662"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -122,6 +144,27 @@ int8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getNextTemperature<
 <tr class="memitem:ab6bd270c191579c5717cf5fe1af89500" id="r_ab6bd270c191579c5717cf5fe1af89500"><td class="memItemLeft" align="right" valign="top"><a id="ab6bd270c191579c5717cf5fe1af89500" name="ab6bd270c191579c5717cf5fe1af89500"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>resetTemperatureHistory</b> ()</td></tr>
 <tr class="separator:ab6bd270c191579c5717cf5fe1af89500"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1045ec4831105dd13f5f32eebb8a962c" id="r_a1045ec4831105dd13f5f32eebb8a962c"><td class="memItemLeft" align="right" valign="top"><a id="a1045ec4831105dd13f5f32eebb8a962c" name="a1045ec4831105dd13f5f32eebb8a962c"></a>
+int8_t&#160;</td><td class="memItemRight" valign="bottom"><b>getNextHumidity</b> ()</td></tr>
+<tr class="separator:a1045ec4831105dd13f5f32eebb8a962c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84cc0bf2cd4b4fe9a36e1e3eacf67915" id="r_a84cc0bf2cd4b4fe9a36e1e3eacf67915"><td class="memItemLeft" align="right" valign="top"><a id="a84cc0bf2cd4b4fe9a36e1e3eacf67915" name="a84cc0bf2cd4b4fe9a36e1e3eacf67915"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>resetHumidityHistory</b> ()</td></tr>
+<tr class="separator:a84cc0bf2cd4b4fe9a36e1e3eacf67915"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3371666c62f6280a03adfbd79e1d30a8" id="r_a3371666c62f6280a03adfbd79e1d30a8"><td class="memItemLeft" align="right" valign="top"><a id="a3371666c62f6280a03adfbd79e1d30a8" name="a3371666c62f6280a03adfbd79e1d30a8"></a>
+int16_t&#160;</td><td class="memItemRight" valign="bottom"><b>getNextCO2</b> ()</td></tr>
+<tr class="separator:a3371666c62f6280a03adfbd79e1d30a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a758aac83c3593b0b9a785dab77a10af7" id="r_a758aac83c3593b0b9a785dab77a10af7"><td class="memItemLeft" align="right" valign="top"><a id="a758aac83c3593b0b9a785dab77a10af7" name="a758aac83c3593b0b9a785dab77a10af7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>resetCO2History</b> ()</td></tr>
+<tr class="separator:a758aac83c3593b0b9a785dab77a10af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1321bc833c3c222d2f152c3ca72babfc" id="r_a1321bc833c3c222d2f152c3ca72babfc"><td class="memItemLeft" align="right" valign="top"><a id="a1321bc833c3c222d2f152c3ca72babfc" name="a1321bc833c3c222d2f152c3ca72babfc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>enviarHistoricoTemperatura</b> ()</td></tr>
+<tr class="separator:a1321bc833c3c222d2f152c3ca72babfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7ca6a57122bfca43a21ea7c2d02c484" id="r_aa7ca6a57122bfca43a21ea7c2d02c484"><td class="memItemLeft" align="right" valign="top"><a id="aa7ca6a57122bfca43a21ea7c2d02c484" name="aa7ca6a57122bfca43a21ea7c2d02c484"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>enviarHistoricoHumidade</b> ()</td></tr>
+<tr class="separator:aa7ca6a57122bfca43a21ea7c2d02c484"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5d0212a6c8194e027efce6cc7fb569a" id="r_ae5d0212a6c8194e027efce6cc7fb569a"><td class="memItemLeft" align="right" valign="top"><a id="ae5d0212a6c8194e027efce6cc7fb569a" name="ae5d0212a6c8194e027efce6cc7fb569a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>enviarHistoricoCO2</b> ()</td></tr>
+<tr class="separator:ae5d0212a6c8194e027efce6cc7fb569a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbdfe0465dfd34a5f244fe41fa27c12a" id="r_afbdfe0465dfd34a5f244fe41fa27c12a"><td class="memItemLeft" align="right" valign="top"><a id="afbdfe0465dfd34a5f244fe41fa27c12a" name="afbdfe0465dfd34a5f244fe41fa27c12a"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>cmdProcessor</b> (void)</td></tr>
 <tr class="separator:afbdfe0465dfd34a5f244fe41fa27c12a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,6 +186,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>getTxBuffer</b> (unsi
 <tr class="memitem:a2a0e03d8d8ff0f0459f7623ffd6d39b1" id="r_a2a0e03d8d8ff0f0459f7623ffd6d39b1"><td class="memItemLeft" align="right" valign="top"><a id="a2a0e03d8d8ff0f0459f7623ffd6d39b1" name="a2a0e03d8d8ff0f0459f7623ffd6d39b1"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>calcChecksum</b> (unsigned char *buf, int nbytes)</td></tr>
 <tr class="separator:a2a0e03d8d8ff0f0459f7623ffd6d39b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ae960446bb49f732e438d40fcb6452a8b" id="r_ae960446bb49f732e438d40fcb6452a8b"><td class="memItemLeft" align="right" valign="top"><a id="ae960446bb49f732e438d40fcb6452a8b" name="ae960446bb49f732e438d40fcb6452a8b"></a>
+<a class="el" href="structRxBuffer.html">RxBuffer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Rx_Buf</b></td></tr>
+<tr class="separator:ae960446bb49f732e438d40fcb6452a8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Authors</dt><dd>Joana Duarte, nmec: 102608 </dd>
