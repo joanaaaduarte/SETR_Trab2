@@ -2,7 +2,7 @@
     \file cmdproc.c
     \authors Joana Duarte, nmec: 102608
     \authors Hugo Miranda, nmec: 104348
-    \date Colocar data  
+    \date April 8, 2025  
  */
 #include <stdio.h>
 #include <string.h>
@@ -628,7 +628,7 @@ int cmdProcessor(void) {
 
 
 			} else {
-				return -2;  // Tipo de sensor inválido
+				return -2;  // Tipo de sensor inválidocd
 			}
 
 				break;  

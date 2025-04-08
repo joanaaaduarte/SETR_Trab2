@@ -2,67 +2,55 @@
 \hypertarget{test}{}\label{test}\index{Test List@{Test List}}
 
 \begin{DoxyRefList}
-\item[Member \doxylink{test_8c_a24c86721354d3e133166708120d06011}{test\+\_\+cmd\+Processor\+\_\+checksum\+\_\+errado\+\_\+entrada} ()]\label{test__test000011}%
+\item[Member \doxylink{test_8c_a19855bd2bb8e13a233019a0f7fad605f}{test\+\_\+cmd\+Processor\+\_\+\+A\+\_\+output\+\_\+correta} (void)]\label{test__test000016}%
+\Hypertarget{test__test000016}%
+This test sends a valid command \#\+A065! and checks that the output is as expected.  
+\item[Member \doxylink{test_8c_a30a52f68b84d1fbef64afc494902f19c}{test\+\_\+cmd\+Processor\+\_\+checksum\+\_\+errado\+\_\+entrada} (void)]\label{test__test000011}%
 \Hypertarget{test__test000011}%
-Test checksum error in command \#\+Pt, expected to return -\/3.  
-\item[Member \doxylink{test_8c_a7b127ce1adde2bec898a4fe46d7db7c1}{test\+\_\+cmd\+Processor\+\_\+checksum\+\_\+valido\+\_\+entrada} ()]\label{test__test000012}%
+This test sends a command with an incorrect checksum (\#\+Pt999!) and expects a return value of -\/3.  
+\item[Member \doxylink{test_8c_a7e8ed3d662076caeafc416cbe2ea9f8b}{test\+\_\+cmd\+Processor\+\_\+checksum\+\_\+valido\+\_\+entrada} (void)]\label{test__test000012}%
 \Hypertarget{test__test000012}%
-Test valid checksum for command \#\+Pt196!  
-\item[Member \doxylink{test_8c_a2dfde4b95e2728cf4dbe25db4b520b05}{test\+\_\+cmd\+Processor\+\_\+faltando\+\_\+ultimo\+\_\+caractere} (void)]\label{test__test000010}%
+This test sends a command with a valid checksum (\#\+Pt196!) and expects a return value of 0.  
+\item[Member \doxylink{test_8c_ad6080109cac33879f22777da9a49d951}{test\+\_\+cmd\+Processor\+\_\+comando\+\_\+invalido} (void)]\label{test__test000010}%
 \Hypertarget{test__test000010}%
-Test command missing \textquotesingle{}!\textquotesingle{} at the end, expected to return -\/4.  
+This test sends an unrecognized command \textquotesingle{}X123!\textquotesingle{} to cmd\+Processor and expects a return value of -\/2.  
 \item[Member \doxylink{test_8c_adeccaed3699ec8e363ca7bc03dd02b82}{test\+\_\+cmd\+Processor\+\_\+incompleto} (void)]\label{test__test000008}%
 \Hypertarget{test__test000008}%
-Test incomplete command, expected to return -\/1.  
-\item[Member \doxylink{test_8c_aa072179016f82cfd48b5176724c77a32}{test\+\_\+cmd\+Processor\+\_\+letra\+\_\+comando\+\_\+invalido} ()]\label{test__test000009}%
+This test sends an incomplete command to cmd\+Processor, expecting it to return -\/1.  
+\item[Member \doxylink{test_8c_adfa177ab5219ecb8095f323d65203787}{test\+\_\+cmd\+Processor\+\_\+letra\+\_\+comando\+\_\+invalido} (void)]\label{test__test000009}%
 \Hypertarget{test__test000009}%
-Test invalid command letter, expected to return -\/2.  
-\item[Member \doxylink{test_8c_a266d7d18f237f2e965dcb5b7190fcbe7}{test\+\_\+cmd\+Processor\+\_\+\+Pc\+\_\+verificar\+\_\+resposta\+\_\+correta} ()]\label{test__test000019}%
-\Hypertarget{test__test000019}%
-Test correct response to command \#\+Pc179!  
-\item[Member \doxylink{test_8c_ab365b1bdeb689de1835c0a8cf0db2c62}{test\+\_\+cmd\+Processor\+\_\+\+Ph\+\_\+verificar\+\_\+resposta\+\_\+correta} ()]\label{test__test000018}%
-\Hypertarget{test__test000018}%
-Test correct response to command \#\+Ph184!  
-\item[Member \doxylink{test_8c_a0573609194137892a9aef74aed34a6f3}{test\+\_\+cmd\+Processor\+\_\+\+Pt\+\_\+verificar\+\_\+resposta\+\_\+correta} ()]\label{test__test000017}%
+This test sends an invalid command letter \textquotesingle{}H\textquotesingle{} to cmd\+Processor and expects a return value of -\/2.  
+\item[Member \doxylink{test_8c_a1ecd685f3730b8a729af276e33114127}{test\+\_\+cmd\+Processor\+\_\+\+R\+\_\+reset\+\_\+historico} ()]\label{test__test000017}%
 \Hypertarget{test__test000017}%
-Test correct response to command \#\+Pt196!  
-\item[Member \doxylink{test_8c_a40e2ae303a2ca8649accf2cc64fbeb0f}{test\+\_\+cmd\+Processor\+A\+\_\+add\+\_\+data} ()]\label{test__test000016}%
-\Hypertarget{test__test000016}%
-Test command \textquotesingle{}A\textquotesingle{} to add data and check response.  
-\item[Member \doxylink{test_8c_ad82a2484a2eae7db278bbf88d3991ea9}{test\+\_\+cmd\+Processor\+L\+\_\+returns\+\_\+last\+\_\+samples} ()]\label{test__test000020}%
-\Hypertarget{test__test000020}%
-Test command \textquotesingle{}L\textquotesingle{} to return last samples.  
-\item[Member \doxylink{test_8c_a8ac9db325cee3b1a11af0b428861be86}{test\+\_\+cmd\+Processor\+R\+\_\+reset\+\_\+history} ()]\label{test__test000021}%
-\Hypertarget{test__test000021}%
-Test command \textquotesingle{}R\textquotesingle{} to reset all histories.  
-\item[Member \doxylink{test_8c_ab3b10cc678e6cec02d8653ca29e506db}{test\+\_\+co2\+\_\+ler\+\_\+co2\+\_\+e\+\_\+reset} ()]\label{test__test000015}%
+This test fills the sensor histories, sends a valid command \textquotesingle{}R\textquotesingle{} with correct checksum, and then verifies that the response is "{}\#\+R082!"{} and that the histories have been reset to their initial values.  
+\item[Member \doxylink{test_8c_a864051f61e6e76036fe5ba9c1dad8ed2}{test\+\_\+co2\+\_\+ler\+\_\+co2\+\_\+e\+\_\+reset} (void)]\label{test__test000015}%
 \Hypertarget{test__test000015}%
-Read and reset CO2 history.  
-\item[Member \doxylink{test_8c_a44d76caca2d9aec9c0f3fcb000977f27}{test\+\_\+humidity\+\_\+ler\+\_\+hums\+\_\+e\+\_\+reset} ()]\label{test__test000014}%
+This test reads two CO2 values, checks them, resets the history, and then verifies that the first CO2 value is the expected value.  
+\item[Member \doxylink{test_8c_a10095a744244683fdc48b7d17436c1ae}{test\+\_\+humidity\+\_\+ler\+\_\+hums\+\_\+e\+\_\+reset} (void)]\label{test__test000014}%
 \Hypertarget{test__test000014}%
-Read and reset humidity history.  
+This test reads two humidity values, checks them, resets the history, and then verifies that the first humidity value is the expected value.  
 \item[Member \doxylink{test_8c_a251055cd936f00cdcf7ca42de5b76e7d}{test\+\_\+reset\+Rx\+Buffer} ()]\label{test__test000001}%
 \Hypertarget{test__test000001}%
-Test if reset\+Rx\+Buffer correctly clears the RX buffer.  
+This test sends a character into the RX buffer, then resets it and verifies that the buffer count and index are zero and that the first element is the null character.  
 \item[Member \doxylink{test_8c_a092218b17bb049bd11cb0fce2557528d}{test\+\_\+reset\+Tx\+Buffer} ()]\label{test__test000005}%
 \Hypertarget{test__test000005}%
-Test if reset\+Tx\+Buffer correctly clears the TX buffer.  
+This test writes characters to the TX buffer, verifies them, resets the buffer, and verifies it is empty.  
 \item[Member \doxylink{test_8c_aeac96837e810e7e08f471975520d5fe3}{test\+\_\+rx\+Char\+\_\+invalido} ()]\label{test__test000003}%
 \Hypertarget{test__test000003}%
-Test if rx\+Char rejects invalid characters.  
+This test sends an invalid character (the null character) to rx\+Char and verifies that it returns an error and that the buffer remains empty.  
 \item[Member \doxylink{test_8c_aedae2008a79e95983a2ff595257cb17b}{test\+\_\+rx\+Char\+\_\+overflow} ()]\label{test__test000004}%
 \Hypertarget{test__test000004}%
-Test RX buffer overflow behavior.  
+This test fills the RX buffer to capacity then attempts to add one more character, expecting an error.  
 \item[Member \doxylink{test_8c_afc3841d181cf953d3538c40488c6c07c}{test\+\_\+rx\+Char\+\_\+valido} ()]\label{test__test000002}%
 \Hypertarget{test__test000002}%
-Test if rx\+Char accepts valid characters into the RX buffer.  
-\item[Member \doxylink{test_8c_a2bbf7ef789f2d9a19449f0ffb2994c2e}{test\+\_\+temperature\+\_\+ler\+\_\+temps\+\_\+e\+\_\+reset} ()]\label{test__test000013}%
+This test sends valid characters to the RX buffer and verifies that the buffer contains the expected string.  
+\item[Member \doxylink{test_8c_a9457bcd5ddfd0ab23937e02139cf610b}{test\+\_\+temperature\+\_\+ler\+\_\+temps\+\_\+e\+\_\+reset} (void)]\label{test__test000013}%
 \Hypertarget{test__test000013}%
-Read and reset temperature history.  
+This test reads two temperature values, checks them, resets the history, and then verifies that the first temperature is the expected value.  
 \item[Member \doxylink{test_8c_ab27d513a80c676725c0b6be80d6a27de}{test\+\_\+tx\+Char\+\_\+overflow} ()]\label{test__test000007}%
 \Hypertarget{test__test000007}%
-Test TX buffer overflow behavior.  
+This test writes to the TX buffer until it reaches maximum capacity, then verifies that attempting to add another character returns an error.  
 \item[Member \doxylink{test_8c_af6d3a81ea7fe9ab1b8a34a580a14c6a2}{test\+\_\+tx\+Char\+\_\+top} ()]\label{test__test000006}%
 \Hypertarget{test__test000006}%
-Test insertion of characters into the TX buffer. 
+This test writes valid characters into the TX buffer and checks that they are stored correctly. 
 \end{DoxyRefList}

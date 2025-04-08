@@ -73,48 +73,40 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt>Member <a class="el" href="test_8c.html#a24c86721354d3e133166708120d06011">test_cmdProcessor_checksum_errado_entrada</a>  ()</dt>
-<dd><a class="anchor" id="_test000011"></a>Test checksum error in command #Pt, expected to return -3.  </dd>
-<dt>Member <a class="el" href="test_8c.html#a7b127ce1adde2bec898a4fe46d7db7c1">test_cmdProcessor_checksum_valido_entrada</a>  ()</dt>
-<dd><a class="anchor" id="_test000012"></a>Test valid checksum for command #Pt196!  </dd>
-<dt>Member <a class="el" href="test_8c.html#a2dfde4b95e2728cf4dbe25db4b520b05">test_cmdProcessor_faltando_ultimo_caractere</a>  (void)</dt>
-<dd><a class="anchor" id="_test000010"></a>Test command missing '!' at the end, expected to return -4.  </dd>
+<dt>Member <a class="el" href="test_8c.html#a19855bd2bb8e13a233019a0f7fad605f">test_cmdProcessor_A_output_correta</a>  (void)</dt>
+<dd><a class="anchor" id="_test000016"></a>This test sends a valid command #A065! and checks that the output is as expected.  </dd>
+<dt>Member <a class="el" href="test_8c.html#a30a52f68b84d1fbef64afc494902f19c">test_cmdProcessor_checksum_errado_entrada</a>  (void)</dt>
+<dd><a class="anchor" id="_test000011"></a>This test sends a command with an incorrect checksum (#Pt999!) and expects a return value of -3.  </dd>
+<dt>Member <a class="el" href="test_8c.html#a7e8ed3d662076caeafc416cbe2ea9f8b">test_cmdProcessor_checksum_valido_entrada</a>  (void)</dt>
+<dd><a class="anchor" id="_test000012"></a>This test sends a command with a valid checksum (#Pt196!) and expects a return value of 0.  </dd>
+<dt>Member <a class="el" href="test_8c.html#ad6080109cac33879f22777da9a49d951">test_cmdProcessor_comando_invalido</a>  (void)</dt>
+<dd><a class="anchor" id="_test000010"></a>This test sends an unrecognized command 'X123!' to cmdProcessor and expects a return value of -2.  </dd>
 <dt>Member <a class="el" href="test_8c.html#adeccaed3699ec8e363ca7bc03dd02b82">test_cmdProcessor_incompleto</a>  (void)</dt>
-<dd><a class="anchor" id="_test000008"></a>Test incomplete command, expected to return -1.  </dd>
-<dt>Member <a class="el" href="test_8c.html#aa072179016f82cfd48b5176724c77a32">test_cmdProcessor_letra_comando_invalido</a>  ()</dt>
-<dd><a class="anchor" id="_test000009"></a>Test invalid command letter, expected to return -2.  </dd>
-<dt>Member <a class="el" href="test_8c.html#a266d7d18f237f2e965dcb5b7190fcbe7">test_cmdProcessor_Pc_verificar_resposta_correta</a>  ()</dt>
-<dd><a class="anchor" id="_test000019"></a>Test correct response to command #Pc179!  </dd>
-<dt>Member <a class="el" href="test_8c.html#ab365b1bdeb689de1835c0a8cf0db2c62">test_cmdProcessor_Ph_verificar_resposta_correta</a>  ()</dt>
-<dd><a class="anchor" id="_test000018"></a>Test correct response to command #Ph184!  </dd>
-<dt>Member <a class="el" href="test_8c.html#a0573609194137892a9aef74aed34a6f3">test_cmdProcessor_Pt_verificar_resposta_correta</a>  ()</dt>
-<dd><a class="anchor" id="_test000017"></a>Test correct response to command #Pt196!  </dd>
-<dt>Member <a class="el" href="test_8c.html#a40e2ae303a2ca8649accf2cc64fbeb0f">test_cmdProcessorA_add_data</a>  ()</dt>
-<dd><a class="anchor" id="_test000016"></a>Test command 'A' to add data and check response.  </dd>
-<dt>Member <a class="el" href="test_8c.html#ad82a2484a2eae7db278bbf88d3991ea9">test_cmdProcessorL_returns_last_samples</a>  ()</dt>
-<dd><a class="anchor" id="_test000020"></a>Test command 'L' to return last samples.  </dd>
-<dt>Member <a class="el" href="test_8c.html#a8ac9db325cee3b1a11af0b428861be86">test_cmdProcessorR_reset_history</a>  ()</dt>
-<dd><a class="anchor" id="_test000021"></a>Test command 'R' to reset all histories.  </dd>
-<dt>Member <a class="el" href="test_8c.html#ab3b10cc678e6cec02d8653ca29e506db">test_co2_ler_co2_e_reset</a>  ()</dt>
-<dd><a class="anchor" id="_test000015"></a>Read and reset CO2 history.  </dd>
-<dt>Member <a class="el" href="test_8c.html#a44d76caca2d9aec9c0f3fcb000977f27">test_humidity_ler_hums_e_reset</a>  ()</dt>
-<dd><a class="anchor" id="_test000014"></a>Read and reset humidity history.  </dd>
+<dd><a class="anchor" id="_test000008"></a>This test sends an incomplete command to cmdProcessor, expecting it to return -1.  </dd>
+<dt>Member <a class="el" href="test_8c.html#adfa177ab5219ecb8095f323d65203787">test_cmdProcessor_letra_comando_invalido</a>  (void)</dt>
+<dd><a class="anchor" id="_test000009"></a>This test sends an invalid command letter 'H' to cmdProcessor and expects a return value of -2.  </dd>
+<dt>Member <a class="el" href="test_8c.html#a1ecd685f3730b8a729af276e33114127">test_cmdProcessor_R_reset_historico</a>  ()</dt>
+<dd><a class="anchor" id="_test000017"></a>This test fills the sensor histories, sends a valid command 'R' with correct checksum, and then verifies that the response is "#R082!" and that the histories have been reset to their initial values.  </dd>
+<dt>Member <a class="el" href="test_8c.html#a864051f61e6e76036fe5ba9c1dad8ed2">test_co2_ler_co2_e_reset</a>  (void)</dt>
+<dd><a class="anchor" id="_test000015"></a>This test reads two CO2 values, checks them, resets the history, and then verifies that the first CO2 value is the expected value.  </dd>
+<dt>Member <a class="el" href="test_8c.html#a10095a744244683fdc48b7d17436c1ae">test_humidity_ler_hums_e_reset</a>  (void)</dt>
+<dd><a class="anchor" id="_test000014"></a>This test reads two humidity values, checks them, resets the history, and then verifies that the first humidity value is the expected value.  </dd>
 <dt>Member <a class="el" href="test_8c.html#a251055cd936f00cdcf7ca42de5b76e7d">test_resetRxBuffer</a>  ()</dt>
-<dd><a class="anchor" id="_test000001"></a>Test if resetRxBuffer correctly clears the RX buffer.  </dd>
+<dd><a class="anchor" id="_test000001"></a>This test sends a character into the RX buffer, then resets it and verifies that the buffer count and index are zero and that the first element is the null character.  </dd>
 <dt>Member <a class="el" href="test_8c.html#a092218b17bb049bd11cb0fce2557528d">test_resetTxBuffer</a>  ()</dt>
-<dd><a class="anchor" id="_test000005"></a>Test if resetTxBuffer correctly clears the TX buffer.  </dd>
+<dd><a class="anchor" id="_test000005"></a>This test writes characters to the TX buffer, verifies them, resets the buffer, and verifies it is empty.  </dd>
 <dt>Member <a class="el" href="test_8c.html#aeac96837e810e7e08f471975520d5fe3">test_rxChar_invalido</a>  ()</dt>
-<dd><a class="anchor" id="_test000003"></a>Test if rxChar rejects invalid characters.  </dd>
+<dd><a class="anchor" id="_test000003"></a>This test sends an invalid character (the null character) to rxChar and verifies that it returns an error and that the buffer remains empty.  </dd>
 <dt>Member <a class="el" href="test_8c.html#aedae2008a79e95983a2ff595257cb17b">test_rxChar_overflow</a>  ()</dt>
-<dd><a class="anchor" id="_test000004"></a>Test RX buffer overflow behavior.  </dd>
+<dd><a class="anchor" id="_test000004"></a>This test fills the RX buffer to capacity then attempts to add one more character, expecting an error.  </dd>
 <dt>Member <a class="el" href="test_8c.html#afc3841d181cf953d3538c40488c6c07c">test_rxChar_valido</a>  ()</dt>
-<dd><a class="anchor" id="_test000002"></a>Test if rxChar accepts valid characters into the RX buffer.  </dd>
-<dt>Member <a class="el" href="test_8c.html#a2bbf7ef789f2d9a19449f0ffb2994c2e">test_temperature_ler_temps_e_reset</a>  ()</dt>
-<dd><a class="anchor" id="_test000013"></a>Read and reset temperature history.  </dd>
+<dd><a class="anchor" id="_test000002"></a>This test sends valid characters to the RX buffer and verifies that the buffer contains the expected string.  </dd>
+<dt>Member <a class="el" href="test_8c.html#a9457bcd5ddfd0ab23937e02139cf610b">test_temperature_ler_temps_e_reset</a>  (void)</dt>
+<dd><a class="anchor" id="_test000013"></a>This test reads two temperature values, checks them, resets the history, and then verifies that the first temperature is the expected value.  </dd>
 <dt>Member <a class="el" href="test_8c.html#ab27d513a80c676725c0b6be80d6a27de">test_txChar_overflow</a>  ()</dt>
-<dd><a class="anchor" id="_test000007"></a>Test TX buffer overflow behavior.  </dd>
+<dd><a class="anchor" id="_test000007"></a>This test writes to the TX buffer until it reaches maximum capacity, then verifies that attempting to add another character returns an error.  </dd>
 <dt>Member <a class="el" href="test_8c.html#af6d3a81ea7fe9ab1b8a34a580a14c6a2">test_txChar_top</a>  ()</dt>
-<dd><a class="anchor" id="_test000006"></a>Test insertion of characters into the TX buffer. </dd>
+<dd><a class="anchor" id="_test000006"></a>This test writes valid characters into the TX buffer and checks that they are stored correctly. </dd>
 </dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
