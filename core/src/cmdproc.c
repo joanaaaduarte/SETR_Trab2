@@ -56,7 +56,7 @@ int8_t getNextTemperature()					//ref:https://stackoverflow.com/questions/362195
 
 void resetTemperatureHistory()
 {
-    memset(temperature_history, 0, sizeof(temperature_history));
+    memset(temperature_history, 0, sizeof(temperature_history)); //ref:https://www.tutorialspoint.com/c_standard_library/c_function_memset.htm
     temp_history_index = 0;
 	temps_index = 0;
 }
@@ -90,7 +90,7 @@ int8_t getNextHumidity()				//ref:https://stackoverflow.com/questions/3621956/ho
 
 void resetHumidityHistory()
 {
-    memset(humidity_history, 0, sizeof(humidity_history));
+    memset(humidity_history, 0, sizeof(humidity_history)); //ref:https://www.tutorialspoint.com/c_standard_library/c_function_memset.htm
     humidity_history_index = 0;
 	humidity_index = 0;
 }
@@ -124,7 +124,7 @@ int16_t getNextCO2()							//ref:https://stackoverflow.com/questions/3621956/how
 
 void resetCO2History()
 {
-    memset(co2_history, 0, sizeof(co2_history));
+    memset(co2_history, 0, sizeof(co2_history));	//ref: https://www.tutorialspoint.com/c_standard_library/c_function_memset.htm
     co2_history_index = 0;
 	co2_index = 0;
 }
@@ -155,7 +155,7 @@ int cmdProcessor(void) {
 
             case 'A': {
 
-				
+				// Validar o formato do comando
 				if (rxBufLen < i + 6)
 				{
 					return -1;
@@ -167,6 +167,7 @@ int cmdProcessor(void) {
 					return -3;
 				}
 
+				//Verifica se o comando acaba com '!'
 			    if (UARTRxBuffer[i + 5] != EOF_SYM)
 				{
         			return -4;
@@ -185,6 +186,8 @@ int cmdProcessor(void) {
 
 				//  Temperatura 
 				resposta[pos++] = 't';
+
+				//Verificar o "sinal"
 				if (temp < 0) {
 
 					resposta[pos++] = '-';
@@ -196,17 +199,26 @@ int cmdProcessor(void) {
 
 				}
 
+				//Converter para ASCII					REF: https://stackoverflow.com/questions/29077138/conversion-of-integer-to-char-array-in-c
 				resposta[pos++] = '0' + (temp / 10);
 				resposta[pos++] = '0' + (temp % 10);
 
 				// Humidade 
 				resposta[pos++] = 'h';
+
+				//Verificar o "sinal"
 				if (hum < 0) {
+
 					resposta[pos++] = '-';
 					hum = -hum;
+
 				} else {
+
 					resposta[pos++] = '+';
+
 				}
+
+				//Converter para ASCII					REF: https://stackoverflow.com/questions/29077138/conversion-of-integer-to-char-array-in-c
 				resposta[pos++] = '0' + (hum / 10);
 				resposta[pos++] = '0' + (hum % 10);
 
@@ -215,24 +227,39 @@ int cmdProcessor(void) {
 				resposta[pos++] = '+'; // sempre positivo
 
 				char co2_str[7]; // 5 digitos + '\0'
-				snprintf(co2_str, sizeof(co2_str), "%05d", co2);
+
+				//Converter c02 para ascii com 5 digitios
+				snprintf(co2_str, sizeof(co2_str), "%05d", co2); //REF:https://www.w3schools.com/c/ref_stdio_snprintf.php
+
 				for (int j = 0; j < 5; ++j)
+				{
 					resposta[pos++] = co2_str[j];
+
+				}
 
 				//  Checksum da resposta 
 				int soma = 0;
 				for (int j = 0; j < pos; ++j)
-					soma += resposta[j];
+				{
+					soma = soma + resposta[j];
+
+				}
 
 				int cs = soma % 256;
 				char cs_str[5];
-				snprintf(cs_str, sizeof(cs_str), "%03d", cs);
 
-				// Transmitir a resposta completa
+				//Converter checksum para ascii com 3 digitos
+				snprintf(cs_str, sizeof(cs_str), "%03d", cs); //REF:https://www.w3schools.com/c/ref_stdio_snprintf.php
+
+				// Enviar a resposta 
 				txChar('#');
 				for (int j = 0; j < pos; ++j)
+				{
 					txChar(resposta[j]);
 
+				}
+
+				//Enviar checksum
 				txChar(cs_str[0]);
 				txChar(cs_str[1]);
 				txChar(cs_str[2]);
@@ -244,11 +271,13 @@ int cmdProcessor(void) {
 
 			case 'P': {  
 
+				// Validar o formato do comando
 				if (rxBufLen < i + 7)
 				{
         			return -1;
 				};
 
+				// Verifica checksum de entrada , "pt" ; "ph" ; "pc"
 				if (!calcChecksum(&UARTRxBuffer[i + 1], 2))  	
 				{					 
         				return -3;
@@ -273,14 +302,19 @@ int cmdProcessor(void) {
 					resposta[posicao++] = 'P';
 					resposta[posicao++] = 't';
 
+					//Definir o "sinal"
 					if (temp < 0) {
+
 						resposta[posicao++] = '-';
 						temp = -temp;
+
 					} else {
+
 						resposta[posicao++] = '+';
+
 					}
 
-					//Converter para ASCII					https://stackoverflow.com/questions/29077138/conversion-of-integer-to-char-array-in-c
+					//Converter para ASCII					REF: https://stackoverflow.com/questions/29077138/conversion-of-integer-to-char-array-in-c
 					resposta[posicao++] = '0' + (temp / 10);
 					resposta[posicao++] = '0' + (temp % 10);
 
@@ -293,20 +327,23 @@ int cmdProcessor(void) {
 
 					int cs = soma % 256;
 					char cs_str[5];
+					
+					//Converter checksum para ascii com 3 digitos
+					snprintf(cs_str, sizeof(cs_str), "%03d", cs);//REF:https://www.w3schools.com/c/ref_stdio_snprintf.php
 
-					snprintf(cs_str, sizeof(cs_str), "%03d", cs);
-
-					// Enviar a resposta real
+					// Enviar a resposta 
 					txChar('#');
 					for (int j = 0; j < posicao; ++j)
 					{
 						txChar(resposta[j]);
 					};
 
+					//Enviar checksum
 					txChar(cs_str[0]);
 					txChar(cs_str[1]);
 					txChar(cs_str[2]);
 					txChar('!');
+
 					return 0;
 
 				} else if (sid == 'h') {
@@ -319,6 +356,7 @@ int cmdProcessor(void) {
 					resposta[posicao++]= 'P';
 					resposta[posicao++]= 'h';
 
+					//Verificar o "sinal"
 					if (hum < 0) {
 
 						resposta[posicao++] = '-';
@@ -343,15 +381,18 @@ int cmdProcessor(void) {
 
 					int cs = soma % 256;
 					char cs_str[5];
-					snprintf(cs_str, sizeof(cs_str), "%03d", cs);
 
-					// Enviar resposta com checksum
+					//Converter checksum para ascii com 3 digitos
+					snprintf(cs_str, sizeof(cs_str), "%03d", cs);//REF:https://www.w3schools.com/c/ref_stdio_snprintf.php
+
+					// Enviar resposta 
 					txChar('#');
 					for (int j = 0; j < posicao; ++j)
 					{
 						txChar(resposta[j]);
 					};
 
+					//Enviar  checksum
 					txChar(cs_str[0]);
 					txChar(cs_str[1]);
 					txChar(cs_str[2]);
@@ -364,7 +405,9 @@ int cmdProcessor(void) {
 					int16_t co2 = getNextCO2(); 
 
 					char co2_str[7];
-					snprintf(co2_str, sizeof(co2_str), "%05d", co2); // 5 dígitos
+
+					//Converter c02 para ascii com 5 digitos
+					snprintf(co2_str, sizeof(co2_str), "%05d", co2); //REF:https://www.w3schools.com/c/ref_stdio_snprintf.php
 
 					unsigned char resposta[16];
 					int posicao = 0;
@@ -389,15 +432,18 @@ int cmdProcessor(void) {
 
 					int cs = soma % 256;
 					char cs_str[6];
-					snprintf(cs_str, sizeof(cs_str), "%03d", cs);
 
-					// Enviar resposta com checksum
+					//Converter checksum para ascii com 3 digitos
+					snprintf(cs_str, sizeof(cs_str), "%03d", cs);//REF:https://www.w3schools.com/c/ref_stdio_snprintf.php
+
+					// Enviar resposta 
 					txChar('#');
 					for (int j = 0; j < posicao; ++j)
 					{
 						txChar(resposta[j]);
 					};
 
+					//Enviar checksum
 					txChar(cs_str[0]);
 					txChar(cs_str[1]);
 					txChar(cs_str[2]);
@@ -408,17 +454,19 @@ int cmdProcessor(void) {
 
 			case 'L':	{
 
-				// Validação do formato do comando
+				// Validar o formato do comando
 				if (rxBufLen < i + 6) 
 				{
 					return -1;
 				}
 
+				// Verifica checksum de entrada ,apenas para 'L'
 				if (!calcChecksum(&UARTRxBuffer[i + 1], 1))
 				{
 					return -3;
 				} 
 
+				//Verifica se o comando acaba com '!'
 				if (UARTRxBuffer[i + 5] != EOF_SYM)
 				{
 						return -4;
@@ -435,10 +483,12 @@ int cmdProcessor(void) {
 				resposta_t[pos++] = 't';
 
 				for (int j = 0; j < MAX_HISTORY; ++j) {
-
+					
+					//Ler dados do buffer circular
 					int idx = (temp_history_index + j) % MAX_HISTORY;
 					int8_t val = temperature_history[idx];
 
+					//Definir o "sinal"
 					if (val < 0) {
 
 						resposta_t[pos++] = '-';
@@ -450,11 +500,13 @@ int cmdProcessor(void) {
 
 					}
 
+					//Converter para ASCII					REF: https://stackoverflow.com/questions/29077138/conversion-of-integer-to-char-array-in-c
 					resposta_t[pos++] = '0' + (val / 10);
 					resposta_t[pos++] = '0' + (val % 10);
 
 				}
 
+				//Calcular checksum
 				soma = 0;
 
 				for (int j = 0; j < pos; ++j)
@@ -464,15 +516,19 @@ int cmdProcessor(void) {
 				}
 
 				cs = soma % 256;
-				snprintf(cs_str, sizeof(cs_str), "%03d", cs);
+
+				//Converter checksum para ascii com 3 digitos
+				snprintf(cs_str, sizeof(cs_str), "%03d", cs);//REF:https://www.w3schools.com/c/ref_stdio_snprintf.php
 
 				txChar('#');
 
+				//Enviar resposta
 				for (int j = 0; j < pos; ++j)
 				{
 					txChar(resposta_t[j]);
 				}
 
+				//Enviar checksum
 				for (int i = 0; i < 3; ++i)
 				{	
 					txChar(cs_str[i]);
@@ -487,11 +543,14 @@ int cmdProcessor(void) {
 				resposta_h[pos++] = 'L';
 				resposta_h[pos++] = 'h';
 
+
 				for (int j = 0; j < MAX_HISTORY; ++j) {
 
+					//Ler dados do buffer circular
 					int idx = (humidity_history_index + j) % MAX_HISTORY;
 					int8_t val = humidity_history[idx];
 
+					//Definir o "sinal"
 					if (val < 0) {
 
 						resposta_h[pos++] = '-';
@@ -503,26 +562,31 @@ int cmdProcessor(void) {
 
 					}
 
+					//Converter para ASCII					REF: https://stackoverflow.com/questions/29077138/conversion-of-integer-to-char-array-in-c
 					resposta_h[pos++] = '0' + (val / 10);
 					resposta_h[pos++] = '0' + (val % 10);
 				}
 
 				soma = 0;
 
+				//Calcular checksum
 				for (int j = 0; j < pos; ++j)
 				{
 					soma = soma +  resposta_h[j];
 				}
 
 				cs = soma % 256;
-				snprintf(cs_str, sizeof(cs_str), "%03d", cs);
+				//Converter checksum para ascii com 3 digitos
+				snprintf(cs_str, sizeof(cs_str), "%03d", cs);//REF:https://www.w3schools.com/c/ref_stdio_snprintf.php
 
+				//Enviar resposta
 				txChar('#');
 				for (int j = 0; j < pos; ++j)
 				{
 					txChar(resposta_h[j]);
 				}
 
+				//Enviar checksum
 				for (int i = 0; i < 3; ++i)
 				{
 					txChar(cs_str[i]);
@@ -537,13 +601,17 @@ int cmdProcessor(void) {
 				resposta_c[pos++] = 'c';
 
 				for (int j = 0; j < MAX_HISTORY; ++j) {
+
+					//Ler dados do buffer circular
 					int idx = (co2_history_index + j) % MAX_HISTORY;
 					int16_t val = co2_history[idx];
 
 					resposta_c[pos++] = '+';
 
 					char val_str[7];
-					snprintf(val_str, sizeof(val_str), "%05d", val);
+
+					//Converter co2 para ascii com 5 digitos
+					snprintf(val_str, sizeof(val_str), "%05d", val);//REF:https://www.w3schools.com/c/ref_stdio_snprintf.php
 
 					for (int k = 0; k < 5; ++k)
 					
@@ -551,20 +619,27 @@ int cmdProcessor(void) {
 				}
 
 				soma = 0;
+
+				//Calcular checksum
 				for (int j = 0; j < pos; ++j)
 				{
 					 soma = soma + resposta_c[j];
 				}
+
 				cs = soma % 256;
-				snprintf(cs_str, sizeof(cs_str), "%03d", cs);
+
+				//Converter checksum para ascii com 3 digitos
+				snprintf(cs_str, sizeof(cs_str), "%03d", cs);//REF:https://www.w3schools.com/c/ref_stdio_snprintf.php
 
 				txChar('#');
 
+				//Enviar resposta
 				for (int j = 0; j < pos; ++j)
 				{
 					txChar(resposta_c[j]);
 				}
 
+				//Enviar checksum
 				for (int i = 0; i < 3; ++i)
 				{
 					txChar(cs_str[i]);
@@ -579,18 +654,20 @@ int cmdProcessor(void) {
 
             case 'R':{
 
-					// Validação básica
+				// Validar o formato do comando
 				if (rxBufLen < i + 6)
 				{
 					return -1;
 				}
 
+				// Verifica checksum de entrada ,apenas para 'R'
 				if (!calcChecksum(&UARTRxBuffer[i + 1], 1))
 				{	
 					return -3;
 
 				}
 
+				//Verifica se o comando acaba com '!'
 				if (UARTRxBuffer[i + 5] != EOF_SYM)
 				{
 					return -4;
@@ -601,7 +678,7 @@ int cmdProcessor(void) {
 				resetHumidityHistory();
 				resetCO2History();
 
-				// Preparar resposta #Rxxx!
+				
 				unsigned char resposta[4];
 				resposta[0] = 'R';
 
@@ -610,12 +687,16 @@ int cmdProcessor(void) {
 
 				int cs = soma % 256;
 				char cs_str[4];
-				snprintf(cs_str, sizeof(cs_str), "%03d", cs);
+
+				//Converter checksum para ascii com 3 digitos
+				snprintf(cs_str, sizeof(cs_str), "%03d", cs);//REF:https://www.w3schools.com/c/ref_stdio_snprintf.php
 
 				txChar('#');
 
+				//Enviar resposta
 				txChar(resposta[0]);
 
+				//Enviar checksum
 				txChar(cs_str[0]);
 				txChar(cs_str[1]);
 				txChar(cs_str[2]);
@@ -708,7 +789,7 @@ void resetRxBuffer(void)
  */
 void resetTxBuffer(void)
 {
-	memset(UARTTxBuffer, 0, UART_TX_SIZE);
+	memset(UARTTxBuffer, 0, UART_TX_SIZE);	//ref:https://www.tutorialspoint.com/c_standard_library/c_function_memset.htm
 	txBufLen = 0;		
 	return;
 }
@@ -729,20 +810,12 @@ void getTxBuffer(unsigned char * buf, int * len)
 /* 
  * calcChecksum
  */ 
-int calcChecksum(unsigned char * buf, int nbytes) {
-	/* Here you are supposed to compute the modulo 256 checksum */
-	/* of the first n bytes of buf. Then you should convert the */
-	/* checksum to ascii (3 digitas/chars) and compare each one */
-	/* of these digits/characters to the ones in the RxBuffer,  */
-	/* positions nbytes, nbytes + 1 and nbytes +2.              */
-	
-	/* That is your work to do. In this example I just assume   */
-	/* that the checksum is always OK.                          */      
+int calcChecksum(unsigned char * buf, int nbytes) {    
 
 	// First: Sum first buffer nbytes
 	int sum = 0;
 	for(int i = 0; i < nbytes; i++){
-			sum +=buf[i];
+			sum = sum + buf[i];
 	}
 
 	// Second: Compute the checksum as the modulo 256 of the sum.
@@ -751,12 +824,12 @@ int calcChecksum(unsigned char * buf, int nbytes) {
 
 	// Third: Convert string 3 digits to ASCII
 	char checksumStr[10];
-	snprintf(checksumStr, sizeof(checksumStr), "%03d", checksum);
+
+	//Converter checksum para ascii com 3 digitos
+	snprintf(checksumStr, sizeof(checksumStr), "%03d", checksum); //REF:https://www.w3schools.com/c/ref_stdio_snprintf.php
 
     // Compara os 3 dígitos com os caracteres no buffer original
-    if (buf[nbytes]     == checksumStr[0] &&
-        buf[nbytes + 1] == checksumStr[1] &&
-        buf[nbytes + 2] == checksumStr[2]) {
+    if (buf[nbytes]     == checksumStr[0] &&   buf[nbytes + 1] == checksumStr[1] && buf[nbytes + 2] == checksumStr[2]) {
         return 1;  // válido
     }
 

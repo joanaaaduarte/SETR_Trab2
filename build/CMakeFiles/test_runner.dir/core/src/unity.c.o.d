@@ -1,8 +1,7 @@
 CMakeFiles/test_runner.dir/core/src/unity.c.o: \
- /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/src/unity.c \
- /usr/include/stdc-predef.h \
- /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/include/unity.h \
- /home/joana/Documents/SETR/git/Trab2/SETR_Trab2/core/include/unity_internals.h \
+ /home/hugo/SETR_Trab2/core/src/unity.c /usr/include/stdc-predef.h \
+ /home/hugo/SETR_Trab2/core/include/unity.h \
+ /home/hugo/SETR_Trab2/core/include/unity_internals.h \
  /usr/include/setjmp.h /usr/include/features.h \
  /usr/include/features-time64.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
@@ -28,22 +27,22 @@ CMakeFiles/test_runner.dir/core/src/unity.c.o: \
  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
- /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
- /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h /usr/include/stdint.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
- /usr/lib/gcc/x86_64-linux-gnu/14/include/limits.h \
- /usr/lib/gcc/x86_64-linux-gnu/14/include/syslimits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h \
  /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
  /usr/include/linux/limits.h \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h \
  /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
- /usr/lib/gcc/x86_64-linux-gnu/14/include/stdnoreturn.h \
- /usr/include/stdio.h /usr/lib/gcc/x86_64-linux-gnu/14/include/stdarg.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdnoreturn.h \
+ /usr/include/stdio.h /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \

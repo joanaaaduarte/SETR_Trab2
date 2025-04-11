@@ -584,7 +584,7 @@ void test_cmdProcessor_Lh_resposta_correta() {
     unsigned char tx[512] = {0};
     int len = 0;
     getTxBuffer(tx, &len);
-    char *ptr = strstr((char *)tx, "#Lh");
+    char *ptr = strstr((char *)tx, "#Lh");  //REF: https://www.tutorialspoint.com/c_standard_library/c_function_strstr.htm
     TEST_ASSERT_NOT_NULL(ptr);
     TEST_ASSERT_EQUAL_CHAR('#', ptr[0]);
     TEST_ASSERT_EQUAL_CHAR('L', ptr[1]);
@@ -609,7 +609,7 @@ void test_cmdProcessor_Lc_resposta_correta() {
     unsigned char tx[1024] = {0};
     int len = 0;
     getTxBuffer(tx, &len);
-    char *ptr = strstr((char *)tx, "#Lc");
+    char *ptr = strstr((char *)tx, "#Lc");  //REF: https://www.tutorialspoint.com/c_standard_library/c_function_strstr.htm
     TEST_ASSERT_NOT_NULL(ptr);
     TEST_ASSERT_EQUAL_CHAR('#', ptr[0]);
     TEST_ASSERT_EQUAL_CHAR('L', ptr[1]);

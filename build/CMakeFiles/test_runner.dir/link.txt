@@ -1,1 +1,1 @@
-/usr/bin/cc -Wall -Werror -g CMakeFiles/test_runner.dir/core/test/test.c.o CMakeFiles/test_runner.dir/core/src/cmdproc.c.o CMakeFiles/test_runner.dir/core/src/unity.c.o -o test_runner
+/usr/bin/cc -Wall -Werror -g CMakeFiles/test_runner.dir/core/test/test.c.o CMakeFiles/test_runner.dir/core/src/cmdproc.c.o CMakeFiles/test_runner.dir/core/src/unity.c.o -o test_runner 
